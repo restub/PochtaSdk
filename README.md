@@ -1,5 +1,6 @@
 # Pochta SDK
 
+[![.NET](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml/badge.svg)](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml)
 [![.NET Framework 4.62](https://img.shields.io/badge/.net-v4.62-yellow)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
 [![.NET 6.0](https://img.shields.io/badge/.net-v6.0-orange)](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
