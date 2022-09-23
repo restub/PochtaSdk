@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net462;net6.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Alexey Yakovlev</Authors>
+    <Copyright>Alexey Yakovlev</Copyright>
+    <Company>https://github.com/yallie</Company>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PackageId>PochtaSdk</PackageId>
+    <PackageProjectUrl>https://github.com/restub/PochtaSdk</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/restub/PochtaSdk.git</RepositoryUrl>
+    <PackageTags>pochta.ru; rest; api; client; framework; tracing; logging</PackageTags>
+    <PackageIcon>PochtaSdk.png</PackageIcon>
+    <Title>restub</Title>
+    <Description>Pochta.ru REST API client with tracing support.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReleaseNotes>Initial beta release.
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="restub" Version="0.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\PochtaSdk.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,46 @@
+name: Publish to Nuget
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    environment: Test
+
+    # copy secrets to environment variables
+    env:
+      TEST_ENVIRONMENT_INITIALIZED: true
+      OTPRAVKA_USER_PASSWORD: '${{secrets.OTPRAVKA_USER_PASSWORD}}'
+      OTPRAVKA_USER_PHONE: '${{secrets.OTPRAVKA_USER_PHONE}}'
+      OTPRAVKA_ACCESS_TOKEN: '${{secrets.OTPRAVKA_ACCESS_TOKEN}}'
+      OTPRAVKA_USER_EMAIL: '${{secrets.OTPRAVKA_USER_EMAIL}}'
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build -c Release --no-restore
+
+    - name: Test
+      run: dotnet test -c Release --no-build --verbosity normal
+
+    - name: Pack
+      run: dotnet pack -c Release --no-build -p:PublicRelease=true
+
+    - name: Publish
+      run: dotnet nuget push PochtaSdk\bin\Release\PochtaSdk*.nupkg -k "${{ secrets.NUGET_POCHTA_SDK_API_TOKEN }}" -s https://api.nuget.org/v3/index.json

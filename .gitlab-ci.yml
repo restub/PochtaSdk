@@ -1,0 +1,39 @@
+stages:
+  - build
+  - unit tests
+  - publish
+
+build:
+  stage: build
+  script:
+    - dotnet build PochtaSdk.sln
+
+unit_tests:
+  stage: unit tests
+  before_script:
+    - echo "Normal build -- running unit tests..."
+    - chcp 65001
+    # uncomment to install the required tools --
+    # dotnet tool install -g trx2junit
+  script:
+    # building again the solution
+    - dotnet test PochtaSdk.sln --logger "trx;LogFileName=TestResults.trx"
+  after_script:
+    - echo Converting test results
+    - trx2junit PochtaSdk.Tests\TestResults\TestResults.trx
+  artifacts:
+    paths:
+      - PochtaSdk.Tests\TestResults\TestResults.trx
+    reports:
+      junit:
+        - PochtaSdk.Tests\TestResults\TestResults.xml
+    expire_in: 1 day
+
+publish:
+  stage: publish
+  script:
+    - dotnet pack -c Release PochtaSdk.sln
+  artifacts:
+    paths:
+      - PochtaSdk\bin\Release\*.nupkg
+      - PochtaSdk\bin\Release\*.snupkg
