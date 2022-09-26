@@ -15,7 +15,7 @@
     <RepositoryUrl>https://github.com/restub/PochtaSdk.git</RepositoryUrl>
     <PackageTags>pochta.ru; rest; api; client; framework; tracing; logging</PackageTags>
     <PackageIcon>PochtaSdk.png</PackageIcon>
-    <Title>restub</Title>
+    <Title>PochtaSdk</Title>
     <Description>Pochta.ru REST API client with tracing support.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>

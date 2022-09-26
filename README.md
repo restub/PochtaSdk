@@ -1,30 +1,45 @@
 # Pochta SDK
 
-[![.NET](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml/badge.svg)](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml)
-[![.NET Framework 4.62](https://img.shields.io/badge/.net-v4.62-yellow)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
+[![Build status](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml/badge.svg)](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml)
+[![.NET Framework 4.6.2](https://img.shields.io/badge/.net-v4.62-yellow)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
 [![.NET 6.0](https://img.shields.io/badge/.net-v6.0-orange)](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+[![DotNetFiddle](https://img.shields.io/badge/try-online-blue)](https://dotnetfiddle.net/HsS50y)
 
 Pochta.ru REST API client with tracing support.
 
 # Welcome
 
-TODO
+This is a very early beta version that covers only very basic API features.
 
 ## Getting started
 
-TODO
+* Add the Nuget package: https://www.nuget.org/packages/restub
+* Use `TariffClient` class to calculate delivery tariffs and terms
+* Use `OtpravkaClient` class to register packages (requires authentication)
 
 ## Sample usage
 
+Try it online: https://dotnetfiddle.net/HsS50y
+
 ```c#
-// TODO
-var client = new GithubClient();
+var client = new TariffClient();
 
-// trace all API calls to the console
-client.Tracer = Console.WriteLine;
+// optional: trace API calls to the console
+// client.Tracer = Console.WriteLine;
 
-// get user's organizations
-var orgs = client.GetUserOrgs("yallie");
+// calculate tariff and display as plain text
+var text = client.Calculate(TariffResponseFormat.Text, new TariffRequest
+{
+    Object = TariffObjectType.WrapperRegular,
+    From = 344038,
+    To = 115162,
+    Weight = 100,
+    Date = DateTime.Now,
+    Time = "0223",
+});
+
+// display server's response
+Console.WriteLine(text);
 ```
 
 <details>
