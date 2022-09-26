@@ -17,7 +17,7 @@ namespace PochtaSdk
         }
 
         private string GetFormat(TariffResponseFormat format) =>
-            ParameterHelper.GetEnumMemberValue(format);
+            ParameterHelper.GetEnumMemberValue(format) as string;
 
         /// <summary>
         /// Calculates the tariff.
@@ -30,7 +30,7 @@ namespace PochtaSdk
                 .AddQueryString(request));
 
         /// <summary>
-        /// Calculates the tariff and returns the.
+        /// Calculates the tariff and returns as formatted text.
         /// </summary>
         /// <param name="format">Tariff response format.</param>
         /// <param name="request">Tariff calculation request.</param>

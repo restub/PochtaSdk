@@ -11,7 +11,19 @@ namespace PochtaSdk.Tariff
         [EnumMember(Value = "json")]
         Json,
 
+        [EnumMember(Value = "jsontext")]
+        JsonText,
+
         [EnumMember(Value = "html")]
         Html,
+
+        [EnumMember(Value = "htmlfull")]
+        HtmlFull,
+
+        [EnumMember(Value = "text")]
+        Text,
+
+        [EnumMember(Value = "easy")]
+        Easy,
     }
 }

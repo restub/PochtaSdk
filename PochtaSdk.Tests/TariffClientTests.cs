@@ -17,17 +17,18 @@ namespace PochtaSdk.Tests
         {
             var tariff = Client.Calculate(new TariffRequest
             {
-                Object = 23030,
+                Object = TariffObjectType.WrapperRegular,
                 From = 344038,
                 To = 115162,
-                Weight = 1000,
+                Weight = 100,
                 Date = DateTime.Now,
                 Time = "0223",
             });
 
             Assert.That(tariff, Is.Not.Null);
-            Assert.That(tariff.FromIndex, Is.EqualTo(344038));
-            Assert.That(tariff.ToIndex, Is.EqualTo(115162));
+            Assert.That(tariff.Weight, Is.EqualTo(100));
+            Assert.That(tariff.Caption, Is.EqualTo("Расчет тарифов"));
+            Assert.That(tariff.Name, Is.EqualTo("Бандероль простая"));
         }
 
         [Test]
@@ -35,18 +36,18 @@ namespace PochtaSdk.Tests
         {
             var json = Client.Calculate(TariffResponseFormat.Json, new TariffRequest
             {
-                Object = 23030,
+                Object = TariffObjectType.WrapperRegular,
                 From = 344038,
                 To = 115162,
-                Weight = 1000,
+                Weight = 100,
                 Date = DateTime.Now,
                 Time = "0223",
             });
 
             Assert.That(json, Is.Not.Null.Or.Empty);
             Assert.That(json, Does.StartWith("{").And.EndWith("}"));
-            Assert.That(json, Does.Contain("344038"));
-            Assert.That(json, Does.Contain("115162"));
+            Assert.That(json, Does.Contain("Расчет тарифов"));
+            Assert.That(json, Does.Contain("Бандероль простая"));
         }
 
         [Test]
@@ -54,10 +55,10 @@ namespace PochtaSdk.Tests
         {
             var html = Client.Calculate(TariffResponseFormat.Html, new TariffRequest
             {
-                Object = 23030,
+                Object = TariffObjectType.WrapperRegular,
                 From = 344038,
                 To = 115162,
-                Weight = 1000,
+                Weight = 100,
                 Date = DateTime.Now,
                 Time = "0223",
             });
@@ -65,8 +66,8 @@ namespace PochtaSdk.Tests
             Assert.That(html, Is.Not.Null.Or.Empty);
             Assert.That(html.Trim(), Does.StartWith("<").And.EndWith(">"));
             Assert.That(html, Does.Contain("<p>"));
-            Assert.That(html, Does.Contain("344038"));
-            Assert.That(html, Does.Contain("115162"));
+            Assert.That(html, Does.Contain("Исходные данные"));
+            Assert.That(html, Does.Contain("Бандероль простая"));
         }
     }
 }
