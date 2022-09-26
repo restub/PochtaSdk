@@ -3,23 +3,24 @@
 [![Build status](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml/badge.svg)](https://github.com/restub/PochtaSdk/actions/workflows/dotnet.yml)
 [![.NET Framework 4.6.2](https://img.shields.io/badge/.net-v4.62-yellow)](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
 [![.NET 6.0](https://img.shields.io/badge/.net-v6.0-orange)](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+[![NuGet](https://img.shields.io/nuget/v/PochtaSdk.svg)](https://www.nuget.org/packages/PochtaSdk)
 [![DotNetFiddle](https://img.shields.io/badge/try-online-blue)](https://dotnetfiddle.net/HsS50y)
 
 Pochta.ru REST API client with tracing support.
 
 # Welcome
 
-This is a very early beta version that covers only very basic API features.
+This is an early beta version that covers only very basic API features.
 
 ## Getting started
 
-* Add the Nuget package: https://www.nuget.org/packages/restub
+* Add the Nuget package: https://www.nuget.org/packages/PochtaSdk
 * Use `TariffClient` class to calculate delivery tariffs and terms
 * Use `OtpravkaClient` class to register packages (requires authentication)
 
 ## Sample usage
 
-Try it online: https://dotnetfiddle.net/HsS50y
+Try online: https://dotnetfiddle.net/HsS50y
 
 ```c#
 var client = new TariffClient();
@@ -46,130 +47,96 @@ Console.WriteLine(text);
   <summary>A typical trace log looks like this:</summary>
     
 ```c
-// GetAuthToken
--> POST https://api.edu.cdek.ru/v2/oauth/token?parameters
+// Calculate
+-> GET https://tariff.pochta.ru/v2/calculate/tariff?json=&object=3000&from=344038&to=115162&weight=100&closed=1&date=2022-09-26T10:37:58%2b03:00&time=0223
 headers: {
-  X-ApiClientName = restub v0.1.6.37278
-  X-ApiMethodName = GetAuthToken
+  X-ApiClientName = restub v0.3.6.25927
+  X-ApiMethodName = Calculate
   Accept = application/json, text/json, text/x-json, text/javascript, application/xml, text/xml
-  Content-type = application/json
 }
-body: null
 
-<- OK 200 (OK) https://api.edu.cdek.ru/v2/oauth/token?parameters
+<- OK 200 (OK) https://tariff.pochta.ru/v2/calculate/tariff?json=&object=3000&from=344038&to=115162&weight=100&closed=1&date=2022-09-26T10:37:58%2b03:00&time=0223
 timings: {
-  started: 2022-09-23 19:51:16
-  elapsed: 0:00:00.719
+  started: 2022-09-26 10:37:58
+  elapsed: 0:00:00.703
 }
 headers: {
-  Transfer-Encoding = chunked
   Connection = keep-alive
-  Keep-Alive = timeout=15
-  Vary = Accept-Encoding
-  Pragma = no-cache
-  X-Content-Type-Options = nosniff
-  X-XSS-Protection = 1; mode=block
-  X-Frame-Options = DENY
-  Content-Encoding = 
-  Cache-Control = no-store
+  Access-Control-Allow-Origin = *
+  Content-Length = 921
   Content-Type = application/json;charset=utf-8
-  Date = Fri, 23 Sep 2022 16:51:18 GMT
-  Server = QRATOR
+  Date = Mon, 26 Sep 2022 07:37:58 GMT
+  Server = nginx
 }
 body: {
-  "access_token": "eyJhbGciOiJSUzI1Ni....eq62ZCji34UPjozvWCUXv16ZvTA",
-  "token_type": "bearer",
-  "expires_in": 3599,
-  "scope": "order:all payment:all",
-  "jti": "be19866f-0d95-4287-b1ff-cad84e113c3c"
-}
-
-// GetRegions
--> GET https://api.edu.cdek.ru/v2/location/regions?size=3&page=2
-headers: {
-  X-ApiClientName = restub v0.1.6.37278
-  X-ApiMethodName = GetRegions
-  Authorization = Bearer eyJhbGciOiJSUzI1Ni....eq62ZCji34UPjozvWCUXv16ZvTA
-  Accept = application/json, text/json, text/x-json, text/javascript, application/xml, text/xml
-}
-
-<- OK 200 (OK) https://api.edu.cdek.ru/v2/location/regions?size=3&page=2
-timings: {
-  started: 2022-09-23 19:55:56
-  elapsed: 0:00:00.859
-}
-headers: {
-  Transfer-Encoding = chunked
-  Connection = keep-alive
-  Keep-Alive = timeout=15
-  Vary = Accept-Encoding
-  X-Content-Type-Options = nosniff
-  X-XSS-Protection = 1; mode=block
-  Pragma = no-cache
-  X-Frame-Options = DENY
-  Content-Encoding = 
-  Cache-Control = no-cache, no-store, max-age=0, must-revalidate
-  Content-Type = application/json
-  Date = Fri, 23 Sep 2022 16:55:58 GMT
-  Expires = 0
-  Server = QRATOR
-}
-body: [
-  {
-    "country_code": "FR",
-    "country": "Франция",
-    "region": "Марна",
-    "region_code": 590
-  },
-  {
-    "country_code": "JP",
-    "country": "Япония",
-    "region": "Фукусима",
-    "region_code": 855
-  },
-  {
-    "country_code": "FR",
-    "country": "Франция",
-    "region": "Ло и Гаронна",
-    "region_code": 560
-  }
-]
-
-// GetRegions
--> GET https://api.edu.cdek.ru/v2/location/regions?page=3
-headers: {
-  X-ApiClientName = restub v0.1.6.37278
-  X-ApiMethodName = GetRegions
-  Authorization = Bearer eyJhbGciOiJSUzI1Ni....eq62ZCji34UPjozvWCUXv16ZvTA
-  Accept = application/json, text/json, text/x-json, text/javascript, application/xml, text/xml
-}
-
-<- ERROR 400 (BadRequest) https://api.edu.cdek.ru/v2/location/regions?page=3
-timings: {
-  started: 2022-09-23 19:51:17
-  elapsed: 0:00:00.078
-}
-headers: {
-  Transfer-Encoding = chunked
-  Connection = keep-alive
-  Keep-Alive = timeout=15
-  X-Content-Type-Options = nosniff
-  X-XSS-Protection = 1; mode=block
-  Pragma = no-cache
-  X-Frame-Options = DENY
-  Cache-Control = no-cache, no-store, max-age=0, must-revalidate
-  Content-Type = application/json
-  Date = Fri, 23 Sep 2022 16:51:19 GMT
-  Expires = 0
-  Server = QRATOR
-}
-body: {
-  "errors": [
+  "version_api": 2,
+  "version": "2.14.1.675",
+  "caption": "Расчет тарифов",
+  "id": 3000,
+  "name": "Бандероль простая",
+  "mailtype": 3,
+  "mailctg": 0,
+  "directctg": 1,
+  "weight": 100,
+  "date": 20220926,
+  "time": 22300,
+  "date-first": 20220101,
+  "postoffice": [
     {
-      "code": "v2_field_is_empty",
-      "message": "[size] is empty"
+      "index": 344038,
+      "tp": 1,
+      "type": 3,
+      "typei": 1,
+      "name": "РОСТОВ-НА-ДОНУ 38",
+      "regionid": 61,
+      "regiono": 60701000001,
+      "region-main": 1,
+      "area-main": 1,
+      "placeid": 39771,
+      "placeo": 60701000001,
+      "parent": 344999,
+      "root": 344700,
+      "courier": 344880,
+      "pvz": 1,
+      "item-check-view": 1,
+      "move": 1,
+      "weight-max": 20000,
+      "pack-max": 99,
+      "box": 344038
     }
-  ]
+  ],
+  "transtype": 1,
+  "transname": "наземно",
+  "items": [
+    {
+      "id": "3173",
+      "name": "Пересылка простой бандероли",
+      "serviceon": [
+        110,
+        11
+      ],
+      "serviceoff": [
+        53,
+        57
+      ],
+      "tariff": {
+        "val": 4200,
+        "valnds": 5040,
+        "valmark": 4200
+      }
+    }
+  ],
+  "ground": {
+    "val": 4200,
+    "valnds": 5040,
+    "valmark": 4200
+  },
+  "paymark": 4200,
+  "pay": 4200,
+  "paynds": 5040,
+  "ndsrate": 20,
+  "nds": 840,
+  "place": "C5-r00-7"
 }
 ```
 </details>
