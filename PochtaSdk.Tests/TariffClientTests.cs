@@ -18,11 +18,11 @@ namespace PochtaSdk.Tests
             var tariff = Client.Calculate(new TariffRequest
             {
                 Object = TariffObjectType.WrapperRegular,
-                From = 344038,
-                To = 115162,
+                FromPostCode = 344038,
+                ToPostCode = 115162,
                 Weight = 100,
                 Date = DateTime.Now,
-                Time = "0223",
+                Time = TimeSpan.FromHours(2.5),
             });
 
             Assert.That(tariff, Is.Not.Null);
@@ -37,11 +37,11 @@ namespace PochtaSdk.Tests
             var json = Client.Calculate(TariffResponseFormat.Json, new TariffRequest
             {
                 Object = TariffObjectType.WrapperRegular,
-                From = 344038,
-                To = 115162,
+                FromPostCode = 344038,
+                ToPostCode = 115162,
                 Weight = 100,
                 Date = DateTime.Now,
-                Time = "0223",
+                Time = TimeSpan.FromHours(2.5),
             });
 
             Assert.That(json, Is.Not.Null.Or.Empty);
@@ -56,11 +56,11 @@ namespace PochtaSdk.Tests
             var html = Client.Calculate(TariffResponseFormat.Html, new TariffRequest
             {
                 Object = TariffObjectType.WrapperRegular,
-                From = 344038,
-                To = 115162,
+                FromPostCode = 344038,
+                ToPostCode = 115162,
                 Weight = 100,
                 Date = DateTime.Now,
-                Time = "0223",
+                Time = TimeSpan.FromHours(2.5),
             });
 
             Assert.That(html, Is.Not.Null.Or.Empty);

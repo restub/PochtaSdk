@@ -146,5 +146,108 @@
 
         Parcel1ClassWithDeclaredValueAndObligatoryPayment = 47060,
         Посылка1КлассаСОбъявленнойЦенностьюИОбязательнымПлатежом = 47060,
+
+        // ----------------
+
+        ParcelOnlineStandard = 23030,
+        ПосылкаОнлайнСтандарт = 23030,
+
+        ParcelOnlineWithDeclaredValue = 23020,
+        ПосылкаОнлайнСОбъявленнойЦенностью = 23020,
+
+        ParcelOnlineWithDeclaredValueAndCashOnDelivery = 23040,
+        ПосылкаОнлайнСОбъявленнойЦенностьюИНаложеннымПлатежом = 23040,
+
+        ParcelOnlineWithDeclaredValueAndObligatoryPayment = 23060,
+        ПосылкаОнлайнСОбъявленнойЦенностьюИОбязательнымПлатежом = 23060,
+
+        // ----------------
+
+        ParcelOnlineCombined = 23080,
+        ПосылкаОнлайнКомбинированная = 23080,
+
+        ParcelOnlineCombinedWithDeclaredValue = 23090,
+        ПосылкаОнлайнКомбинированнаяСОбъявленнойЦенностью = 23090,
+
+        ParcelOnlineCombinedWithDeclaredValueAndCashOnDelivery = 23100,
+        ПосылкаОнлайнКомбинированнаяСОбъявленнойЦенностьюИНаложеннымПлатежом = 23100,
+
+        // ----------------
+
+        ParcelEasyReturnStandard = 51030,
+        ПосылкаЛегкийВозвратСтандарт = 51030,
+
+        ParcelEasyReturnWithDeclaredValue = 51020,
+        ПосылкаЛегкийВозвратСОбъявленнойЦенностью = 51020,
+
+        // ----------------
+
+        ParcelCourierOnlineStandard = 24030,
+        ПосылкаКурьерОнлайнСтандарт = 24030,
+
+        ParcelCourierOnlineWithDeclaredValue = 24020,
+        ПосылкаКурьерОнлайнСОбъявленнойЦенностью = 24020,
+
+        ParcelCourierOnlineWithDeclaredValueAndCashOnDelivery = 24040,
+        ПосылкаКурьерОнлайнСОбъявленнойЦенностьюИНаложеннымПлатежом = 24040,
+
+        ParcelCourierOnlineWithDeclaredValueAndObligatoryPayment = 24060,
+        ПосылкаКурьерОнлайнСОбъявленнойЦенностьюИОбязательнымПлатежом = 24060,
+
+        // ----------------
+
+        ParcelBusinessCourierStandard = 30030,
+        ПосылкаБизнесКурьерСтандарт = 30030,
+
+        ParcelBusinessCourierWithDeclaredValue = 30020,
+        ПосылкаБизнесКурьерСОбъявленнойЦенностью = 30020,
+
+        ParcelBusinessCourierExpress = 31030,
+        ПосылкаБизнесКурьерЭкспресс = 31030,
+
+        ParcelBusinessCourierExpressWithDeclaredValue = 31020,
+        ПосылкаБизнесКурьерЭкспрессСОбъявленнойЦенностью = 31020,
+
+        // ----------------
+
+        Ems = 7030,
+        Емс = 7030,
+
+        EmsWithDeclaredValue = 7020,
+        ЕмсСОбъявленнойЦенностью = 7020,
+
+        EmsWithDeclaredValueAndCashOnDelivery = 7040,
+        ЕмсСОбъявленнойЦенностьюИНаложеннымПлатежом = 7040,
+
+        EmsWithDeclaredValueAndObligatoryPayment = 7060,
+        ЕмсСОбъявленнойЦенностьюИОбязательнымПлатежом = 7060,
+
+        // ----------------
+
+        EmsOptimal = 34030,
+        ЕмсОптимальное = 34030,
+
+        EmsOptimalWithDeclaredValue = 34020,
+        ЕмсОптимальноеСОбъявленнойЦенностью = 34020,
+
+        EmsOptimalWithDeclaredValueAndCashOnDelivery = 34040,
+        ЕмсОптимальноеСОбъявленнойЦенностьюИНаложеннымПлатежом = 34040,
+
+        EmsOptimalWithDeclaredValueAndObligatoryPayment = 34060,
+        ЕмсОптимальноеСОбъявленнойЦенностьюИОбязательнымПлатежом = 34060,
+
+        EmsCashOnDeliveryPayment = 7000,
+        ЕмсОплатаНаложенногоПлатежаПолучателем = 7000,
+
+        // ----------------
+
+        EmsRt = 41030,
+        ЕмсРт = 41030,
+
+        EmsRtWithDeclaredValue = 41020,
+        ЕмсРтСОбъявленнойЦенностью = 41020,
+
+        EmsRtWithDeclaredValueAndCashOnDelivery = 41040,
+        ЕмсРтСОбъявленнойЦенностьюИНаложеннымПлатежом = 41040,
     }
 }
