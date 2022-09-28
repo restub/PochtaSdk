@@ -74,6 +74,13 @@ namespace PochtaSdk.Tariff
         public int? WeightAll { get; set; }
 
         /// <summary>
+        /// Average weight of a shipment, grams.
+        /// Средний вес отправления, в граммах.
+        /// </summary>
+        [DataMember(Name = "aweight")]
+        public int? WeightAvg { get; set; }
+
+        /// <summary>
         /// Declared value, cents.
         /// Сумма объявленной ценности, в копейках.
         /// </summary>
@@ -192,10 +199,6 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "mailrank")]
         public int? MailRank { get; set; }
 
-
-        [DataMember(Name = "group")]
-        public int? Group { get; set; } = 0;
-
         /// <summary>
         /// Mail type code.
         /// Вид отправления, согласно РТМ-2.
@@ -216,6 +219,132 @@ namespace PochtaSdk.Tariff
         /// </summary>
         [DataMember(Name = "directctg")]
         public DirectionCategory? DirectCtg { get; set; }
+
+        /// <summary>
+        /// Generic parameter 1.
+        /// Универсальный параметр 1.
+        /// </summary>
+        [DataMember(Name = "p1")]
+        public int? P1 { get; set; }
+
+        /// <summary>
+        /// Generic parameter 2.
+        /// Универсальный параметр 2.
+        /// </summary>
+        [DataMember(Name = "p2")]
+        public int? P2 { get; set; }
+
+        /// <summary>
+        /// Generic parameter 3.
+        /// Универсальный параметр 3.
+        /// </summary>
+        [DataMember(Name = "p3")]
+        public int? P3 { get; set; }
+
+        /// <summary>
+        /// Generic parameter 4.
+        /// Универсальный параметр 4.
+        /// </summary>
+        [DataMember(Name = "p4")]
+        public int? P4 { get; set; }
+
+        /// <summary>
+        /// Generic parameter 5.
+        /// Универсальный параметр 5.
+        /// </summary>
+        [DataMember(Name = "p5")]
+        public int? P5 { get; set; }
+
+        /// <summary>
+        /// Request identifier, for tagging requests.
+        /// Внешний идентификатор запроса.
+        /// </summary>
+        [DataMember(Name = "reqid")]
+        public string ReqID { get; set; }
+
+        /// <summary>
+        /// Group tariffication mode.
+        /// Признак тарификации группы отправлений по общему весу.
+        /// </summary>
+        [DataMember(Name = "group")]
+        public GroupTariffication? Group { get; set; }
+
+        /// <summary>
+        /// Outgoing international shipping index.
+        /// Индекс исходящего ММПО.
+        /// </summary>
+        [DataMember(Name = "export")]
+        public int? ExportIndex { get; set; }
+
+        /// <summary>
+        /// Incoming international shipping index.
+        /// Индекс входящего ММПО.
+        /// </summary>
+        [DataMember(Name = "import")]
+        public int? ImportIndex { get; set; }
+
+        /// <summary>
+        /// Volume.
+        /// Объём. Для некоторых продуктов или услуг.
+        /// </summary>
+        [DataMember(Name = "volume")]
+        public decimal? Volume { get; set; }
+
+        /// <summary>
+        /// Duration.
+        /// Длительность. Для некоторых продуктов или услуг.
+        /// </summary>
+        [DataMember(Name = "duration")]
+        public decimal? Duration { get; set; }
+
+        /// <summary>
+        /// Domestic.
+        /// Доместик.
+        /// </summary>
+        [DataMember(Name = "domestic")]
+        public int? Domestic { get; set; }
+
+        /// <summary>
+        /// Payment type.
+        /// Способ платежа.
+        /// </summary>
+        [DataMember(Name = "paytype")]
+        public PaymentType? PaymentType { get; set; }
+
+        /// <summary>
+        /// Payer type.
+        /// Кто плательщик.
+        /// </summary>
+        [DataMember(Name = "payer")]
+        public PayerType? PayerType { get; set; }
+
+        /// <summary>
+        /// International product type.
+        /// Международный продукт.
+        /// </summary>
+        [DataMember(Name = "int-product")]
+        public InternationalProductType? IntProduct { get; set; }
+
+        /// <summary>
+        /// International tariff type.
+        /// Международный тариф.
+        /// </summary>
+        [DataMember(Name = "int-type")]
+        public InternationalTariffType? IntType { get; set; }
+
+        /// <summary>
+        /// International delivery channel.
+        /// Международный канал доставки.
+        /// </summary>
+        [DataMember(Name = "channel")]
+        public InternationalDeliveryChannel? Channel { get; set; }
+
+        /// <summary>
+        /// International client.
+        /// Международный клиент.
+        /// </summary>
+        [DataMember(Name = "int-client")]
+        public InternationalClient? IntClient { get; set; }
 
         // properties with non-standard formatting
 
@@ -246,5 +375,19 @@ namespace PochtaSdk.Tariff
         /// </summary>
         [IgnoreDataMember, DataMember(Name = "time")]
         public TimeSpan? Time { get; set; } = TimeSpan.Zero;
+
+        /// <summary>
+        /// Starting date.
+        /// Дата начала действия.
+        /// </summary>
+        [IgnoreDataMember, DataMember(Name = "date-from")]
+        public DateTime? DateFrom { get; set; } = DateTime.Today;
+
+        /// <summary>
+        /// Ending date.
+        /// Дата окончания действия.
+        /// </summary>
+        [IgnoreDataMember, DataMember(Name = "date-to")]
+        public DateTime? DateTo { get; set; } = DateTime.Today;
     }
 }
