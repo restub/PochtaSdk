@@ -52,7 +52,7 @@ namespace PochtaSdk.Tariff
         public int DateFirst { get; set; }
 
         [DataMember(Name = "postoffice")]
-        public List<TariffPostOffice> PostOffice { get; set; }
+        public List<PostOffice> PostOffice { get; set; }
 
         [DataMember(Name = "transtype")]
         public int Transtype { get; set; }
@@ -64,28 +64,28 @@ namespace PochtaSdk.Tariff
         public List<TariffServiceItem> Items { get; set; }
 
         [DataMember(Name = "isgroup")]
-        public int Isgroup { get; set; }
+        public int IsGroup { get; set; }
 
         [DataMember(Name = "isdogovor")]
-        public int Isdogovor { get; set; }
+        public int IsDogovor { get; set; }
 
         [DataMember(Name = "ground")]
         public TariffAmount Amount { get; set; }
 
         [DataMember(Name = "paymoney")]
-        public int Paymoney { get; set; }
+        public int PayMoney { get; set; }
 
         [DataMember(Name = "paymoneynds")]
-        public int Paymoneynds { get; set; }
+        public int PayMoneyNds { get; set; }
 
         [DataMember(Name = "pay")]
         public int Pay { get; set; }
 
         [DataMember(Name = "paynds")]
-        public int Paynds { get; set; }
+        public int PayNds { get; set; }
 
         [DataMember(Name = "ndsrate")]
-        public int Ndsrate { get; set; }
+        public int NdsRate { get; set; }
 
         [DataMember(Name = "nds")]
         public int Nds { get; set; }

@@ -16,7 +16,7 @@ namespace PochtaSdk
         {
         }
 
-        private string GetFormat(TariffResponseFormat format) =>
+        private string GetFormat(ResponseFormat format) =>
             ParameterHelper.GetEnumMemberValue(format) as string;
 
         private T Get<T>(string url, string format, TariffRequest request) =>
@@ -27,10 +27,10 @@ namespace PochtaSdk
                     .AddQueryString(request);
 
                 // add properties with weird formatting
-                if (request.ReturnHttpErrorCode.HasValue)
+                if (request.ErrorCode.HasValue)
                 {
                     r.AddQueryParameter("errorcode",
-                        request.ReturnHttpErrorCode.Value ? "1" : "0");
+                        request.ErrorCode.Value ? "1" : "0");
                 }
 
                 if (request.Closed.HasValue)
@@ -66,7 +66,7 @@ namespace PochtaSdk
         /// <param name="format">Tariff response format.</param>
         /// <param name="request">Tariff calculation request.</param>
         /// <returns>Calculated tariff in the requested format.</returns>
-        public string Calculate(TariffResponseFormat format, TariffRequest request) =>
+        public string Calculate(ResponseFormat format, TariffRequest request) =>
             Get<string>("v2/calculate/tariff", GetFormat(format), request);
     }
 }

@@ -5,7 +5,7 @@
     /// Values are serialized as numbers, so enum shouldn't be marked as DataContract.
     /// https://tariff.pochta.ru/post-calculator-api.pdf (see Appendix 1)
     /// </summary>
-    public enum TariffObjectType
+    public enum ObjectType
     {
         LetterRegular = 2000,
         ПисьмоПростое = 2000,

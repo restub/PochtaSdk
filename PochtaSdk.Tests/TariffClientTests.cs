@@ -17,7 +17,7 @@ namespace PochtaSdk.Tests
         {
             var tariff = Client.Calculate(new TariffRequest
             {
-                Object = TariffObjectType.WrapperRegular,
+                Object = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -34,9 +34,9 @@ namespace PochtaSdk.Tests
         [Test]
         public void TariffClientCalculatesJsonTariff()
         {
-            var json = Client.Calculate(TariffResponseFormat.Json, new TariffRequest
+            var json = Client.Calculate(ResponseFormat.Json, new TariffRequest
             {
-                Object = TariffObjectType.WrapperRegular,
+                Object = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -53,9 +53,9 @@ namespace PochtaSdk.Tests
         [Test]
         public void TariffClientCalculatesHtmlTariff()
         {
-            var html = Client.Calculate(TariffResponseFormat.Html, new TariffRequest
+            var html = Client.Calculate(ResponseFormat.Html, new TariffRequest
             {
-                Object = TariffObjectType.WrapperRegular,
+                Object = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -68,6 +68,35 @@ namespace PochtaSdk.Tests
             Assert.That(html, Does.Contain("<p>"));
             Assert.That(html, Does.Contain("Исходные данные"));
             Assert.That(html, Does.Contain("Бандероль простая"));
+        }
+
+        [Test]
+        public void TariffClientCalculatesTariffWithServices()
+        {
+            var tariff = Client.Calculate(new TariffRequest
+            {
+                Object = ObjectType.ParcelStandard,
+                FromPostCode = 344038,
+                ToPostCode = 115162,
+                Weight = 1000,
+                Date = DateTime.Now,
+                Time = TimeSpan.FromHours(2.5),
+                Pack = PackageType.BoxS,
+                Services =
+                { 
+                    ServiceType.FreeStorageUpTo7Days, 
+                    ServiceType.SafetyGuarantee,
+                    ServiceType.Delivery,
+                }
+            });
+
+            Assert.That(tariff, Is.Not.Null);
+            Assert.That(tariff.Weight, Is.EqualTo(1000));
+            Assert.That(tariff.Caption, Is.EqualTo("Расчет тарифов"));
+            Assert.That(tariff.Name, Is.EqualTo("Посылка стандарт"));
+            Assert.That(tariff.Amount, Is.Not.Null);
+            Assert.That(tariff.Amount.Amount, Is.Not.EqualTo(0));
+            Assert.That(tariff.Amount.AmountVat, Is.Not.EqualTo(0));
         }
     }
 }

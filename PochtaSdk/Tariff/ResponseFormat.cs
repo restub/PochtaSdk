@@ -6,7 +6,7 @@ namespace PochtaSdk.Tariff
     /// Specifies the response format.
     /// </summary>
     [DataContract]
-    public enum TariffResponseFormat
+    public enum ResponseFormat
     {
         [EnumMember(Value = "json")]
         Json,

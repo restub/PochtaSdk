@@ -3,7 +3,7 @@
 namespace PochtaSdk.Tariff
 {
     [DataContract]
-    public class TariffPostOffice
+    public class PostOffice
     {
         [DataMember(Name = "index")]
         public int Index { get; set; }
@@ -21,7 +21,7 @@ namespace PochtaSdk.Tariff
         public string Name { get; set; }
 
         [DataMember(Name = "regionid")]
-        public int Regionid { get; set; }
+        public int RegionID { get; set; }
 
         [DataMember(Name = "regiono")]
         public long Regiono { get; set; }
@@ -33,7 +33,7 @@ namespace PochtaSdk.Tariff
         public int AreaMain { get; set; }
 
         [DataMember(Name = "placeid")]
-        public int Placeid { get; set; }
+        public int PlaceID { get; set; }
 
         [DataMember(Name = "placeo")]
         public long Placeo { get; set; }
