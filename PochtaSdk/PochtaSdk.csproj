@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="restub" Version="0.4.7" />
+    <PackageReference Include="restub" Version="0.5.6" />
   </ItemGroup>
 
   <ItemGroup>
