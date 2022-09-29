@@ -2,23 +2,48 @@
 
 namespace PochtaSdk.Tariff
 {
+    /// <summary>
+    /// Postal office.
+    /// Почтовое отделение.
+    /// https://tariff.pochta.ru/post-calculator-api.pdf (Table 1.5)
+    /// </summary>
     [DataContract]
     public class PostOffice
     {
+        /// <summary>
+        /// Postal code.
+        /// Почтовый индекс отделения.
+        /// </summary>
         [DataMember(Name = "index")]
-        public int Index { get; set; }
+        public int PostCode { get; set; }
 
+        /// <summary>
+        /// Post office role.
+        /// Роль почтового отделения в расчете.
+        /// </summary>
         [DataMember(Name = "tp")]
-        public int Tp { get; set; }
+        public PostOfficeRole Role { get; set; }
 
+        /// <summary>
+        /// Name.
+        /// Наименование.
+        /// </summary>
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// PS object type.
+        /// Тип объекта ПС.
+        /// </summary>
         [DataMember(Name = "type")]
         public int Type { get; set; }
 
+        /// <summary>
+        /// Postal code type.
+        /// Тип почтового индекса.
+        /// </summary>
         [DataMember(Name = "typei")]
-        public int Typei { get; set; }
-
-        [DataMember(Name = "name")]
-        public string Name { get; set; }
+        public int TypeI { get; set; }
 
         [DataMember(Name = "regionid")]
         public int RegionID { get; set; }

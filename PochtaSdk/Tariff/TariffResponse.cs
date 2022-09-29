@@ -2,6 +2,11 @@
 
 namespace PochtaSdk.Tariff
 {
+    /// <summary>
+    /// Tariff/delivery term calculation response.
+    /// Результат расчета тарифа/срока доставки.
+    /// https://tariff.pochta.ru/post-calculator-api.pdf (Chapter 1.5)
+    /// </summary>
     [DataContract]
     public class TariffResponse
     {
@@ -15,7 +20,7 @@ namespace PochtaSdk.Tariff
         public string Caption { get; set; }
 
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -30,16 +35,16 @@ namespace PochtaSdk.Tariff
         public int DirectCategory { get; set; }
 
         [DataMember(Name = "from")]
-        public int FromIndex { get; set; }
+        public int FromPostCode { get; set; }
 
         [DataMember(Name = "to")]
-        public int ToIndex { get; set; }
+        public int ToPostCode { get; set; }
 
         [DataMember(Name = "weight")]
         public int Weight { get; set; }
 
-        [DataMember(Name = "group")]
-        public PackageGroup Group { get; set; }
+        [DataMember(Name = "pack")]
+        public PackageInfo PackageInfo { get; set; }
 
         [DataMember(Name = "date")] // date only
         public string Date { get; set; }

@@ -139,7 +139,7 @@ namespace PochtaSdk.Tests
                 Weight = 1000,
                 Date = DateTime.Now,
                 Time = TimeSpan.FromHours(2.5),
-                Pack = PackageType.BoxS,
+                PackageType = PackageType.BoxS,
                 Services =
                 { 
                     ServiceType.FreeStorageUpTo7Days, 
@@ -171,7 +171,7 @@ namespace PochtaSdk.Tests
                 Weight = 1000,
                 Date = DateTime.Now,
                 Time = TimeSpan.FromHours(2.5),
-                Pack = PackageType.BoxS,
+                PackageType = PackageType.BoxS,
                 Services =
                 {
                     ServiceType.RegisteredDeliveryNotification,

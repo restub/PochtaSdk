@@ -152,7 +152,7 @@ namespace PochtaSdk.Tariff
         /// Код типа упаковки.
         /// </summary>
         [DataMember(Name = "pack")]
-        public PackageType? Pack { get; set; }
+        public PackageType? PackageType { get; set; }
 
         /// <summary>
         /// Quantity of packages in the group.
