@@ -1,4 +1,5 @@
-﻿using PochtaSdk.Tariff;
+﻿using System.Runtime.CompilerServices;
+using PochtaSdk.Tariff;
 using Restub;
 using Restub.Toolbox;
 
@@ -19,7 +20,7 @@ namespace PochtaSdk
         private string GetFormat(ResponseFormat format) =>
             ParameterHelper.GetEnumMemberValue(format) as string;
 
-        private T Get<T>(string url, string format, TariffRequest request) =>
+        private T Get<T>(string url, string format, TariffRequest request, [CallerMemberName] string apiMethodName = null) =>
             Get<T>(url, r =>
             {
                 // add properties with easy formatting
@@ -50,7 +51,7 @@ namespace PochtaSdk
                     r.AddQueryParameter("time",
                         request.Time.Value.ToString("hhmm"));
                 }
-            });
+            }, apiMethodName);
 
         /// <summary>
         /// Calculates the tariff and delivery terms.

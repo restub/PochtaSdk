@@ -177,7 +177,7 @@ namespace PochtaSdk.Tests
                     ServiceType.RegisteredDeliveryNotification,
                     ServiceType.SmsNotificationOfArrivalAtTheBranch,
                     ServiceType.SmsNotificationOfDelivery,
-                    ServiceType.MaintenanceofConsolidators,
+                    ServiceType.MaintenanceOfConsolidators,
                 }
             });
 
@@ -198,6 +198,41 @@ namespace PochtaSdk.Tests
             svc = result.Services.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfDelivery));
             Assert.That(svc, Is.Not.Null);
             Assert.That(svc.Name, Is.EqualTo("СМС-уведомление о вручении"));
+        }
+
+        [Test]
+        [TestCase(ObjectType.ParcelOnlineStandard, 10)] // ПосылкаОнлайнСтандарт
+        [TestCase(ObjectType.ParcelCourierOnlineStandard, 12.5)] // ПосылкаКурьерОнлайнСтандарт
+        [TestCase(ObjectType.ParcelEasyReturnStandard, 2.1)] // ПосылкаЛегкийВозвратСтандарт
+        [TestCase(ObjectType.ParcelOnlineWithDeclaredValue, 0.2)] // ПосылкаОнлайнСОбъявленнойЦенностью
+        public void TariffClientCalculatesPackageTariffsWithServices(ObjectType objectType, double hourOfDay)
+        {
+            var result = Client.Calculate(new TariffRequest
+            {
+                Object = objectType,
+                FromPostCode = 344038,
+                ToPostCode = 115162,
+                Weight = 1000,
+                Date = DateTime.Today.AddDays(1),
+                Time = TimeSpan.FromHours(hourOfDay),
+                PackageType = PackageType.BoxM,
+                SumOc = 1000,
+                Services =
+                {
+                    ServiceType.RegisteredDeliveryNotification,
+                    ServiceType.SmsNotificationOfArrivalAtTheBranch,
+                    ServiceType.SmsNotificationOfDelivery,
+                    ServiceType.MaintenanceOfConsolidators,
+                }
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.Weight, Is.EqualTo(1000));
+            Assert.That(result.Caption, Is.EqualTo("Расчет тарифов, контрольных сроков доставки"));
+            Assert.That(result.Amount, Is.Not.Null);
+            Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
+            Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
+            Assert.That(result.Services, Is.Not.Null.Or.Empty);
         }
     }
 }

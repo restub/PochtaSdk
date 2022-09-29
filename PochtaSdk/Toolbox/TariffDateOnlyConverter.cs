@@ -6,11 +6,11 @@ using Restub;
 
 namespace PochtaSdk.Toolbox
 {
-    public class TariffDateTimeConverter : CustomIsoDateTimeConverter
+    public class TariffDateOnlyConverter : CustomIsoDateTimeConverter
     {
-        public TariffDateTimeConverter()
+        public TariffDateOnlyConverter()
         {
-            DateTimeFormat = "yyyyMMdd\\THHmmss";
+            DateTimeFormat = "yyyyMMdd";
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

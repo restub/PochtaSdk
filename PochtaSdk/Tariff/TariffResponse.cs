@@ -1,4 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using PochtaSdk.Toolbox;
+using Restub.Toolbox;
 
 namespace PochtaSdk.Tariff
 {
@@ -19,14 +23,22 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "caption")]
         public string Caption { get; set; }
 
+        /// <summary>
+        /// Tariff calculation object type code.
+        /// Код типа объекта расчета.
+        /// </summary>
         [DataMember(Name = "id")]
-        public int ID { get; set; }
+        public ObjectType ObjectType { get; set; }
 
+        /// <summary>
+        /// Tariff calculation object type name.
+        /// Название типа объекта расчета.
+        /// </summary>
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
         [DataMember(Name = "mailtype")]
-        public int Mailtype { get; set; }
+        public int MailType { get; set; }
 
         [DataMember(Name = "mailctg")]
         public int MailCategory { get; set; }
@@ -34,23 +46,39 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "directctg")]
         public int DirectCategory { get; set; }
 
+        /// <summary>
+        /// Source postal code.
+        /// Почтовый индекс отправления.
+        /// </summary>
         [DataMember(Name = "from")]
         public int FromPostCode { get; set; }
 
+        /// <summary>
+        /// Destination postal code.
+        /// Почтовый индекс назначения.
+        /// </summary>
         [DataMember(Name = "to")]
         public int ToPostCode { get; set; }
 
+        /// <summary>
+        /// Weight of a package.
+        /// Вес отправления.
+        /// </summary>
         [DataMember(Name = "weight")]
         public int Weight { get; set; }
 
+        /// <summary>
+        /// Packaging information.
+        /// Информация об упаковке.
+        /// </summary>
         [DataMember(Name = "pack")]
         public PackageInfo PackageInfo { get; set; }
 
-        [DataMember(Name = "date")] // date only
-        public string Date { get; set; }
+        [DataMember(Name = "date"), JsonConverter(typeof(TariffDateOnlyConverter))] // date only
+        public DateTime Date { get; set; }
 
-        [DataMember(Name = "time")] // time only
-        public string Time { get; set; }
+        [DataMember(Name = "time"), JsonConverter(typeof(TariffTimeOnlyConverter))] // time only
+        public TimeSpan Time { get; set; }
 
         [DataMember(Name = "date-first")]
         public int DateFirst { get; set; }

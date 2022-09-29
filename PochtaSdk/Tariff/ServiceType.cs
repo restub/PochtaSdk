@@ -193,7 +193,7 @@
         AgencyFunctionsToThirdParties = 60,
         DeliveryByCall = 61,
         ElectronicDeliveryNotification = 62,
-        MaintenanceofConsolidators = 63,
+        MaintenanceOfConsolidators = 63,
         SmsServicePackage = 64,
         CourierFee = 65,
         ReturnOfAccompanyingDocuments = 66,
