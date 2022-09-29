@@ -29,14 +29,14 @@ var client = new TariffClient();
 // client.Tracer = Console.WriteLine;
 
 // calculate tariff and display as plain text
-var text = client.Calculate(TariffResponseFormat.Text, new TariffRequest
+var text = client.CalculateTariff(ResponseFormat.Text, new TariffRequest
 {
-    Object = TariffObjectType.WrapperRegular,
-    From = 344038,
-    To = 115162,
-    Weight = 100,
-    Date = DateTime.Now,
-    Time = "0223",
+	Object = ObjectType.WrapperRegular,
+	FromPostCode = 344038,
+	ToPostCode = 115162,
+	Weight = 100,
+	Date = DateTime.Today,
+	Time = DateTime.Now.TimeOfDay,
 });
 
 // display server's response
