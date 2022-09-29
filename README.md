@@ -43,8 +43,9 @@ var text = client.Calculate(TariffResponseFormat.Text, new TariffRequest
 Console.WriteLine(text);
 ```
 
-<details>
-  <summary>A typical trace log looks like this:</summary>
+## Trace log
+
+A typical trace log looks like this:
     
 ```c
 // Calculate
@@ -139,7 +140,6 @@ body: {
   "place": "C5-r00-7"
 }
 ```
-</details>
 
 # PochtaSdk versioning
 
