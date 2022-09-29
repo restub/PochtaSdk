@@ -53,12 +53,37 @@ namespace PochtaSdk
             });
 
         /// <summary>
-        /// Calculates the tariff.
+        /// Calculates the tariff and delivery terms.
         /// </summary>
         /// <param name="request">Tariff calculation request.</param>
         /// <returns>Calculated tariff in the requested format.</returns>
         public TariffResponse Calculate(TariffRequest request) =>
+            Get<TariffResponse>("v2/calculate/tariff/delivery", "json", request);
+
+        /// <summary>
+        /// Calculates the tariff.
+        /// </summary>
+        /// <param name="request">Tariff calculation request.</param>
+        /// <returns>Calculated tariff in the requested format.</returns>
+        public TariffResponse CalculateTariff(TariffRequest request) =>
             Get<TariffResponse>("v2/calculate/tariff", "json", request);
+
+        /// <summary>
+        /// Calculates the delivery terms.
+        /// </summary>
+        /// <param name="request">Tariff calculation request.</param>
+        /// <returns>Calculated tariff in the requested format.</returns>
+        public TariffResponse CalculateDelivery(TariffRequest request) =>
+            Get<TariffResponse>("v2/calculate/delivery", "json", request);
+
+        /// <summary>
+        /// Calculates the tariff and delivery terms and returns as formatted text.
+        /// </summary>
+        /// <param name="format">Tariff response format.</param>
+        /// <param name="request">Tariff calculation request.</param>
+        /// <returns>Calculated tariff in the requested format.</returns>
+        public string Calculate(ResponseFormat format, TariffRequest request) =>
+            Get<string>("v2/calculate/tariff/delivery", GetFormat(format), request);
 
         /// <summary>
         /// Calculates the tariff and returns as formatted text.
@@ -66,7 +91,16 @@ namespace PochtaSdk
         /// <param name="format">Tariff response format.</param>
         /// <param name="request">Tariff calculation request.</param>
         /// <returns>Calculated tariff in the requested format.</returns>
-        public string Calculate(ResponseFormat format, TariffRequest request) =>
+        public string CalculateTariff(ResponseFormat format, TariffRequest request) =>
             Get<string>("v2/calculate/tariff", GetFormat(format), request);
+
+        /// <summary>
+        /// Calculates the delivery terms and returns as formatted text.
+        /// </summary>
+        /// <param name="format">Tariff response format.</param>
+        /// <param name="request">Tariff calculation request.</param>
+        /// <returns>Calculated tariff in the requested format.</returns>
+        public string CalculateDelivery(ResponseFormat format, TariffRequest request) =>
+            Get<string>("v2/calculate/delivery", GetFormat(format), request);
     }
 }
