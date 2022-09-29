@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace PochtaSdk.Tariff
 {
@@ -40,7 +39,7 @@ namespace PochtaSdk.Tariff
         public int Weight { get; set; }
 
         [DataMember(Name = "group")]
-        public TariffPackageGroup Group { get; set; }
+        public PackageGroup Group { get; set; }
 
         [DataMember(Name = "date")] // date only
         public string Date { get; set; }
@@ -52,7 +51,7 @@ namespace PochtaSdk.Tariff
         public int DateFirst { get; set; }
 
         [DataMember(Name = "postoffice")]
-        public List<PostOffice> PostOffice { get; set; }
+        public PostOffice[] PostOffices { get; set; }
 
         [DataMember(Name = "transtype")]
         public int Transtype { get; set; }
@@ -61,7 +60,7 @@ namespace PochtaSdk.Tariff
         public string Transname { get; set; }
 
         [DataMember(Name = "items")]
-        public List<TariffServiceItem> Items { get; set; }
+        public ServiceItem[] Services { get; set; }
 
         [DataMember(Name = "isgroup")]
         public int IsGroup { get; set; }

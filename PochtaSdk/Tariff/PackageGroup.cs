@@ -3,7 +3,7 @@
 namespace PochtaSdk.Tariff
 {
     [DataContract]
-    public class TariffPackageGroup
+    public class PackageGroup
     {
         [DataMember(Name = "id")]
         public int ID { get; set; }

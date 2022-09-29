@@ -1,13 +1,14 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using PochtaSdk.Tariff;
-using RestSharp.Serialization;
+using Restub;
 
 namespace PochtaSdk.Tests
 {
     [TestFixture]
-    public class TariffObjectTypeSerializationTests
+    public class TariffSerializationTests
     {
-        private IRestSerializer Serializer { get; } = new TariffClient().Serializer;
+        private IRestubSerializer Serializer { get; } = new TariffClient().Serializer;
 
         [Test]
         public void TariffObjectTypeEnglishAndRussianNamesAreEquivalent()
@@ -23,6 +24,27 @@ namespace PochtaSdk.Tests
             Assert.That(ObjectType.LetterTrackedPostcard, Is.EqualTo(ObjectType.ПисьмоТрекОткрытка));
             Assert.That(Serializer.Serialize(ObjectType.LetterTrackedPostcard), Is.EqualTo("36000"));
             Assert.That(Serializer.Serialize(ObjectType.ПисьмоТрекОткрытка), Is.EqualTo("36000"));
+        }
+
+        [Test]
+        public void DeliveryTermsUsesDatesWithoutDelimiters()
+        {
+            var json = Serializer.Serialize(new DeliveryTerms
+            {
+                Min = 1,
+                Max = 10,
+                Deadline = new DateTime(2022, 12, 10, 11, 30, 00, DateTimeKind.Utc)
+            });
+
+            Assert.That(json, Is.Not.Null.Or.Empty);
+            Assert.That(json, Is.EqualTo("{\"min\":1,\"max\":10,\"deadline\":\"20221210T113000\"}"));
+
+            var info = Serializer.Deserialize<DeliveryTerms>(json);
+            Assert.That(info, Is.Not.Null.Or.Empty);
+            Assert.That(info.Deadline, Is.InRange(new DateTime(2022, 12, 10), new DateTime(2022, 12, 11)));
+
+            var tmp = Serializer.Deserialize<DeliveryTerms>(@"{""min"":4,""max"":4,""deadline"":""20221003T235900""}");
+            Assert.That(tmp, Is.Not.Null.Or.Empty);
         }
     }
 }

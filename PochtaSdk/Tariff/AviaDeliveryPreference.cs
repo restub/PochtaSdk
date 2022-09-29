@@ -3,7 +3,7 @@
     /// <summary>
     /// Avia delivery preference.
     /// Предпочтение воздушной доставки.
-    /// https://tariff.pochta.ru/post-calculator-api.pdf
+    /// https://tariff.pochta.ru/post-calculator-api.pdf (page 9)
     /// </summary>
     public enum AviaDeliveryPreference
     {

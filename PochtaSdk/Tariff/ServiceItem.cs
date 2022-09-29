@@ -8,7 +8,7 @@ namespace PochtaSdk.Tariff
     /// https://tariff.pochta.ru/post-calculator-api.pdf (Table 1.4)
     /// </summary>
     [DataContract]
-    public class TariffServiceItem
+    public class ServiceItem
     {
         /// <summary>
         /// Calculation step identity. The value is not persistent,
@@ -60,6 +60,9 @@ namespace PochtaSdk.Tariff
         /// Тариф на шаге расчета.
         /// </summary>
         [DataMember(Name = "tariff")]
-        public TariffAmount Amount { get; set; }
+        public TariffAmount Tariff { get; set; }
+
+        [DataMember(Name = "delivery")]
+        public DeliveryTerms Delivery { get; set; }
     }
 }

@@ -145,6 +145,9 @@ namespace PochtaSdk.Tests
                     ServiceType.FreeStorageUpTo7Days, 
                     ServiceType.SafetyGuarantee,
                     ServiceType.Delivery,
+                    ServiceType.RegisteredDeliveryNotification,
+                    ServiceType.SmsNotificationOfArrivalAtTheBranch,
+                    ServiceType.SmsNotificationOfDelivery,
                 }
             });
 
@@ -185,14 +188,14 @@ namespace PochtaSdk.Tests
             Assert.That(result.Amount, Is.Not.Null);
             Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
             Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
-            Assert.That(result.Items, Is.Not.Null.Or.Empty);
+            Assert.That(result.Services, Is.Not.Null.Or.Empty);
 
             // check if we have tariffs for the services
-            var svc = result.Items.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfArrivalAtTheBranch));
+            var svc = result.Services.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfArrivalAtTheBranch));
             Assert.That(svc, Is.Not.Null);
             Assert.That(svc.Name, Is.EqualTo("СМС-уведомление о прибытии в отделение"));
 
-            svc = result.Items.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfDelivery));
+            svc = result.Services.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfDelivery));
             Assert.That(svc, Is.Not.Null);
             Assert.That(svc.Name, Is.EqualTo("СМС-уведомление о вручении"));
         }
