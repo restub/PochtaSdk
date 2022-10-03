@@ -155,9 +155,9 @@ namespace PochtaSdk.Tests
             Assert.That(result.Weight, Is.EqualTo(1000));
             Assert.That(result.Caption, Is.EqualTo("Расчет тарифов, контрольных сроков доставки"));
             Assert.That(result.Name, Is.EqualTo("Посылка стандарт"));
-            Assert.That(result.Amount, Is.Not.Null);
-            Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
-            Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
+            Assert.That(result.GroundAmount, Is.Not.Null);
+            Assert.That(result.GroundAmount.Value, Is.Not.EqualTo(0));
+            Assert.That(result.GroundAmount.ValueNds, Is.Not.EqualTo(0));
         }
 
         [Test]
@@ -185,9 +185,9 @@ namespace PochtaSdk.Tests
             Assert.That(result.Weight, Is.EqualTo(1000));
             Assert.That(result.Caption, Is.EqualTo("Расчет тарифов, контрольных сроков доставки"));
             Assert.That(result.Name, Is.EqualTo("Бандероль заказная"));
-            Assert.That(result.Amount, Is.Not.Null);
-            Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
-            Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
+            Assert.That(result.GroundAmount, Is.Not.Null);
+            Assert.That(result.GroundAmount.Value, Is.Not.EqualTo(0));
+            Assert.That(result.GroundAmount.ValueNds, Is.Not.EqualTo(0));
             Assert.That(result.Items, Is.Not.Null.Or.Empty);
 
             // check if we have tariffs for the services
@@ -229,9 +229,9 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Weight, Is.EqualTo(1000));
             Assert.That(result.Caption, Is.EqualTo("Расчет тарифов, контрольных сроков доставки"));
-            Assert.That(result.Amount, Is.Not.Null);
-            Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
-            Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
+            Assert.That(result.GroundAmount, Is.Not.Null);
+            Assert.That(result.GroundAmount.Value, Is.Not.EqualTo(0));
+            Assert.That(result.GroundAmount.ValueNds, Is.Not.EqualTo(0));
             Assert.That(result.Items, Is.Not.Null.Or.Empty);
         }
     }

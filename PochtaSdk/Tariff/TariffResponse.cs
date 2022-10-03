@@ -150,26 +150,180 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "isdogovor")]
         public int IsDogovor { get; set; }
 
+        /// <summary>
+        /// Total amount for the ground transport.
+        /// Итоговая сумма за почтовый наземный сбор.
+        /// </summary>
         [DataMember(Name = "ground")]
-        public TariffAmount Amount { get; set; }
+        public TariffAmount GroundAmount { get; set; }
 
-        [DataMember(Name = "paymoney")]
-        public int PayMoney { get; set; }
+        /// <summary>
+        /// Total amount for the avia transport.
+        /// Итоговая сумма за авиасбор.
+        /// </summary>
+        [DataMember(Name = "avia")]
+        public TariffAmount AviaAmount { get; set; }
 
-        [DataMember(Name = "paymoneynds")]
-        public int PayMoneyNds { get; set; }
+        /// <summary>
+        /// Total amount for the additional services.
+        /// Тариф за дополнительную услугу.
+        /// </summary>
+        [DataMember(Name = "service")]
+        public TariffAmount ServiceAmount { get; set; }
 
+        /// <summary>
+        /// Total payment amount, no VAT, in cents.
+        /// Итоговая сумма платы без НДС в копейках (в валюте расчета).
+        /// </summary>
         [DataMember(Name = "pay")]
-        public int Pay { get; set; }
+        public int? Pay { get; set; }
 
+        /// <summary>
+        /// Total payment amount, including VAT, in cents.
+        /// Итоговая сумма платы c НДС в копейках (в валюте расчета).
+        /// </summary>
         [DataMember(Name = "paynds")]
-        public int PayNds { get; set; }
+        public int? PayNds { get; set; }
 
+        /// <summary>
+        /// VAT percents.
+        /// Ставка НДС в процентах.
+        /// </summary>
         [DataMember(Name = "ndsrate")]
-        public int NdsRate { get; set; }
+        public int? NdsRate { get; set; }
 
+        /// <summary>
+        /// VAT amount, in cents.
+        /// Сумма НДС в копейках (в валюте расчета).
+        /// </summary>
         [DataMember(Name = "nds")]
-        public int Nds { get; set; }
+        public int? Nds { get; set; }
+
+        /// <summary>
+        /// Total payment amount, in cents when paid with stamps.
+        /// Итоговая сумма платы в копейках при оплате почтовыми марками, всегда кратна рублю.
+        /// </summary>
+        [DataMember(Name = "paymark")]
+        public int? PayMark { get; set; }
+
+        /// <summary>
+        /// Total payment amount, in cents when paid with SDR.
+        /// Итоговая сумма платы в копейках при оплате в СПЗ, всегда кратна рублю.
+        /// </summary>
+        [DataMember(Name = "paysdr")]
+        public int? PaySdr { get; set; }
+
+        /// <summary>
+        /// SDR exchange rate.
+        /// Курс СПЗ.
+        /// </summary>
+        [DataMember(Name = "sdr")]
+        public int Sdr { get; set; }
+
+        /// <summary>
+        /// Total payment amount for additional services, no VAT, cents.
+        /// Итоговая сумма платы за дополнительные услуги без НДС в копейках (в валюте расчета)
+        /// </summary>
+        [DataMember(Name = "paymoney")]
+        public int? PayMoney { get; set; }
+
+        /// <summary>
+        /// Total payment amount for additional services, including VAT, cents.
+        /// Итоговая сумма платы за дополнительные услуги с НДС в копейках (в валюте расчета)
+        /// </summary>
+        [DataMember(Name = "paymoneynds")]
+        public int? PayMoneyNds { get; set; }
+
+        /// <summary>
+        /// Volume.
+        /// Объем.
+        /// </summary>
+        [DataMember(Name = "volume")]
+        public decimal? Volume { get; set; }
+
+        /// <summary>
+        /// Duration.
+        /// Длительность.
+        /// </summary>
+        [DataMember(Name = "duration")]
+        public decimal? Duration { get; set; }
+
+        /// <summary>
+        /// Domestic.
+        /// Доместик.
+        /// </summary>
+        [DataMember(Name = "domestic")]
+        public int? Domestic { get; set; }
+
+        /// <summary>
+        /// Starting date.
+        /// Дата начала действия.
+        /// </summary>
+        [DataMember(Name = "date-from"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DateFrom { get; set; }
+
+        /// <summary>
+        /// Ending date.
+        /// Дата окончания действия.
+        /// </summary>
+        [DataMember(Name = "date-to"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DateTo { get; set; }
+
+        /// <summary>
+        /// Payment type.
+        /// Способ платежа.
+        /// </summary>
+        [DataMember(Name = "paytype")]
+        public PaymentType? PaymentType { get; set; }
+
+        /// <summary>
+        /// Payer type.
+        /// Кто плательщик.
+        /// </summary>
+        [DataMember(Name = "payer")]
+        public PayerType? PayerType { get; set; }
+
+        /// <summary>
+        /// International product type.
+        /// Международный продукт.
+        /// </summary>
+        [DataMember(Name = "int-product")]
+        public InternationalProductType? IntProduct { get; set; }
+
+        /// <summary>
+        /// International tariff type.
+        /// Международный тариф.
+        /// </summary>
+        [DataMember(Name = "int-type")]
+        public InternationalTariffType? IntType { get; set; }
+
+        /// <summary>
+        /// International delivery channel.
+        /// Международный канал доставки.
+        /// </summary>
+        [DataMember(Name = "channel")]
+        public InternationalDeliveryChannel? Channel { get; set; }
+
+        /// <summary>
+        /// International client.
+        /// Международный клиент.
+        /// </summary>
+        [DataMember(Name = "int-client")]
+        public InternationalClient? IntClient { get; set; }
+
+        /// <summary>
+        /// Starting date of the service.
+        /// Дата начала предоставления услуги.
+        /// </summary>
+        [DataMember(Name = "date-begin"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DateBegin { get; set; }
+
+        /// <summary>
+        /// Ending date of the service.
+        /// Дата окончания предоставления услуги.
+        /// </summary>
+        [DataMember(Name = "date-end"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DateEnd { get; set; }
 
         [DataMember(Name = "place")]
         public string Place { get; set; }
