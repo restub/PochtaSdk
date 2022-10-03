@@ -15,7 +15,7 @@ namespace PochtaSdk.Tariff
         /// Объект расчета тарифа.
         /// </summary>
         [DataMember(Name = "object")]
-        public ObjectType Object { get; set; } = ObjectType.LetterRegular;
+        public ObjectType ObjectType { get; set; } = ObjectType.LetterRegular;
 
         /// <summary>
         /// From postal code.

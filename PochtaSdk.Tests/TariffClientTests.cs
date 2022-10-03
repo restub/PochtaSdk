@@ -18,7 +18,7 @@ namespace PochtaSdk.Tests
         {
             var result = Client.Calculate(new TariffRequest
             {
-                Object = ObjectType.WrapperRegular,
+                ObjectType = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -37,7 +37,7 @@ namespace PochtaSdk.Tests
         {
             var result = Client.CalculateTariff(new TariffRequest
             {
-                Object = ObjectType.WrapperRegular,
+                ObjectType = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -56,7 +56,7 @@ namespace PochtaSdk.Tests
         {
             var result = Client.CalculateDelivery(new TariffRequest
             {
-                Object = ObjectType.WrapperRegular,
+                ObjectType = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -74,7 +74,7 @@ namespace PochtaSdk.Tests
         {
             var json = Client.Calculate(ResponseFormat.Json, new TariffRequest
             {
-                Object = ObjectType.WrapperRegular,
+                ObjectType = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -93,7 +93,7 @@ namespace PochtaSdk.Tests
         {
             var text = Client.Calculate(ResponseFormat.Text, new TariffRequest
             {
-                Object = ObjectType.WrapperRegular,
+                ObjectType = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -113,7 +113,7 @@ namespace PochtaSdk.Tests
         {
             var html = Client.Calculate(ResponseFormat.Html, new TariffRequest
             {
-                Object = ObjectType.WrapperRegular,
+                ObjectType = ObjectType.WrapperRegular,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 100,
@@ -133,7 +133,7 @@ namespace PochtaSdk.Tests
         {
             var result = Client.Calculate(new TariffRequest
             {
-                Object = ObjectType.ParcelStandard,
+                ObjectType = ObjectType.ParcelStandard,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 1000,
@@ -165,7 +165,7 @@ namespace PochtaSdk.Tests
         {
             var result = Client.Calculate(new TariffRequest
             {
-                Object = ObjectType.WrapperRegistered,
+                ObjectType = ObjectType.WrapperRegistered,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 1000,
@@ -188,14 +188,14 @@ namespace PochtaSdk.Tests
             Assert.That(result.Amount, Is.Not.Null);
             Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
             Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
-            Assert.That(result.Services, Is.Not.Null.Or.Empty);
+            Assert.That(result.Items, Is.Not.Null.Or.Empty);
 
             // check if we have tariffs for the services
-            var svc = result.Services.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfArrivalAtTheBranch));
+            var svc = result.Items.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfArrivalAtTheBranch));
             Assert.That(svc, Is.Not.Null);
             Assert.That(svc.Name, Is.EqualTo("СМС-уведомление о прибытии в отделение"));
 
-            svc = result.Services.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfDelivery));
+            svc = result.Items.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfDelivery));
             Assert.That(svc, Is.Not.Null);
             Assert.That(svc.Name, Is.EqualTo("СМС-уведомление о вручении"));
         }
@@ -209,7 +209,7 @@ namespace PochtaSdk.Tests
         {
             var result = Client.Calculate(new TariffRequest
             {
-                Object = objectType,
+                ObjectType = objectType,
                 FromPostCode = 344038,
                 ToPostCode = 115162,
                 Weight = 1000,
@@ -232,7 +232,7 @@ namespace PochtaSdk.Tests
             Assert.That(result.Amount, Is.Not.Null);
             Assert.That(result.Amount.Value, Is.Not.EqualTo(0));
             Assert.That(result.Amount.ValueNds, Is.Not.EqualTo(0));
-            Assert.That(result.Services, Is.Not.Null.Or.Empty);
+            Assert.That(result.Items, Is.Not.Null.Or.Empty);
         }
     }
 }

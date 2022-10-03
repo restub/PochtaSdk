@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using PochtaSdk.Toolbox;
-using Restub.Toolbox;
+using Restub.DataContracts;
 
 namespace PochtaSdk.Tariff
 {
@@ -12,16 +13,35 @@ namespace PochtaSdk.Tariff
     /// https://tariff.pochta.ru/post-calculator-api.pdf (Chapter 1.5)
     /// </summary>
     [DataContract]
-    public class TariffResponse
+    public class TariffResponse : IHasErrors
     {
+        // <summary>
+        /// API version, should be 2.
+        /// Версия API, равно 2.
+        /// </summary>
         [DataMember(Name = "version_api")]
         public int VersionApi { get; set; }
 
+        // <summary>
+        /// Service version.
+        /// Версия сервиса.
+        /// </summary>
         [DataMember(Name = "version")]
         public string Version { get; set; }
 
+        // <summary>
+        /// Service caption.
+        /// Название сервиса.
+        /// </summary>
         [DataMember(Name = "caption")]
         public string Caption { get; set; }
+
+        // <summary>
+        /// List of calculation errors.
+        /// Список ошибок расчета.
+        /// </summary>
+        [DataMember(Name = "errors")]
+        public ErrorReport[] Errors { get; set; }
 
         /// <summary>
         /// Tariff calculation object type code.
@@ -80,8 +100,33 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "time"), JsonConverter(typeof(TariffTimeOnlyConverter))] // time only
         public TimeSpan Time { get; set; }
 
-        [DataMember(Name = "date-first")]
-        public int DateFirst { get; set; }
+        /// <summary>
+        /// Starting date of the tariff.
+        /// Дата начала действия тарифа.
+        /// </summary>
+        [DataMember(Name = "date-first"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DateFirst { get; set; }
+
+        /// <summary>
+        /// Ending date of the tariff.
+        /// Дата окончания действия тарифа.
+        /// </summary>
+        [DataMember(Name = "date-last"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DateLast { get; set; }
+
+        /// <summary>
+        /// Starting date of the delivery terms.
+        /// Дата начала действия контрольных сроков.
+        /// </summary>
+        [DataMember(Name = "delivery-date-first"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DeliveryDateFirst { get; set; }
+
+        /// <summary>
+        /// Ending date of the delivery terms.
+        /// Дата окончания действия контрольных сроков.
+        /// </summary>
+        [DataMember(Name = "delivery-date-last"), JsonConverter(typeof(TariffDateOnlyConverter))]
+        public DateTime? DeliveryDateLast { get; set; }
 
         [DataMember(Name = "postoffice")]
         public PostOffice[] PostOffices { get; set; }
@@ -92,8 +137,12 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "transname")]
         public string Transname { get; set; }
 
+        /// <summary>
+        /// Tariff calculation items.
+        /// Список составных частей расчета.
+        /// </summary>
         [DataMember(Name = "items")]
-        public ServiceItem[] Services { get; set; }
+        public ServiceItem[] Items { get; set; }
 
         [DataMember(Name = "isgroup")]
         public int IsGroup { get; set; }
@@ -124,5 +173,20 @@ namespace PochtaSdk.Tariff
 
         [DataMember(Name = "place")]
         public string Place { get; set; }
+
+        /// <summary>
+        /// Delivery terms.
+        /// Контрольные сроки доставки.
+        /// </summary>
+        [DataMember(Name = "delivery")]
+        public DeliveryTerms DeliveryTerms { get; set; }
+
+        public bool HasErrors() =>
+            Errors != null && Errors.Any();
+
+        public string GetErrorMessage() =>
+            string.Join(Environment.NewLine,
+                (Errors ?? Enumerable.Empty<ErrorReport>())
+                    .Select(e => e.Message));
     }
 }
