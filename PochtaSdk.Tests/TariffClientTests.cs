@@ -293,11 +293,11 @@ namespace PochtaSdk.Tests
             services = Client.GetServices(ServiceType.Administrative, ServiceType.Billing, ServiceType.CombinedDelivery);
             Assert.That(services, Is.Not.Null.Or.Empty);
 
-            var text = Client.GetServices(ResponseFormat.Html);
-            Assert.That(services, Is.Not.Null.Or.Empty);
+            var html = Client.GetServices(ResponseFormat.Html);
+            Assert.That(html, Is.Not.Null.Or.Empty);
 
-            text = Client.GetServices(ResponseFormat.Text, ServiceType.Administrative, ServiceType.Billing, ServiceType.CombinedDelivery);
-            Assert.That(services, Is.Not.Null.Or.Empty);
+            var text = Client.GetServices(ResponseFormat.Text, ServiceType.Administrative, ServiceType.Billing, ServiceType.CombinedDelivery);
+            Assert.That(text, Is.Not.Null.Or.Empty);
         }
     }
 }
