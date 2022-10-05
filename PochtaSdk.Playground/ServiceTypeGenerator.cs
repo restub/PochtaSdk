@@ -14,23 +14,27 @@ namespace PochtaSdk.Playground
             };
 
             // use Yandex translator to translate service names to English
-            var apiKey = "yandexApiKey";
-            var translator = new YandexTranslateClient(apiKey);
+            var folderId = "-- folder name --";
+            var token = "-- iam token --";
+            var translator = new YandexTranslateClient(folderId, token)
+            {
+                Tracer = Console.WriteLine
+            };
 
             // generate enumeration
             var services = tariffClient.GetServices();
             foreach (var svc in services.Services.OrderBy(s => s.ID))
             {
-                var russian = svc.Name;
+                var russianText = svc.Name;
                 var name = ToTitleCase(svc.Name);
-                var english = translator.Translate(russian, "ru-en").Text;
+                var english = translator.Translate("en", russianText).Translations.Select(t => t.Text);
                 var englishText = string.Join(Environment.NewLine, english);
                 var englishName = ToTitleCase(englishText);
 
                 Console.WriteLine($@"
         /// <summary>
-        /// {english}.
-        /// {russian}.
+        /// {englishText}.
+        /// {russianText}.
         /// </summary>
         {englishName} = {svc.ID},
         {name} = {svc.ID},
