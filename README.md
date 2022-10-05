@@ -31,7 +31,7 @@ var client = new TariffClient();
 // calculate tariff and display as plain text
 var text = client.CalculateTariff(ResponseFormat.Text, new TariffRequest
 {
-	Object = ObjectType.WrapperRegular,
+	ObjectType = ObjectType.WrapperRegular,
 	FromPostCode = 344038,
 	ToPostCode = 115162,
 	Weight = 100,
@@ -49,40 +49,67 @@ A typical trace log looks like this:
     
 ```c
 // Calculate
--> GET https://tariff.pochta.ru/v2/calculate/tariff?json=&object=3000&from=344038&to=115162&weight=100&closed=1&date=2022-09-26T10:37:58%2b03:00&time=0223
+-> GET https://tariff.pochta.ru/v2/calculate/tariff/delivery?json=json&object=3000&from=344038&to=115162&weight=100&service=&errorcode=1&date=20221006&time=0230
 headers: {
-  X-ApiClientName = restub v0.3.6.25927
+  X-ApiClientName = PochtaSdk.TariffClient v0.4.9.1922, restub v0.6.6.4920
   X-ApiMethodName = Calculate
   Accept = application/json, text/json, text/x-json, text/javascript, application/xml, text/xml
 }
 
-<- OK 200 (OK) https://tariff.pochta.ru/v2/calculate/tariff?json=&object=3000&from=344038&to=115162&weight=100&closed=1&date=2022-09-26T10:37:58%2b03:00&time=0223
+<- OK 200 (OK) https://tariff.pochta.ru/v2/calculate/tariff/delivery?json=json&object=3000&from=344038&to=115162&weight=100&service=&errorcode=1&date=20221006&time=0230
 timings: {
-  started: 2022-09-26 10:37:58
-  elapsed: 0:00:00.703
+  started: 2022-10-06 02:22:25
+  elapsed: 0:00:00.578
 }
 headers: {
   Connection = keep-alive
   Access-Control-Allow-Origin = *
-  Content-Length = 921
+  Content-Length = 1927
   Content-Type = application/json;charset=utf-8
-  Date = Mon, 26 Sep 2022 07:37:58 GMT
+  Date = Wed, 05 Oct 2022 23:22:27 GMT
   Server = nginx
 }
 body: {
   "version_api": 2,
-  "version": "2.14.1.675",
-  "caption": "Расчет тарифов",
+  "version": "2.14.1.676",
+  "caption": "Расчет тарифов, контрольных сроков доставки",
   "id": 3000,
   "name": "Бандероль простая",
   "mailtype": 3,
   "mailctg": 0,
   "directctg": 1,
   "weight": 100,
-  "date": 20220926,
-  "time": 22300,
+  "from": 344038,
+  "to": 115162,
+  "date": 20221006,
+  "time": 23000,
   "date-first": 20220101,
+  "delivery-date-first": 20181217,
   "postoffice": [
+    {
+      "index": 115162,
+      "tp": 2,
+      "type": 3,
+      "typei": 1,
+      "name": "МОСКВА 162",
+      "regionid": 77,
+      "regiono": 45000000,
+      "region-main": 1,
+      "areao": 45000000,
+      "area-main": 1,
+      "placeid": 30302,
+      "placeo": 45000000,
+      "parent": 117950,
+      "root": 101700,
+      "courier": 130206,
+      "pvz": 1,
+      "item-check-view": 1,
+      "move": 1,
+      "weight-max": 20000,
+      "pack-max": 99,
+      "cutoff": 235900,
+      "box": 117997
+    },
     {
       "index": 344038,
       "tp": 1,
@@ -92,6 +119,7 @@ body: {
       "regionid": 61,
       "regiono": 60701000001,
       "region-main": 1,
+      "areao": 60701000001,
       "area-main": 1,
       "placeid": 39771,
       "placeo": 60701000001,
@@ -103,6 +131,7 @@ body: {
       "move": 1,
       "weight-max": 20000,
       "pack-max": 99,
+      "cutoff": 235900,
       "box": 344038
     }
   ],
@@ -125,8 +154,35 @@ body: {
         "valnds": 5040,
         "valmark": 4200
       }
+    },
+    {
+      "id": "5203",
+      "name": "Нормативный срок внутренней доставки, группа: Бандероль",
+      "serviceon": [
+        130,
+        111
+      ],
+      "from": 344038,
+      "to": 115162,
+      "delivery": {
+        "min": 4,
+        "max": 4
+      }
+    },
+    {
+      "id": "5303",
+      "name": "Срок внутренней доставки с учетом расписания работы и обмена, группа: Бандероль",
+      "serviceon": [
+        132,
+        111
+      ],
+      "to": 115162,
+      "delivery": {
+        "deadline": "20221010T235900"
+      }
     }
   ],
+  "delivery-variant": 61,
   "ground": {
     "val": 4200,
     "valnds": 5040,
@@ -137,7 +193,12 @@ body: {
   "paynds": 5040,
   "ndsrate": 20,
   "nds": 840,
-  "place": "C5-r00-7"
+  "delivery": {
+    "min": 4,
+    "max": 4,
+    "deadline": "20221010T235900"
+  },
+  "place": "C5-d01-8"
 }
 ```
 
