@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using PochtaSdk.Tariff;
 using Restub;
@@ -22,6 +23,9 @@ namespace PochtaSdk
         public TariffClient(string baseUrl = BaseUrl) : base(baseUrl)
         {
         }
+
+        public override string LibraryName =>
+            $"{nameof(PochtaSdk)}.{nameof(TariffClient)} v{GetType().GetAssemblyVersion()}, {base.LibraryName}";
 
         private string GetFormat(ResponseFormat format) =>
             ParameterHelper.GetEnumMemberValue(format) as string;
@@ -202,6 +206,48 @@ namespace PochtaSdk
                 {
                     rqst.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
                 }
-            }); 
+            });
+
+        /// <summary>
+        /// Get services.
+        /// Получение списка услуг.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.6)
+        /// </summary>
+        /// <param name="serviceTypes">Service types, optional.</param>
+        public ServiceResponse GetServices(params ServiceType[] serviceTypes) =>
+            Get<ServiceResponse>("v2/dictionary/service", r =>
+            {
+                r.AddQueryParameter("json", "json");
+
+                if (serviceTypes != null && serviceTypes.Any())
+                {
+                    r.AddQueryString(new
+                    {
+                        id = serviceTypes
+                    });
+                }
+            });
+
+        /// <summary>
+        /// Get services as text.
+        /// Получение списка услуг в текстовом виде.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.6)
+        /// </summary>
+        /// <param name="format">Output format.</param>
+        /// <param name="serviceTypes">Service types, optional.</param>
+        public string GetServices(ResponseFormat format, params ServiceType[] serviceTypes) =>
+            Get<string>("v2/dictionary/service", r =>
+            {
+                var fmt = GetFormat(format);
+                r.AddQueryParameter(fmt, fmt);
+
+                if (serviceTypes != null && serviceTypes.Any())
+                {
+                    r.AddQueryString(new
+                    {
+                        id = serviceTypes
+                    });
+                }
+            });
     }
 }

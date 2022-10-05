@@ -13,22 +13,8 @@ namespace PochtaSdk.Tariff
     /// https://tariff.pochta.ru/post-calculator-api.pdf (Chapter 1.5)
     /// </summary>
     [DataContract]
-    public class TariffResponse : IHasErrors
+    public class TariffResponse : BaseResponse, IHasErrors
     {
-        // <summary>
-        /// API version, should be 2.
-        /// Версия API, равно 2.
-        /// </summary>
-        [DataMember(Name = "version_api")]
-        public int VersionApi { get; set; }
-
-        // <summary>
-        /// Service version.
-        /// Версия сервиса.
-        /// </summary>
-        [DataMember(Name = "version")]
-        public string Version { get; set; }
-
         // <summary>
         /// Service caption.
         /// Название сервиса.
