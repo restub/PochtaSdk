@@ -14,7 +14,7 @@ namespace PochtaSdk.Tests
         };
 
         [Test]
-        public void TariffClientCalculatesTariffAndDeliveryTerms()
+        public void CalculateTariffAndDeliveryTerms()
         {
             var result = Client.Calculate(new TariffRequest
             {
@@ -33,7 +33,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesTariff()
+        public void CalculateTariff()
         {
             var result = Client.CalculateTariff(new TariffRequest
             {
@@ -52,7 +52,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesDeliveryTerms()
+        public void CalculateDeliveryTerms()
         {
             var result = Client.CalculateDelivery(new TariffRequest
             {
@@ -70,7 +70,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesJsonTariff()
+        public void CalculateJsonTariff()
         {
             var json = Client.Calculate(ResponseFormat.Json, new TariffRequest
             {
@@ -89,7 +89,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesTextTariff()
+        public void CalculateTextTariff()
         {
             var text = Client.Calculate(ResponseFormat.Text, new TariffRequest
             {
@@ -109,7 +109,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesHtmlTariff()
+        public void CalculateHtmlTariff()
         {
             var html = Client.Calculate(ResponseFormat.Html, new TariffRequest
             {
@@ -129,7 +129,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesParcelTariffWithServices()
+        public void CalculateParcelTariffWithServices()
         {
             var result = Client.Calculate(new TariffRequest
             {
@@ -161,7 +161,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void TariffClientCalculatesWrapperTariffWithServices()
+        public void CalculateWrapperTariffWithServices()
         {
             var result = Client.Calculate(new TariffRequest
             {
@@ -205,7 +205,7 @@ namespace PochtaSdk.Tests
         [TestCase(ObjectType.ParcelCourierOnlineStandard, 12.5)] // ПосылкаКурьерОнлайнСтандарт
         [TestCase(ObjectType.ParcelEasyReturnStandard, 2.1)] // ПосылкаЛегкийВозвратСтандарт
         [TestCase(ObjectType.ParcelOnlineWithDeclaredValue, 0.2)] // ПосылкаОнлайнСОбъявленнойЦенностью
-        public void TariffClientCalculatesPackageTariffsWithServices(ObjectType objectType, double hourOfDay)
+        public void CalculatePackageTariffsWithServices(ObjectType objectType, double hourOfDay)
         {
             var result = Client.Calculate(new TariffRequest
             {
@@ -233,6 +233,32 @@ namespace PochtaSdk.Tests
             Assert.That(result.GroundAmount.Value, Is.Not.EqualTo(0));
             Assert.That(result.GroundAmount.ValueNds, Is.Not.EqualTo(0));
             Assert.That(result.Items, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        public void GetCategories()
+        {
+            var cat = Client.GetCategories();
+            Assert.That(cat, Is.Not.Null.Or.Empty);
+
+            var html = Client.GetCategories(ResponseFormat.Html);
+            Assert.That(html, Is.Not.Null.Or.Empty);
+
+            var text = Client.GetCategories(ResponseFormat.Text);
+            Assert.That(text, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        public void GetCategory()
+        {
+            var cat = Client.GetCategory(100);
+            Assert.That(cat, Is.Not.Null.Or.Empty);
+
+            var html = Client.GetCategory(ResponseFormat.Html, 200);
+            Assert.That(html, Is.Not.Null.Or.Empty);
+
+            var text = Client.GetCategory(ResponseFormat.Text, 400);
+            Assert.That(text, Is.Not.Null.Or.Empty);
         }
     }
 }
