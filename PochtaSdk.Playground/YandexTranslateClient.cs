@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using RestSharp;
 using Restub;
 using Restub.DataContracts;
@@ -49,20 +44,20 @@ namespace PochtaSdk.Playground
         }
 
         [DataContract]
-        public class Translation
-        {
-            [DataMember(Name = "text")]
-            public string Text { get; set; }
-
-            [DataMember(Name = "detectedLanguageCode")]
-            public string DetectedLanguageCode { get; set; }
-        }
-
-        [DataContract]
         public class TranslationResponse
         {
             [DataMember(Name = "translations")]
             public Translation[] Translations { get; set; }
+
+            [DataContract]
+            public class Translation
+            {
+                [DataMember(Name = "text")]
+                public string Text { get; set; }
+
+                [DataMember(Name = "detectedLanguageCode")]
+                public string DetectedLanguageCode { get; set; }
+            }
         }
 
         public TranslationResponse Translate(string lang, params string[] texts) =>

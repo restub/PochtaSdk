@@ -3,22 +3,32 @@ using System.Linq;
 
 namespace PochtaSdk.Playground
 {
+    /// <summary>
+    /// Helper class to generate Services.cs enumeration.
+    /// </summary>
     public class ServiceTypeGenerator
     {
+        // obtain Yandex folderId and IAM token for your Yandex Cloud account
+        const string YandexFolderID = "-- folderId --";
+        const string YandexTraslateToken = "-- iam token --";
+
+        /// <summary>
+        /// 1. Gets the list of services from Pochta.ru Tariff API
+        /// 2. Translates service names in English
+        /// 3. Generates the enumeration to be included in PochtaSdk project.
+        /// </summary>
         public static void GenerateServices()
         {
             // use TariffClient to get the list of services
             var tariffClient = new TariffClient
             {
-                Tracer = Console.Error.WriteLine
+                Tracer = WriteDebugLog
             };
 
             // use Yandex translator to translate service names to English
-            var folderId = "-- folder name --";
-            var token = "-- iam token --";
-            var translator = new YandexTranslateClient(folderId, token)
+            var translator = new YandexTranslateClient(YandexFolderID, YandexTraslateToken)
             {
-                Tracer = Console.Error.WriteLine
+                Tracer = WriteDebugLog
             };
 
             // get service names ordered by id
@@ -46,8 +56,14 @@ namespace PochtaSdk.Playground
         {englishName} = {svc.service.ID},
         {name} = {svc.service.ID},");
             }
+        }
 
-            Console.ReadKey();
+        public static void WriteDebugLog(string format, params object[] args)
+        {
+            var oldColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Error.WriteLine(format, args);
+            Console.ForegroundColor = oldColor;
         }
 
         private static string ToTitleCase(string s)

@@ -142,7 +142,7 @@ namespace PochtaSdk.Tests
                 PackageType = PackageType.BoxS,
                 Services =
                 { 
-                    ServiceType.FreeStorageUpTo7Days, 
+                    ServiceType.FreeStorageForUpTo7Days, 
                     ServiceType.SafetyGuarantee,
                     ServiceType.Delivery,
                     ServiceType.RegisteredDeliveryNotification,
