@@ -249,15 +249,38 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void GetCategory()
+        [TestCase(0)]
+        [TestCase(100)]
+        [TestCase(200)]
+        [TestCase(400)]
+        [TestCase(612)]
+        public void GetCategoryDescription(int id)
         {
-            var cat = Client.GetCategory(100);
+            var cat = Client.GetCategoryDescription(id);
             Assert.That(cat, Is.Not.Null.Or.Empty);
 
-            var html = Client.GetCategory(ResponseFormat.Html, 200);
+            var html = Client.GetCategoryDescription(ResponseFormat.Html, id);
             Assert.That(html, Is.Not.Null.Or.Empty);
 
-            var text = Client.GetCategory(ResponseFormat.Text, 400);
+            var text = Client.GetCategoryDescription(ResponseFormat.Text, id);
+            Assert.That(text, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        [TestCase(400)]
+        [TestCase(100)]
+        [TestCase(200)]
+        [TestCase(400)]
+        [TestCase(207)]
+        public void GetObjectTypes(int id)
+        {
+            var cat = Client.GetObjectTypes(id);
+            Assert.That(cat, Is.Not.Null.Or.Empty);
+
+            var html = Client.GetObjectTypes(ResponseFormat.Html, id);
+            Assert.That(html, Is.Not.Null.Or.Empty);
+
+            var text = Client.GetObjectTypes(ResponseFormat.Text, id);
             Assert.That(text, Is.Not.Null.Or.Empty);
         }
     }

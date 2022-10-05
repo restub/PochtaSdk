@@ -3,7 +3,9 @@
     /// <summary>
     /// Tariffication object types.
     /// Values are serialized as numbers, so enum shouldn't be marked as DataContract.
-    /// https://tariff.pochta.ru/post-calculator-api.pdf (see Appendix 1)
+    /// Типы объектов тарификации.
+    /// Сериализуются в виде чисел, поэтому атрибут DataContract не применяется.
+    /// https://tariff.pochta.ru/post-calculator-api.pdf (Appendix 1)
     /// </summary>
     public enum ObjectType
     {

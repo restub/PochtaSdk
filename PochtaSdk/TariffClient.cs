@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using PochtaSdk.Tariff;
 using Restub;
 using Restub.Toolbox;
@@ -122,12 +123,13 @@ namespace PochtaSdk
             Get<string>("v2/calculate/delivery", GetFormat(format), request);
 
         /// <summary>
-        /// Get tariff calculation object categories.
-        /// Получение списка категорий объектов расчета.
+        /// Get tariff calculation object categories as object tree.
+        /// Получение списка категорий объектов расчета в виде дерева объектов.
         /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
         /// </summary>
-        public string GetCategories() =>
-            Get<string>("v2/dictionary/category", r => r.AddQueryParameter("json", "json"));
+        public CategoryInfo GetCategories() =>
+            Get<CategoryInfo>("v2/dictionary/category", r => r
+                .AddQueryParameter("json", "json"));
 
         /// <summary>
         /// Get tariff calculation object categories as formatted text.
@@ -136,15 +138,17 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="format">Output format.</param>
         public string GetCategories(ResponseFormat format) =>
-            Get<string>("v2/dictionary/category", r => r.AddQueryParameter(GetFormat(format), string.Empty));
+            Get<string>("v2/dictionary/category", r => r
+                .AddQueryParameter(GetFormat(format), string.Empty));
 
         /// <summary>
         /// Get tariff calculation object category description.
         /// Получение описания категории объектов расчета.
         /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
         /// </summary>
-        public string GetCategory(int id) =>
-            Get<string>("v2/dictionary/category", r => r
+        /// <param name="id">Category identity.</param>
+        public CategoryDescription GetCategoryDescription(int id) =>
+            Get<CategoryDescription>("v2/dictionary/category", r => r
                 .AddQueryParameter("json", "json")
                 .AddQueryParameter("id", id.ToString()));
 
@@ -154,9 +158,50 @@ namespace PochtaSdk
         /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
         /// </summary>
         /// <param name="format">Output format.</param>
-        public string GetCategory(ResponseFormat format, int id) =>
+        /// <param name="id">Category identity.</param>
+        public string GetCategoryDescription(ResponseFormat format, int id) =>
             Get<string>("v2/dictionary/category", r => r
                 .AddQueryParameter(GetFormat(format), string.Empty)
                 .AddQueryParameter("id", id.ToString()));
+
+        /// <summary>
+        /// Get tariff calculation object category description.
+        /// Получение описания категории объектов расчета.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// </summary>
+        /// <param name="categoryId">Category identity.</param>
+        /// <param name="date">Actual date.</param>
+        public CategoryObjectTypes GetObjectTypes(int categoryId, DateTime? date = null) =>
+            Get<CategoryObjectTypes>("v2/dictionary/object/tariff/delivery", rqst =>
+            {
+                rqst.AddQueryParameter("json", "json")
+                    .AddQueryParameter("id", categoryId.ToString());
+
+                if (date.HasValue)
+                {
+                    rqst.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
+                }
+            });
+
+        /// <summary>
+        /// Get tariff calculation object category description.
+        /// Получение описания категории объектов расчета в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// </summary>
+        /// <param name="format">Output format.</param>
+        /// <param name="categoryId">Category identity.</param>
+        /// <param name="date">Actual date.</param>
+        public string GetObjectTypes(ResponseFormat format, int categoryId, DateTime? date = null) =>
+            Get<string>("v2/dictionary/object/tariff/delivery", rqst =>
+            {
+                var fmt = GetFormat(format);
+                rqst.AddQueryParameter(fmt, fmt)
+                    .AddQueryParameter("id", categoryId.ToString());
+
+                if (date.HasValue)
+                {
+                    rqst.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
+                }
+            }); 
     }
 }
