@@ -10,7 +10,7 @@ namespace PochtaSdk.Playground
             // use TariffClient to get the list of services
             var tariffClient = new TariffClient
             {
-                Tracer = Console.WriteLine
+                Tracer = Console.Error.WriteLine
             };
 
             // use Yandex translator to translate service names to English
@@ -18,28 +18,33 @@ namespace PochtaSdk.Playground
             var token = "-- iam token --";
             var translator = new YandexTranslateClient(folderId, token)
             {
-                Tracer = Console.WriteLine
+                Tracer = Console.Error.WriteLine
             };
 
+            // get service names ordered by id
+            var services = tariffClient.GetServices().Services.OrderBy(s => s.ID).ToArray();
+            var russianTexts = services.Select(s => s.Name).ToArray();
+
+            // translate service names to English
+            var englishTexts = translator.Translate("en", russianTexts).Translations.Select(t => t.Text).ToArray();
+            var translatedServices = services.Zip(englishTexts, (service, english) => new { service, english });
+
             // generate enumeration
-            var services = tariffClient.GetServices();
-            foreach (var svc in services.Services.OrderBy(s => s.ID))
+            foreach (var svc in translatedServices)
             {
-                var russianText = svc.Name;
-                var name = ToTitleCase(svc.Name);
-                var english = translator.Translate("en", russianText).Translations.Select(t => t.Text);
-                var englishText = string.Join(Environment.NewLine, english);
+                var russianText = svc.service.Name;
+                var name = ToTitleCase(russianText);
+                var englishText = svc.english;
                 var englishName = ToTitleCase(englishText);
 
+                // redirect the output to the text file, i.e. Services.cs
                 Console.WriteLine($@"
         /// <summary>
         /// {englishText}.
         /// {russianText}.
         /// </summary>
-        {englishName} = {svc.ID},
-        {name} = {svc.ID},
-");
-                break;
+        {englishName} = {svc.service.ID},
+        {name} = {svc.service.ID},");
             }
 
             Console.ReadKey();
@@ -54,7 +59,10 @@ namespace PochtaSdk.Playground
                 string.IsNullOrWhiteSpace(p) ? string.Empty :
                     p.Substring(0, 1).ToUpperInvariant() + p.Substring(1).ToLowerInvariant();
 
-            return string.Join(string.Empty, s.Split(' ').Select(clean).Select(titleCase));
+            return string.Join(string.Empty,
+                s.Split(' ', '-', '/', '\'', '"', '«', '»')
+                    .Select(clean)
+                    .Select(titleCase));
         }
     }
 }
