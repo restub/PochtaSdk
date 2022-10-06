@@ -21,7 +21,10 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageReleaseNotes>Initial beta release.
+    <PackageReleaseNotes>Beta release. What's new:
+
+    v0.5.10
+    — Implemented TariffClient: tariffs, delivery terms, countries, post offices, etc.
     </PackageReleaseNotes>
   </PropertyGroup>
 
