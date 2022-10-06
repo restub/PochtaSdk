@@ -131,8 +131,8 @@ namespace PochtaSdk
         /// Получение списка категорий объектов расчета в виде дерева объектов.
         /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
         /// </summary>
-        public CategoryInfo GetCategories() =>
-            Get<CategoryInfo>("v2/dictionary/category", r => r
+        public CategoryInfoResponse GetCategories() =>
+            Get<CategoryInfoResponse>("v2/dictionary/category", r => r
                 .AddQueryParameter("json", "json"));
 
         /// <summary>

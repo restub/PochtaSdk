@@ -4,7 +4,8 @@
     {
         static void Main()
         {
-            ServiceTypeGenerator.GenerateServices();
+            //ServiceTypeGenerator.GenerateServices();
+            ObjectTypeGenerator.GenerateObjectTypes();
         }
     }
 }

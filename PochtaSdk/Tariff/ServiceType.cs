@@ -7,6 +7,10 @@
     /// Перечисление сериализуется как числа, поэтому на нем нет атрибута DataContract.
     /// https://tariff.pochta.ru/post-calculator-api.pdf (Appendix 2)
     /// </summary>
+    /// <remarks>
+    /// The contents of this enum is generated, see PochtaSdk.Playground/ServiceTypeGenerator.cs.
+    /// Содержимое этого перечисления сгенерировано, см. PochtaSdk.Playground/ServiceTypeGenerator.cs.
+    /// </remarks>
     public enum ServiceType
     {
         /// <summary>

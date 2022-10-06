@@ -21,9 +21,9 @@ namespace PochtaSdk.Tests
             Assert.That(Serializer.Serialize(ObjectType.LetterRegistered), Is.EqualTo("2010"));
             Assert.That(Serializer.Serialize(ObjectType.ПисьмоЗаказное), Is.EqualTo("2010"));
 
-            Assert.That(ObjectType.LetterTrackedPostcard, Is.EqualTo(ObjectType.ПисьмоТрекОткрытка));
-            Assert.That(Serializer.Serialize(ObjectType.LetterTrackedPostcard), Is.EqualTo("36000"));
-            Assert.That(Serializer.Serialize(ObjectType.ПисьмоТрекОткрытка), Is.EqualTo("36000"));
+            Assert.That(ObjectType.TrackPostcard, Is.EqualTo(ObjectType.ТрекОткрытка));
+            Assert.That(Serializer.Serialize(ObjectType.TrackPostcard), Is.EqualTo("36000"));
+            Assert.That(Serializer.Serialize(ObjectType.ТрекОткрытка), Is.EqualTo("36000"));
         }
 
         [Test]

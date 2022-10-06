@@ -201,9 +201,9 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        [TestCase(ObjectType.ParcelOnlineStandard, 10)] // ПосылкаОнлайнСтандарт
-        [TestCase(ObjectType.ParcelCourierOnlineStandard, 12.5)] // ПосылкаКурьерОнлайнСтандарт
-        [TestCase(ObjectType.ParcelEasyReturnStandard, 2.1)] // ПосылкаЛегкийВозвратСтандарт
+        [TestCase(ObjectType.ParcelOnlineRegular, 10)] // ПосылкаОнлайнОбыкновенная
+        [TestCase(ObjectType.CourierOnlineRegular, 12.5)] // КурьерОнлайнОбыкновенный
+        [TestCase(ObjectType.ParcelEasyReturnRegular, 2.1)] // ПосылкаЛегкийВозвратОбыкновенная
         [TestCase(ObjectType.ParcelOnlineWithDeclaredValue, 0.2)] // ПосылкаОнлайнСОбъявленнойЦенностью
         public void CalculatePackageTariffsWithServices(ObjectType objectType, double hourOfDay)
         {
