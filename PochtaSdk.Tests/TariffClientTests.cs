@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using PochtaSdk.Tariff;
+using Restub;
 
 namespace PochtaSdk.Tests
 {
@@ -328,7 +329,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void GetCountriesAsString()
+        public void GetCountriesAsText()
         {
             // all countries
             var html = Client.GetCountries(ResponseFormat.Html);
@@ -345,6 +346,55 @@ namespace PochtaSdk.Tests
             // listed countries on the specified date
             var easy = Client.GetCountries(ResponseFormat.Easy, new DateTime(2020, 01, 01), 895, 40, 8);
             Assert.That(easy, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        public void GetPostOffices()
+        {
+            // no way to get all post offices
+            Assert.That(() => Client.GetPostOffices(), Throws.TypeOf<RestubException>()
+                .With.Message.EqualTo("Не указан код почтового объекта"));
+
+            // listed post offices
+            var postOffices = Client.GetPostOffices(125424, 344038);
+            Assert.That(postOffices, Is.Not.Null.Or.Empty);
+            Assert.That(postOffices.PostCodes, Is.Not.Null.Or.Empty);
+            Assert.That(postOffices.PostOffices, Is.Not.Null.Or.Empty);
+
+            var moscow = postOffices.PostOffices.Single(c => c.PostCode == 125424);
+            Assert.That(moscow.Name, Is.EqualTo("МОСКВА 424"));
+
+            // no way to request all post offices on the specified date
+            Assert.That(() => Client.GetPostOffices(new DateTime(2020, 01, 01)),
+                Throws.TypeOf<RestubException>().With.Message.EqualTo("Не указан код почтового объекта"));
+
+            // listed post offices on the specified date
+            postOffices = Client.GetPostOffices(new DateTime(2020, 01, 01), 125424, 344038);
+            Assert.That(postOffices, Is.Not.Null.Or.Empty);
+            Assert.That(postOffices.PostOffices, Is.Not.Null.Or.Empty);
+            Assert.That(postOffices.PostCodes, Is.Not.Null.Or.Empty);
+
+            var rostov = postOffices.PostOffices.Single(c => c.PostCode == 344038);
+            Assert.That(rostov.Name, Is.EqualTo("РОСТОВ-НА-ДОНУ 38"));
+        }
+
+        [Test]
+        public void GetPostOfficesAsText()
+        {
+            // no way to get all post offices
+            Assert.That(() => Client.GetPostOffices(ResponseFormat.Html), Throws.TypeOf<RestubException>()
+                .With.Message.Contains("Не указан код почтового объекта"));
+
+            // listed post offices
+            var html = Client.GetPostOffices(ResponseFormat.HtmlFull, 125424, 344038);
+
+            // no way to request all post offices on the specified date
+            Assert.That(() => Client.GetPostOffices(ResponseFormat.Text, new DateTime(2020, 01, 01)),
+                Throws.TypeOf<RestubException>().With.Message.Contains("Не указан код почтового объекта"));
+
+            // listed post offices on the specified date
+            var text = Client.GetPostOffices(ResponseFormat.Text, new DateTime(2020, 01, 01), 125424, 344038);
+            Assert.That(text, Is.Not.Null.Or.Empty);
         }
     }
 }

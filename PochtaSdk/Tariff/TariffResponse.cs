@@ -13,7 +13,7 @@ namespace PochtaSdk.Tariff
     /// https://tariff.pochta.ru/post-calculator-api.pdf (Chapter 1.5)
     /// </summary>
     [DataContract]
-    public class TariffResponse : BaseResponse, IHasErrors
+    public class TariffResponse : BaseResponse
     {
         // <summary>
         /// Service caption.
@@ -21,13 +21,6 @@ namespace PochtaSdk.Tariff
         /// </summary>
         [DataMember(Name = "caption")]
         public string Caption { get; set; }
-
-        // <summary>
-        /// List of calculation errors.
-        /// Список ошибок расчета.
-        /// </summary>
-        [DataMember(Name = "errors")]
-        public ErrorReport[] Errors { get; set; }
 
         /// <summary>
         /// Tariff calculation object type code.
@@ -320,13 +313,5 @@ namespace PochtaSdk.Tariff
         /// </summary>
         [DataMember(Name = "delivery")]
         public DeliveryTerms DeliveryTerms { get; set; }
-
-        public bool HasErrors() =>
-            Errors != null && Errors.Any();
-
-        public string GetErrorMessage() =>
-            string.Join(Environment.NewLine,
-                (Errors ?? Enumerable.Empty<ErrorReport>())
-                    .Select(e => e.Message));
     }
 }

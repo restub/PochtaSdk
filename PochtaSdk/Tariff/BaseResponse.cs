@@ -13,7 +13,7 @@ namespace PochtaSdk.Tariff
     /// https://tariff.pochta.ru/post-calculator-api.pdf (Chapters 1.5, 2.6)
     /// </summary>
     [DataContract]
-    public class BaseResponse
+    public class BaseResponse : IHasErrors
     {
         // <summary>
         /// API version, should be 2.
@@ -28,5 +28,20 @@ namespace PochtaSdk.Tariff
         /// </summary>
         [DataMember(Name = "version")]
         public string Version { get; set; }
+
+        // <summary>
+        /// List of calculation errors.
+        /// Список ошибок расчета.
+        /// </summary>
+        [DataMember(Name = "errors")]
+        public ErrorReport[] Errors { get; set; }
+
+        public bool HasErrors() =>
+            Errors != null && Errors.Any();
+
+        public string GetErrorMessage() =>
+            string.Join(Environment.NewLine,
+                (Errors ?? Enumerable.Empty<ErrorReport>())
+                    .Select(e => e.Message));
     }
 }

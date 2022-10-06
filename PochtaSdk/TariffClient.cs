@@ -303,5 +303,70 @@ namespace PochtaSdk
                     r.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
                 }
             });
+
+        /// <summary>
+        /// Get post offices as object array.
+        /// Получение списка почтовых отделений в виде массива объектов.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.8)
+        /// </summary>
+        /// <param name="ids">Postal codes.</param>
+        public PostOfficesResponse GetPostOffices(params int[] ids) => GetPostOffices(null, ids);
+
+        /// <summary>
+        /// Get post offices as object array.
+        /// Получение списка почтовых отделений в виде массива объектов.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.8)
+        /// </summary>
+        /// <param name="date">Actual date.</param>
+        /// <param name="ids">Postal codes.</param>
+        public PostOfficesResponse GetPostOffices(DateTime? date, params int[] ids) =>
+            Get<PostOfficesResponse>("v2/dictionary/postoffice", r =>
+            {
+                r.AddQueryParameter("json", "json");
+
+                if (ids != null && ids.Any())
+                {
+                    r.AddQueryParameter("id", string.Join(",", ids));
+                }
+
+                if (date.HasValue)
+                {
+                    r.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
+                }
+            });
+
+        /// <summary>
+        /// Get post offices as formatted text.
+        /// Получение списка почтовых отделений в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.8)
+        /// </summary>
+        /// <param name="format">Response format.</param>
+        /// <param name="ids">Postal codes.</param>
+        public string GetPostOffices(ResponseFormat format, params int[] ids) => GetPostOffices(format, null, ids);
+
+        /// <summary>
+        /// Get post offices as object array.
+        /// Получение списка почтовых отделений в виде массива объектов.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.8)
+        /// </summary>
+        /// <param name="format">Response format.</param>
+        /// <param name="date">Actual date.</param>
+        /// <param name="ids">Postal codes.</param>
+        public string GetPostOffices(ResponseFormat format, DateTime? date, params int[] ids) =>
+            Get<string>("v2/dictionary/postoffice", r =>
+            {
+                var fmt = GetFormat(format);
+                r.AddQueryParameter(fmt, fmt);
+
+                if (ids != null && ids.Any())
+                {
+                    r.AddQueryParameter("id", string.Join(",", ids));
+                }
+
+                if (date.HasValue)
+                {
+                    r.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
+                }
+            });
     }
 }
