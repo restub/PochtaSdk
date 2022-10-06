@@ -114,7 +114,7 @@ namespace PochtaSdk.Playground
                     name = name.Replace("перевод", "money transfer").Replace("Перевод", "Money transfer");
                 }
 
-                // avoid translating «Форсаж» as «Fast and Furious», prefer pseudo-French «forcage»
+                // avoid translating «Форсаж» as «Fast and Furious», prefer French «forçage» but without the diacritic
                 if (name.IndexOf("Форсаж", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     name = name.Replace("Форсаж", "Forcage").Replace("форсаж", "forcage");

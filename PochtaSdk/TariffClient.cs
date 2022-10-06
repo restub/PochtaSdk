@@ -249,5 +249,59 @@ namespace PochtaSdk
                     });
                 }
             });
+
+        /// <summary>
+        /// Get countries as object array.
+        /// Получение списка стран в виде массива объектов.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// </summary>
+        /// <param name="ids">Country identities.</param>
+        public CountriesResponse GetCountries(params int[] ids) => GetCountries(null, ids);
+
+        /// <summary>
+        /// Get countries as object array.
+        /// Получение списка стран в виде массива объектов.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// </summary>
+        /// <param name="date">Actual date.</param>
+        /// <param name="ids">Country identities.</param>
+        public CountriesResponse GetCountries(DateTime? date, params int[] ids) =>
+            Get<CountriesResponse>("v2/dictionary/country{ids}", r =>
+            {
+                r.AddQueryParameter("json", "json");
+                r.AddUrlSegment("ids", ids != null && ids.Any() ? "/" + string.Join(",", ids) : string.Empty);
+                if (date.HasValue)
+                {
+                    r.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
+                }
+            });
+
+        /// <summary>
+        /// Get tariff calculation object categories as formatted text.
+        /// Получение списка категорий объектов расчета в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// </summary>
+        /// <param name="format">Output format.</param>
+        /// <param name="ids">Country identities.</param>
+        public string GetCountries(ResponseFormat format, params int[] ids) => GetCountries(format, null, ids);
+
+        /// <summary>
+        /// Get tariff calculation object categories as formatted text.
+        /// Получение списка категорий объектов расчета в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// </summary>
+        /// <param name="format">Output format.</param>
+        /// <param name="date">Actual date.</param>
+        /// <param name="ids">Country identities.</param>
+        public string GetCountries(ResponseFormat format, DateTime? date = null, params int[] ids) =>
+            Get<string>("v2/dictionary/country{ids}", r =>
+            {
+                r.AddQueryParameter(GetFormat(format), string.Empty);
+                r.AddUrlSegment("ids", ids != null && ids.Any() ? "/" + string.Join(",", ids) : string.Empty);
+                if (date.HasValue)
+                {
+                    r.AddQueryParameter("date", date.Value.ToString("yyyyMMdd"));
+                }
+            });
     }
 }

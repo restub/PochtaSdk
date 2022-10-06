@@ -299,5 +299,52 @@ namespace PochtaSdk.Tests
             var text = Client.GetServices(ResponseFormat.Text, ServiceType.Administrative, ServiceType.Billing, ServiceType.CombinedDelivery);
             Assert.That(text, Is.Not.Null.Or.Empty);
         }
+
+        [Test]
+        public void GetCountries()
+        {
+            // all countries
+            var countries = Client.GetCountries();
+            Assert.That(countries, Is.Not.Null.Or.Empty);
+
+            // listed countries
+            countries = Client.GetCountries(895, 40, 8);
+            Assert.That(countries, Is.Not.Null.Or.Empty);
+            Assert.That(countries.Countries, Is.Not.Null.Or.Empty);
+            Assert.That(countries.CountryIDs, Is.Not.Null.Or.Empty);
+
+            var albania = countries.Countries.Single(c => c.ID == 8);
+            Assert.That(albania.Name, Is.EqualTo("АЛБАНИЯ"));
+
+            // all countries on the specified date
+            countries = Client.GetCountries(new DateTime(2020, 01, 01));
+            Assert.That(countries, Is.Not.Null.Or.Empty);
+
+            // listed countries on the specified date
+            countries = Client.GetCountries(new DateTime(2020, 01, 01), 895, 40, 8);
+            Assert.That(countries, Is.Not.Null.Or.Empty);
+            Assert.That(countries.Countries, Is.Not.Null.Or.Empty);
+            Assert.That(countries.CountryIDs, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
+        public void GetCountriesAsString()
+        {
+            // all countries
+            var html = Client.GetCountries(ResponseFormat.Html);
+            Assert.That(html, Is.Not.Null.Or.Empty);
+
+            // listed countries
+            var text = Client.GetCountries(ResponseFormat.Text, 895, 40, 8);
+            Assert.That(text, Is.Not.Null.Or.Empty);
+
+            // all countries on the specified date
+            var json = Client.GetCountries(ResponseFormat.JsonText, new DateTime(2020, 01, 01));
+            Assert.That(json, Is.Not.Null.Or.Empty);
+
+            // listed countries on the specified date
+            var easy = Client.GetCountries(ResponseFormat.Easy, new DateTime(2020, 01, 01), 895, 40, 8);
+            Assert.That(easy, Is.Not.Null.Or.Empty);
+        }
     }
 }
