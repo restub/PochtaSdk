@@ -31,12 +31,12 @@ var client = new TariffClient();
 // calculate tariff and display as plain text
 var text = client.CalculateTariff(ResponseFormat.Text, new TariffRequest
 {
-	ObjectType = ObjectType.WrapperRegular,
-	FromPostCode = 344038,
-	ToPostCode = 115162,
-	Weight = 100,
-	Date = DateTime.Today,
-	Time = DateTime.Now.TimeOfDay,
+    ObjectType = ObjectType.LetterRegistered,
+    FromPostCode = 344038,
+    ToPostCode = 115162,
+    Weight = 100,
+    Date = DateTime.Today,
+    Time = DateTime.Now.TimeOfDay,
 });
 
 // display server's response
