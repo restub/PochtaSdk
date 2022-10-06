@@ -7,7 +7,14 @@ namespace PochtaSdk.Playground
 {
     public class YandexTranslateClient : RestubClient
     {
-        public YandexTranslateClient(string folderId, string token, string baseUrl = "https://translate.api.cloud.yandex.net/translate/")
+        // obtain Yandex folderId and IAM token for your Yandex Cloud account
+        public const string YandexFolderID = "-- folderId --";
+        public const string YandexTranslateToken = "-- iam token --";
+
+        public YandexTranslateClient(
+            string baseUrl = "https://translate.api.cloud.yandex.net/translate/",
+            string folderId = YandexFolderID,
+            string token = YandexTranslateToken)
             : base(baseUrl, new YandexCredentials { Token = token })
         {
             FolderID = folderId;

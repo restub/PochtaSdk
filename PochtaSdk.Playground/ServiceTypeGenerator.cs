@@ -8,10 +8,6 @@ namespace PochtaSdk.Playground
     /// </summary>
     public class ServiceTypeGenerator
     {
-        // obtain Yandex folderId and IAM token for your Yandex Cloud account
-        const string YandexFolderID = "-- folderId --";
-        const string YandexTraslateToken = "-- iam token --";
-
         /// <summary>
         /// 1. Gets the list of services from Pochta.ru Tariff API
         /// 2. Translates service names in English
@@ -26,7 +22,7 @@ namespace PochtaSdk.Playground
             };
 
             // use Yandex translator to translate service names to English
-            var translator = new YandexTranslateClient(YandexFolderID, YandexTraslateToken)
+            var translator = new YandexTranslateClient
             {
                 Tracer = WriteDebugLog
             };
