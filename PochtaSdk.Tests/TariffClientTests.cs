@@ -286,6 +286,23 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
+        [TestCase(ObjectType.LetterRegular, "Письмо простое")]
+        [TestCase(ObjectType.Wrapper1ClassRegistered, "Бандероль 1 класса заказная")]
+        [TestCase(ObjectType.Parcel, "Посылка")]
+        public void GetObjectType(ObjectType objectType, string name)
+        {
+            var obj = Client.GetObjectType(objectType);
+            Assert.That(obj, Is.Not.Null.Or.Empty);
+            Assert.That(obj.Name, Is.EqualTo(name));
+
+            var html = Client.GetObjectType(ResponseFormat.Html, objectType);
+            Assert.That(html, Is.Not.Null.Or.Empty);
+
+            var text = Client.GetObjectType(ResponseFormat.Text, objectType);
+            Assert.That(text, Is.Not.Null.Or.Empty);
+        }
+
+        [Test]
         public void GetServices()
         {
             var services = Client.GetServices();

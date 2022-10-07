@@ -209,6 +209,27 @@ namespace PochtaSdk
             });
 
         /// <summary>
+        /// Get tariff calculation object description.
+        /// Получение описания объекта расчета.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// </summary>
+        /// <param name="categoryId">Category identity.</param>
+        /// <param name="date">Actual date.</param>
+        public ObjectTypeInfo GetObjectType(ObjectType objectType, DateTime? date = null) =>
+            GetObjectTypes((int)objectType, date).ObjectTypes.FirstOrDefault();
+
+        /// <summary>
+        /// Get tariff calculation object description.
+        /// Получение описания объекта расчета в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// </summary>
+        /// <param name="format">Output format.</param>
+        /// <param name="objectType">Object type.</param>
+        /// <param name="date">Actual date.</param>
+        public string GetObjectType(ResponseFormat format, ObjectType objectType, DateTime? date = null) =>
+            GetObjectTypes(format, (int)objectType, date);
+
+        /// <summary>
         /// Get services.
         /// Получение списка услуг.
         /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.6)
