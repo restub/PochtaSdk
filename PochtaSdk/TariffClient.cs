@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using PochtaSdk.Tariff;
 using Restub;
@@ -171,7 +172,7 @@ namespace PochtaSdk
         /// <summary>
         /// Get tariff calculation object category description.
         /// Получение описания категории объектов расчета.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.4)
         /// </summary>
         /// <param name="categoryId">Category identity.</param>
         /// <param name="date">Actual date.</param>
@@ -190,7 +191,7 @@ namespace PochtaSdk
         /// <summary>
         /// Get tariff calculation object category description.
         /// Получение описания категории объектов расчета в виде форматированного текста.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.4)
         /// </summary>
         /// <param name="format">Output format.</param>
         /// <param name="categoryId">Category identity.</param>
@@ -211,17 +212,21 @@ namespace PochtaSdk
         /// <summary>
         /// Get tariff calculation object description.
         /// Получение описания объекта расчета.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.4)
         /// </summary>
-        /// <param name="categoryId">Category identity.</param>
+        /// <param name="objectType">Object type.</param>
         /// <param name="date">Actual date.</param>
-        public ObjectTypeInfo GetObjectType(ObjectType objectType, DateTime? date = null) =>
-            GetObjectTypes((int)objectType, date).ObjectTypes.FirstOrDefault();
+        public ObjectTypeInfo GetObjectType(ObjectType objectType, DateTime? date = null)
+        {
+            var objectTypes = GetObjectTypes((int)objectType, date).ObjectTypes;
+            var objectTypeInfo = (objectTypes ?? Enumerable.Empty<ObjectTypeInfo>()).FirstOrDefault();
+            return objectTypeInfo ?? throw new RestubException(HttpStatusCode.OK, "Object type not found: " + objectType, null);
+        }
 
         /// <summary>
         /// Get tariff calculation object description.
         /// Получение описания объекта расчета в виде форматированного текста.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.2)
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.4)
         /// </summary>
         /// <param name="format">Output format.</param>
         /// <param name="objectType">Object type.</param>
@@ -274,7 +279,7 @@ namespace PochtaSdk
         /// <summary>
         /// Get countries as object array.
         /// Получение списка стран в виде массива объектов.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.7)
         /// </summary>
         /// <param name="ids">Country identities.</param>
         public CountriesResponse GetCountries(params int[] ids) => GetCountries(null, ids);
@@ -282,7 +287,7 @@ namespace PochtaSdk
         /// <summary>
         /// Get countries as object array.
         /// Получение списка стран в виде массива объектов.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.7)
         /// </summary>
         /// <param name="date">Actual date.</param>
         /// <param name="ids">Country identities.</param>
@@ -298,18 +303,18 @@ namespace PochtaSdk
             });
 
         /// <summary>
-        /// Get tariff calculation object categories as formatted text.
-        /// Получение списка категорий объектов расчета в виде форматированного текста.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// Get countries as formatted text.
+        /// Получение списка стран в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.7)
         /// </summary>
         /// <param name="format">Output format.</param>
         /// <param name="ids">Country identities.</param>
         public string GetCountries(ResponseFormat format, params int[] ids) => GetCountries(format, null, ids);
 
         /// <summary>
-        /// Get tariff calculation object categories as formatted text.
-        /// Получение списка категорий объектов расчета в виде форматированного текста.
-        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.3.1)
+        /// Get countries as formatted text.
+        /// Получение списка стран в виде форматированного текста.
+        /// https://tariff.pochta.ru/post-calculator-api.pdf (chapter 2.7)
         /// </summary>
         /// <param name="format">Output format.</param>
         /// <param name="date">Actual date.</param>

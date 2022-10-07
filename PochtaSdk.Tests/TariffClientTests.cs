@@ -300,6 +300,10 @@ namespace PochtaSdk.Tests
 
             var text = Client.GetObjectType(ResponseFormat.Text, objectType);
             Assert.That(text, Is.Not.Null.Or.Empty);
+
+            var invalidObjectType = 100000 + (int)objectType;
+            Assert.That(() => Client.GetObjectType((ObjectType)invalidObjectType),
+                Throws.Exception.TypeOf<RestubException>());
         }
 
         [Test]

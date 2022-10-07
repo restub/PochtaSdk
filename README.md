@@ -10,7 +10,7 @@ Pochta.ru REST API client with tracing support.
 
 # Welcome
 
-This is an early beta version that covers only very basic API features.
+This is a beta version that covers basic API features.
 
 ## Getting started
 
@@ -201,6 +201,26 @@ body: {
   "place": "C5-d01-8"
 }
 ```
+
+## Tariff API support
+
+Documentation: https://tariff.pochta.ru/post-calculator-api.pdf
+
+* CalculateTariff, CalculateDelivery, Calculate (chapter 1)
+* GetCategories (chapter 2.3.1)
+* GetCategoryDescription (chapter 2.3.2)
+* GetObjectTypes, GetObjectType (chapter 2.4)
+* GetServices (chapter 2.6)
+* GetCountries (chapter 2.7)
+* GetPostOffices (chapter 2.8)
+
+## Otpravka API support
+
+Documentation: https://otpravka.pochta.ru/specification
+
+* Authorization: [authorization-token](https://otpravka.pochta.ru/specification#/authorization-token)
+* CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
+* CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
 
 # PochtaSdk versioning
 
