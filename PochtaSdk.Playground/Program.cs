@@ -5,7 +5,8 @@
         static void Main()
         {
             //ServiceTypeGenerator.GenerateServices();
-            ObjectTypeGenerator.GenerateObjectTypes();
+            //ObjectTypeGenerator.GenerateObjectTypes();
+            ObjectTypeIndexGenerator.GenerateObjectTypesIndex();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using PochtaSdk.Toolbox;
 
 namespace PochtaSdk.Playground
 {
@@ -39,9 +40,9 @@ namespace PochtaSdk.Playground
             foreach (var svc in translatedServices)
             {
                 var russianText = svc.service.Name;
-                var name = ToTitleCase(russianText);
+                var name = russianText.ToTitleCase();
                 var englishText = svc.english;
-                var englishName = ToTitleCase(englishText);
+                var englishName = englishText.ToTitleCase();
 
                 // redirect the output to the text file, i.e. Services.cs
                 Console.WriteLine($@"
@@ -60,21 +61,6 @@ namespace PochtaSdk.Playground
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Error.WriteLine(format, args);
             Console.ForegroundColor = oldColor;
-        }
-
-        private static string ToTitleCase(string s)
-        {
-            string clean(string p) =>
-                string.Join(string.Empty, p.Where(char.IsLetterOrDigit));
-
-            string titleCase(string p) =>
-                string.IsNullOrWhiteSpace(p) ? string.Empty :
-                    p.Substring(0, 1).ToUpperInvariant() + p.Substring(1).ToLowerInvariant();
-
-            return string.Join(string.Empty,
-                s.Split(' ', '-', '/', '\'', '"', '«', '»')
-                    .Select(clean)
-                    .Select(titleCase));
         }
     }
 }

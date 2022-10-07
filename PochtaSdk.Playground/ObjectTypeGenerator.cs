@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PochtaSdk.Tariff;
+using PochtaSdk.Toolbox;
 
 namespace PochtaSdk.Playground
 {
@@ -54,9 +55,9 @@ namespace PochtaSdk.Playground
             foreach (var obj in translatedTypes)
             {
                 var russianText = obj.objectType.Name;
-                var name = ToTitleCase(russianText);
+                var name = russianText.ToTitleCase();
                 var englishText = obj.english;
-                var englishName = ToTitleCase(englishText);
+                var englishName = englishText.ToTitleCase();
 
                 // redirect the output to the text file, i.e. Services.cs
                 Console.WriteLine($@"
@@ -159,45 +160,12 @@ namespace PochtaSdk.Playground
             }
         }
 
-        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> enumerable, Func<T, TKey> keySelector, IEqualityComparer<TKey> comparer = null)
-        {
-            if (enumerable == null || !enumerable.Any())
-            {
-                yield break;
-            }
-
-            var keys = new HashSet<TKey>(comparer);
-            foreach (var item in enumerable)
-            {
-                var key = keySelector(item);
-                if (keys.Add(key))
-                {
-                    yield return item;
-                }
-            }
-        }
-
         public static void WriteDebugLog(string format, params object[] args)
         {
             var oldColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Error.WriteLine(format, args);
             Console.ForegroundColor = oldColor;
-        }
-
-        private static string ToTitleCase(string s)
-        {
-            string clean(string p) =>
-                string.Join(string.Empty, p.Where(char.IsLetterOrDigit));
-
-            string titleCase(string p) =>
-                string.IsNullOrWhiteSpace(p) ? string.Empty :
-                    p.Substring(0, 1).ToUpperInvariant() + p.Substring(1).ToLowerInvariant();
-
-            return string.Join(string.Empty,
-                s.Split(' ', '-', '/', '\'', '"', '«', '»')
-                    .Select(clean)
-                    .Select(titleCase));
         }
     }
 }
