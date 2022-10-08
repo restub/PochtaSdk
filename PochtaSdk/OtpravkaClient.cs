@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using PochtaSdk.Otpravka;
+using RestSharp.Authenticators;
 using Restub;
 
 namespace PochtaSdk
@@ -23,7 +24,7 @@ namespace PochtaSdk
         {
         }
 
-        protected override Authenticator CreateAuthenticator() =>
+        protected override IAuthenticator CreateAuthenticator() =>
             new OtpravkaAuthenticator(this, (OtpravkaCredentials)Credentials);
 
         /// <summary>

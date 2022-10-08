@@ -1,7 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using RestSharp;
+using RestSharp.Authenticators;
 using Restub;
-using Restub.DataContracts;
 
 namespace PochtaSdk.Playground
 {
@@ -15,39 +16,28 @@ namespace PochtaSdk.Playground
             string baseUrl = "https://translate.api.cloud.yandex.net/translate/",
             string folderId = YandexFolderID,
             string token = YandexTranslateToken)
-            : base(baseUrl, new YandexCredentials { Token = token })
+            : base(baseUrl)
         {
             FolderID = folderId;
+            Token = token;
         }
 
-        public string FolderID { get; private set; }
+        private string FolderID { get; set; }
 
-        protected override Authenticator CreateAuthenticator() =>
-            new YandexAuthenticator(this, (YandexCredentials)Credentials);
+        private string Token { get; set; }
 
-        public class YandexCredentials : Credentials
-        {
-            public string Token { get; set; }
-
-            public override AuthToken Authenticate(RestubClient client) => new AuthToken();
-        }
-
-        public class YandexAuthenticator : Authenticator
-        {
-            public YandexAuthenticator(YandexTranslateClient client, YandexCredentials credentials) 
-                : base(client, credentials)
+        protected override IAuthenticator CreateAuthenticator() =>
+            new YandexAuthenticator
             {
-                Token = credentials.Token;
-            }
+                GetToken = () => Token
+            };
 
-            public string Token { get; private set; }
+        public class YandexAuthenticator : IAuthenticator
+        {
+            public Func<string> GetToken { private get; set; }
 
-            public override void SetAuthToken(AuthToken authToken)
-            {
-            }
-
-            public override void Authenticate(IRestClient client, IRestRequest request) =>
-                request.AddHeader("Authorization", $"Bearer {Token}");
+            public void Authenticate(IRestClient client, IRestRequest request) =>
+                request.AddHeader("Authorization", $"Bearer {GetToken()}");
         }
 
         [DataContract]
