@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
 using PochtaSdk.Tariff;
+using RestSharp;
 using Restub;
+using Restub.DataContracts;
 using Restub.Toolbox;
 
 namespace PochtaSdk
@@ -24,6 +25,9 @@ namespace PochtaSdk
         public TariffClient(string baseUrl = BaseUrl) : base(baseUrl)
         {
         }
+
+        protected override Exception CreateException(IRestResponse response, string errorMessage, IHasErrors errorResponse) =>
+            new TariffException(response.StatusCode, errorMessage, response.ErrorException);
 
         public override string LibraryName =>
             $"{nameof(PochtaSdk)}.{nameof(TariffClient)} v{GetType().GetAssemblyVersion()}, {base.LibraryName}";
@@ -220,7 +224,7 @@ namespace PochtaSdk
         {
             var objectTypes = GetObjectTypes((int)objectType, date).ObjectTypes;
             var objectTypeInfo = (objectTypes ?? Enumerable.Empty<ObjectTypeInfo>()).FirstOrDefault();
-            return objectTypeInfo ?? throw new RestubException(HttpStatusCode.OK, "Object type not found: " + objectType, null);
+            return objectTypeInfo ?? throw new TariffException("Object type not found: " + objectType, null);
         }
 
         /// <summary>

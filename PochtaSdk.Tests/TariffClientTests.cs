@@ -2,7 +2,6 @@
 using System.Linq;
 using NUnit.Framework;
 using PochtaSdk.Tariff;
-using Restub;
 
 namespace PochtaSdk.Tests
 {
@@ -303,7 +302,7 @@ namespace PochtaSdk.Tests
 
             var invalidObjectType = 100000 + (int)objectType;
             Assert.That(() => Client.GetObjectType((ObjectType)invalidObjectType),
-                Throws.Exception.TypeOf<RestubException>());
+                Throws.Exception.TypeOf<TariffException>());
         }
 
         [Test]
@@ -373,7 +372,7 @@ namespace PochtaSdk.Tests
         public void GetPostOffices()
         {
             // no way to get all post offices
-            Assert.That(() => Client.GetPostOffices(), Throws.TypeOf<RestubException>()
+            Assert.That(() => Client.GetPostOffices(), Throws.TypeOf<TariffException>()
                 .With.Message.EqualTo("Не указан код почтового объекта"));
 
             // listed post offices
@@ -387,7 +386,7 @@ namespace PochtaSdk.Tests
 
             // no way to request all post offices on the specified date
             Assert.That(() => Client.GetPostOffices(new DateTime(2020, 01, 01)),
-                Throws.TypeOf<RestubException>().With.Message.EqualTo("Не указан код почтового объекта"));
+                Throws.TypeOf<TariffException>().With.Message.EqualTo("Не указан код почтового объекта"));
 
             // listed post offices on the specified date
             postOffices = Client.GetPostOffices(new DateTime(2020, 01, 01), 125424, 344038);
@@ -403,7 +402,7 @@ namespace PochtaSdk.Tests
         public void GetPostOfficesAsText()
         {
             // no way to get all post offices
-            Assert.That(() => Client.GetPostOffices(ResponseFormat.Html), Throws.TypeOf<RestubException>()
+            Assert.That(() => Client.GetPostOffices(ResponseFormat.Html), Throws.TypeOf<TariffException>()
                 .With.Message.Contains("Не указан код почтового объекта"));
 
             // listed post offices
@@ -411,7 +410,7 @@ namespace PochtaSdk.Tests
 
             // no way to request all post offices on the specified date
             Assert.That(() => Client.GetPostOffices(ResponseFormat.Text, new DateTime(2020, 01, 01)),
-                Throws.TypeOf<RestubException>().With.Message.Contains("Не указан код почтового объекта"));
+                Throws.TypeOf<TariffException>().With.Message.Contains("Не указан код почтового объекта"));
 
             // listed post offices on the specified date
             var text = Client.GetPostOffices(ResponseFormat.Text, new DateTime(2020, 01, 01), 125424, 344038);

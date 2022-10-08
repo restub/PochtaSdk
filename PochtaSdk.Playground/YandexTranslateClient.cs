@@ -1,21 +1,18 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using RestSharp;
 using RestSharp.Authenticators;
 using Restub;
 
 namespace PochtaSdk.Playground
 {
-    public class YandexTranslateClient : RestubClient
+    public class YandexTranslateClient : RestubClient, IAuthenticator
     {
         // obtain Yandex folderId and IAM token for your Yandex Cloud account
         public const string YandexFolderID = "-- folderId --";
         public const string YandexTranslateToken = "-- iam token --";
+        public const string YandexTranslateUrl = "https://translate.api.cloud.yandex.net/translate/";
 
-        public YandexTranslateClient(
-            string baseUrl = "https://translate.api.cloud.yandex.net/translate/",
-            string folderId = YandexFolderID,
-            string token = YandexTranslateToken)
+        public YandexTranslateClient(string baseUrl = YandexTranslateUrl, string folderId = YandexFolderID, string token = YandexTranslateToken)
             : base(baseUrl)
         {
             FolderID = folderId;
@@ -26,19 +23,10 @@ namespace PochtaSdk.Playground
 
         private string Token { get; set; }
 
-        protected override IAuthenticator CreateAuthenticator() =>
-            new YandexAuthenticator
-            {
-                GetToken = () => Token
-            };
+        protected override IAuthenticator CreateAuthenticator() => this;
 
-        public class YandexAuthenticator : IAuthenticator
-        {
-            public Func<string> GetToken { private get; set; }
-
-            public void Authenticate(IRestClient client, IRestRequest request) =>
-                request.AddHeader("Authorization", $"Bearer {GetToken()}");
-        }
+        public void Authenticate(IRestClient client, IRestRequest request) =>
+            request.AddHeader("Authorization", $"Bearer {Token}");
 
         [DataContract]
         public class TranslationResponse
