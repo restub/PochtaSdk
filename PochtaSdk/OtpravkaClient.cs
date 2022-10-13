@@ -12,7 +12,7 @@ namespace PochtaSdk
     /// </summary>
     public class OtpravkaClient : RestubClient
     {
-        public const string BaseUrl = "https://otpravka-api.pochta.ru";
+        public const string BaseUrl = "https://otpravka-api.pochta.ru/1.0/";
 
         public OtpravkaClient(OtpravkaCredentials credentials)
             : base(BaseUrl, credentials)
@@ -33,10 +33,10 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="address">Address to normalize.</param>
         /// <returns>Normalized address.</returns>
-        public OtpravkaAddress CleanAddress(string address) =>
-            Post<OtpravkaAddress[]>("/1.0/clean/address", new[]
+        public Address CleanAddress(string address) =>
+            Post<Address[]>("clean/address", new[]
             {
-                new OtpravkaAddressRequest
+                new AddressRequest
                 {
                     ID = "adr1",
                     OriginalAddress = address,
@@ -50,15 +50,15 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="addresses">Addresses to normalize.</param>
         /// <returns>Normalized addresses, in the same order.</returns>
-        public OtpravkaAddress[] CleanAddress(params string[] addresses)
+        public Address[] CleanAddress(params string[] addresses)
         {
-            var req = addresses.Select((a, i) => new OtpravkaAddressRequest
+            var req = addresses.Select((a, i) => new AddressRequest
             {
                 ID = i.ToString(),
                 OriginalAddress = a,
             });
 
-            var result = Post<OtpravkaAddress[]>("/1.0/clean/address", req.ToArray());
+            var result = Post<Address[]>("clean/address", req.ToArray());
 
             // make sure that normalized addresses are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
@@ -70,10 +70,10 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="fullName">Full name to normalize.</param>
         /// <returns>Normalized person full name.</returns>
-        public OtpravkaFullName CleanFullName(string fullName) =>
-            Post<OtpravkaFullName[]>("/1.0/clean/physical", new[]
+        public FullName CleanFullName(string fullName) =>
+            Post<FullName[]>("clean/physical", new[]
             {
-                new OtpravkaFullNameRequest
+                new FullNameRequest
                 {
                     ID = "person1",
                     OriginalFullName = fullName,
@@ -87,17 +87,54 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="fullName">Full name to normalize.</param>
         /// <returns>Normalized person full name.</returns>
-        public OtpravkaFullName[] CleanFullName(params string[] fullNames)
+        public FullName[] CleanFullName(params string[] fullNames)
         {
-            var req = fullNames.Select((a, i) => new OtpravkaFullNameRequest
+            var req = fullNames.Select((a, i) => new FullNameRequest
             {
                 ID = i.ToString(),
                 OriginalFullName = a,
             });
 
-            var result = Post<OtpravkaFullName[]>("/1.0/clean/physical", req.ToArray());
+            var result = Post<FullName[]>("clean/physical", req.ToArray());
 
             // make sure that normalized names are returned in the same order
+            return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
+        }
+
+        /// <summary>
+        /// Phome number normalization.
+        /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
+        /// </summary>
+        /// <param name="phone">Phone number to normalize.</param>
+        /// <returns>Normalized person full name.</returns>
+        public Phone CleanPhone(string phone) =>
+            Post<Phone[]>("clean/phone", new[]
+            {
+                new PhoneRequest
+                {
+                    ID = "phone1",
+                    OriginalPhone = phone,
+                }
+            })
+            .FirstOrDefault();
+
+        /// <summary>
+        /// Phome number normalization.
+        /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
+        /// </summary>
+        /// <param name="phones">Phone numbersto normalize.</param>
+        /// <returns>Normalized phone numbers in the same order.</returns>
+        public Phone[] CleanPhone(params string[] phones)
+        {
+            var req = phones.Select((a, i) => new PhoneRequest
+            {
+                ID = i.ToString(),
+                OriginalPhone = a,
+            });
+
+            var result = Post<Phone[]>("clean/phone", req.ToArray());
+
+            // make sure that normalized phones are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
         }
     }

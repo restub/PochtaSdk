@@ -2,14 +2,18 @@
 
 namespace PochtaSdk.Otpravka
 {
+    /// <summary>
+    /// Address normalization response.
+    /// https://otpravka.pochta.ru/specification#/nogroup-normalization_adress
+    /// </summary>
     [DataContract]
-    public class OtpravkaAddress
+    public class Address
     {
         [DataMember(Name = "address-guid")]
         public string AddressGuid { get; set; }
 
         [DataMember(Name = "address-type")]
-        public string AddressType { get; set; }
+        public AddressType AddressType { get; set; }
 
         [DataMember(Name = "area")]
         public string Area { get; set; }
@@ -51,7 +55,7 @@ namespace PochtaSdk.Otpravka
         public string PlaceGuid { get; set; }
 
         [DataMember(Name = "quality-code")]
-        public string QualityCode { get; set; }
+        public AddressQuality QualityCode { get; set; }
 
         [DataMember(Name = "region")]
         public string Region { get; set; }
@@ -72,6 +76,6 @@ namespace PochtaSdk.Otpravka
         public string StreetGuid { get; set; }
 
         [DataMember(Name = "validation-code")]
-        public string ValidationCode { get; set; }
+        public AddressValidation ValidationCode { get; set; }
     }
 }

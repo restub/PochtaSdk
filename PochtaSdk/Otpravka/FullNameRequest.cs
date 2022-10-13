@@ -2,8 +2,12 @@
 
 namespace PochtaSdk.Otpravka
 {
+    /// <summary>
+    /// Full name normalization request.
+    /// https://otpravka.pochta.ru/specification#/nogroup-normalization_fio
+    /// </summary>
     [DataContract]
-    public class OtpravkaFullNameRequest
+    public class FullNameRequest
     {
         [DataMember(Name = "id")]
         public string ID { get; set; }

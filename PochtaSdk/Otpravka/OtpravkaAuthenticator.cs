@@ -4,6 +4,10 @@ using Restub;
 
 namespace PochtaSdk.Otpravka
 {
+    /// <summary>
+    /// Pochta.ru otpravka API authenticator.
+    /// https://otpravka.pochta.ru/specification#/authorization-key
+    /// </summary>
     public class OtpravkaAuthenticator : Authenticator<OtpravkaClient, OtpravkaAuthToken>
     {
         public OtpravkaAuthenticator(OtpravkaClient apiClient, OtpravkaCredentials credentials)

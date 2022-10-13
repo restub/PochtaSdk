@@ -46,7 +46,7 @@ Console.WriteLine(text);
 ## Trace log
 
 A typical trace log looks like this:
-    
+
 ```c
 // Calculate
 -> GET https://tariff.pochta.ru/v2/calculate/tariff/delivery?json=json&object=3000&from=344038&to=115162&weight=100&service=&errorcode=1&date=20221006&time=0230

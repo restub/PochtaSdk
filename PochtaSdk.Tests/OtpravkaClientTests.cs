@@ -72,10 +72,10 @@ namespace PochtaSdk.Tests
         {
             var address = Client.CleanAddress("Москва, Варшавское шоссе, 37");
             Assert.That(address, Is.Not.Null);
-            Assert.That(address.AddressType, Is.EqualTo("DEFAULT"));
+            Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
             Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
-            Assert.That(address.QualityCode, Is.EqualTo("GOOD"));
-            Assert.That(address.ValidationCode, Is.EqualTo("VALIDATED"));
+            Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
+            Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
             Assert.That(address.Index, Is.EqualTo("117105"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
@@ -94,10 +94,10 @@ namespace PochtaSdk.Tests
             Assert.That(addresses.Length, Is.EqualTo(2));
 
             var address = addresses[0];
-            Assert.That(address.AddressType, Is.EqualTo("DEFAULT"));
+            Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
             Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
-            Assert.That(address.QualityCode, Is.EqualTo("GOOD"));
-            Assert.That(address.ValidationCode, Is.EqualTo("VALIDATED"));
+            Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
+            Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
             Assert.That(address.Index, Is.EqualTo("117105"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
@@ -109,10 +109,10 @@ namespace PochtaSdk.Tests
             Assert.That(address.OriginalAddress, Is.EqualTo("Москва, Варшавское шоссе, 37"));
 
             address = addresses[1];
-            Assert.That(address.AddressType, Is.EqualTo("DEFAULT"));
+            Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
             Assert.That(address.AddressGuid, Is.EqualTo("c511f9b0-5117-11ec-87e6-1bcdc4503f64"));
-            Assert.That(address.QualityCode, Is.EqualTo("GOOD"));
-            Assert.That(address.ValidationCode, Is.EqualTo("VALIDATED"));
+            Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
+            Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
             Assert.That(address.Index, Is.EqualTo("101000"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
@@ -208,6 +208,91 @@ namespace PochtaSdk.Tests
             Assert.That(person.Name, Is.EqualTo("Константин"));
             Assert.That(person.MiddleName, Is.EqualTo("Константинович"));
             Assert.That(person.Surname, Is.EqualTo("Достоевский"));
+        }
+
+        [Test]
+        public void OtpravkaPhoneCleanup()
+        { 
+            var phone = Client.CleanPhone("499 12345-67");
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("499 12345-67"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("499"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("1234567"));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = Client.CleanPhone("+78632 21-54-55");
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+78632 21-54-55"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("863"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("2215455"));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = Client.CleanPhone("+78632 21-54-5");
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.IncorrectData));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+78632 21-54-5"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneNumber, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = Client.CleanPhone("+7495 321-54-56 123");
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.IncorrectData));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+7495 321-54-56 123"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneNumber, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void OtpravkaPhoneBatchCleanup()
+        {
+            var phones = Client.CleanPhone("499 12345-67", "+78632 21-54-55",
+                "+78632 21-54-5", "+7495 321-54-56 123");
+            Assert.That(phones, Is.Not.Null.Or.Empty);
+            Assert.That(phones.Length, Is.EqualTo(4));
+
+            var phone = phones[0];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("499 12345-67"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("499"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("1234567"));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = phones[1];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+78632 21-54-55"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("863"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("2215455"));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = phones[2];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.IncorrectData));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+78632 21-54-5"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneNumber, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = phones[3];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.IncorrectData));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+7495 321-54-56 123"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneNumber, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
         }
     }
 }
