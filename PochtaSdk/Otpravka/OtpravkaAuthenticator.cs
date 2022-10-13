@@ -4,7 +4,7 @@ using Restub;
 
 namespace PochtaSdk.Otpravka
 {
-    public class OtpravkaAuthenticator : Authenticator<OtpravkaClient, OtpravkaAuthToken, OtpravkaCredentials>
+    public class OtpravkaAuthenticator : Authenticator<OtpravkaClient, OtpravkaAuthToken>
     {
         public OtpravkaAuthenticator(OtpravkaClient apiClient, OtpravkaCredentials credentials)
             : base(apiClient, credentials)
