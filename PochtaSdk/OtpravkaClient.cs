@@ -40,7 +40,7 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="address">Address to normalize.</param>
         /// <returns>Normalized address.</returns>
-        public Address CleanAddress(string address) =>
+        public AddressClean CleanAddress(string address) =>
             CleanAddress(new[] { address }).Single();
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="addresses">Addresses to normalize.</param>
         /// <returns>Normalized addresses, in the same order.</returns>
-        public Address[] CleanAddress(params string[] addresses)
+        public AddressClean[] CleanAddress(params string[] addresses)
         {
             var req = addresses.Select((a, i) => new AddressRequest
             {
@@ -57,7 +57,7 @@ namespace PochtaSdk
                 OriginalAddress = a,
             });
 
-            var result = Post<Address[]>("clean/address", req.ToArray());
+            var result = Post<AddressClean[]>("clean/address", req.ToArray());
 
             // make sure that normalized addresses are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();

@@ -81,10 +81,9 @@ namespace PochtaSdk.Tests
             var address = Client.CleanAddress("Москва, Варшавское шоссе, 37");
             Assert.That(address, Is.Not.Null);
             Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
-            Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
             Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
             Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
-            Assert.That(address.Index, Is.EqualTo("117105"));
+            Assert.That(address.PostCode, Is.EqualTo("117105"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
             Assert.That(address.Street, Is.EqualTo("ш Варшавское"));
@@ -92,6 +91,7 @@ namespace PochtaSdk.Tests
             Assert.That(address.RegionGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.PlaceGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.StreetGuid, Is.EqualTo("8fc06b0b-5de3-4a72-9e6f-9e0647a37a66"));
+            Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
         }
 
         [Test]
@@ -103,10 +103,9 @@ namespace PochtaSdk.Tests
 
             var address = addresses[0];
             Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
-            Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
             Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
             Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
-            Assert.That(address.Index, Is.EqualTo("117105"));
+            Assert.That(address.PostCode, Is.EqualTo("117105"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
             Assert.That(address.Street, Is.EqualTo("ш Варшавское"));
@@ -114,14 +113,14 @@ namespace PochtaSdk.Tests
             Assert.That(address.RegionGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.PlaceGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.StreetGuid, Is.EqualTo("8fc06b0b-5de3-4a72-9e6f-9e0647a37a66"));
+            Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
             Assert.That(address.OriginalAddress, Is.EqualTo("Москва, Варшавское шоссе, 37"));
 
             address = addresses[1];
             Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
-            Assert.That(address.AddressGuid, Is.EqualTo("c511f9b0-5117-11ec-87e6-1bcdc4503f64"));
             Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
             Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
-            Assert.That(address.Index, Is.EqualTo("101000"));
+            Assert.That(address.PostCode, Is.EqualTo("101000"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
             Assert.That(address.Street, Is.EqualTo("ул Мясницкая"));
@@ -129,6 +128,7 @@ namespace PochtaSdk.Tests
             Assert.That(address.RegionGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.PlaceGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.StreetGuid, Is.EqualTo("757b544e-3c93-424c-b717-6f9813f123a9"));
+            Assert.That(address.AddressGuid, Is.EqualTo("c511f9b0-5117-11ec-87e6-1bcdc4503f64"));
             Assert.That(address.OriginalAddress, Is.EqualTo("ул. Мясницкая, д. 26, г. Москва"));
         }
 
