@@ -129,7 +129,7 @@ namespace PochtaSdk.Tests
         {
             var person = Client.CleanFullName("Христофор Бонифатиевич Врунгель");
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Христофор Бонифатиевич Врунгель"));
             Assert.That(person.Name, Is.EqualTo("Христофор"));
             Assert.That(person.MiddleName, Is.EqualTo("Бонифатиевич"));
@@ -137,7 +137,7 @@ namespace PochtaSdk.Tests
 
             person = Client.CleanFullName("Иван Рылов");
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Иван Рылов"));
             Assert.That(person.Name, Is.EqualTo("Иван"));
             Assert.That(person.MiddleName, Is.Null);
@@ -145,7 +145,7 @@ namespace PochtaSdk.Tests
 
             person = Client.CleanFullName("Иванка Петкова");
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Иванка Петкова"));
             Assert.That(person.Name, Is.EqualTo("Иванка"));
             Assert.That(person.MiddleName, Is.Null);
@@ -153,7 +153,7 @@ namespace PochtaSdk.Tests
 
             person = Client.CleanFullName("Марфа Васильевна");
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Марфа Васильевна"));
             Assert.That(person.Name, Is.EqualTo("Марфа"));
             Assert.That(person.MiddleName, Is.EqualTo("Васильевна"));
@@ -171,7 +171,7 @@ namespace PochtaSdk.Tests
 
             var person = people[0];
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Христофор Бонифатьевич Врунгель"));
             Assert.That(person.Name, Is.EqualTo("Христофор"));
             Assert.That(person.MiddleName, Is.EqualTo("Бонифатьевич"));
@@ -179,7 +179,7 @@ namespace PochtaSdk.Tests
 
             person = people[1];
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Иван Рылов"));
             Assert.That(person.Name, Is.EqualTo("Иван"));
             Assert.That(person.MiddleName, Is.Null);
@@ -187,7 +187,7 @@ namespace PochtaSdk.Tests
 
             person = people[2];
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Иванка Петкова"));
             Assert.That(person.Name, Is.EqualTo("Иванка"));
             Assert.That(person.MiddleName, Is.Null);
@@ -195,7 +195,7 @@ namespace PochtaSdk.Tests
 
             person = people[3];
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("NOT_SURE"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.NotSure));
             Assert.That(person.OriginalFullName, Is.EqualTo("Марфа Васильевна"));
             Assert.That(person.Name, Is.EqualTo("Марфа"));
             Assert.That(person.MiddleName, Is.EqualTo("Васильевна"));
@@ -203,7 +203,7 @@ namespace PochtaSdk.Tests
 
             person = people[4];
             Assert.That(person, Is.Not.Null);
-            Assert.That(person.QualityCode, Is.EqualTo("EDITED"));
+            Assert.That(person.QualityCode, Is.EqualTo(FullNameQuality.Edited));
             Assert.That(person.OriginalFullName, Is.EqualTo("Достоевский Константин Константинович"));
             Assert.That(person.Name, Is.EqualTo("Константин"));
             Assert.That(person.MiddleName, Is.EqualTo("Константинович"));
@@ -211,7 +211,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaPhoneCleanup()
+        public void OtpravkaStringPhoneCleanup()
         { 
             var phone = Client.CleanPhone("499 12345-67");
             Assert.That(phone, Is.Not.Null);
@@ -251,7 +251,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaPhoneBatchCleanup()
+        public void OtpravkaStringPhoneBatchCleanup()
         {
             var phones = Client.CleanPhone("499 12345-67", "+78632 21-54-55",
                 "+78632 21-54-5", "+7495 321-54-56 123");
@@ -292,6 +292,69 @@ namespace PochtaSdk.Tests
             Assert.That(phone.PhoneCountryCode, Is.EqualTo(string.Empty));
             Assert.That(phone.PhoneCityCode, Is.EqualTo(string.Empty));
             Assert.That(phone.PhoneNumber, Is.EqualTo(string.Empty));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void OtpravkaPhoneBatchCleanup()
+        {
+            var phones = Client.CleanPhone(
+                new PhoneRequest
+                {
+                    ID = "hoho",
+                    Area = "Москва",
+                    Place = "Москва",
+                    Region = "Центральный",
+                    OriginalPhone = "499 12345-67",
+                },
+                new PhoneRequest
+                {
+                    ID = string.Empty,
+                    Area = "",
+                    Place = "",
+                    Region = "",
+                    OriginalPhone = "+78632 21-54-55",
+                },
+                new PhoneRequest
+                {
+                    ID = "haha",
+                    Area = "",
+                    Place = "",
+                    Region = "",
+                    OriginalPhone = "+7499 1131623",
+                });
+
+            Assert.That(phones, Is.Not.Null.Or.Empty);
+            Assert.That(phones.Length, Is.EqualTo(3));
+
+            var phone = phones[0];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.ID, Is.EqualTo("hoho"));
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("499 12345-67"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("499"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("1234567"));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = phones[1];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.ID, Is.EqualTo(string.Empty));
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+78632 21-54-55"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("863"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("2215455"));
+            Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+
+            phone = phones[2];
+            Assert.That(phone, Is.Not.Null);
+            Assert.That(phone.ID, Is.EqualTo("haha"));
+            Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
+            Assert.That(phone.OriginalPhone, Is.EqualTo("+7499 1131623"));
+            Assert.That(phone.PhoneCountryCode, Is.EqualTo("7"));
+            Assert.That(phone.PhoneCityCode, Is.EqualTo("499"));
+            Assert.That(phone.PhoneNumber, Is.EqualTo("1131623"));
             Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
         }
     }

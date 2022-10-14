@@ -5,6 +5,7 @@ namespace PochtaSdk.Otpravka
     /// <summary>
     /// Address normalization validation code.
     /// Код проверки нормализации адреса.
+    /// https://otpravka.pochta.ru/specification#/enums-clean-address-validation
     /// </summary>
     [DataContract]
     public enum AddressValidation

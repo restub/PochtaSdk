@@ -4,6 +4,7 @@ namespace PochtaSdk.Otpravka
 {
     /// <summary>
     /// Address normalization response.
+    /// Нормализованный адрес.
     /// https://otpravka.pochta.ru/specification#/nogroup-normalization_adress
     /// </summary>
     [DataContract]

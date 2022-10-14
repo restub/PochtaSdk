@@ -4,6 +4,7 @@ namespace PochtaSdk.Otpravka
 {
     /// <summary>
     /// Full name normalization response.
+    /// Нормализованные ФИО.
     /// https://otpravka.pochta.ru/specification#/nogroup-normalization_fio
     /// </summary>
     [DataContract]
@@ -22,7 +23,7 @@ namespace PochtaSdk.Otpravka
         public string OriginalFullName { get; set; }
 
         [DataMember(Name = "quality-code")]
-        public string QualityCode { get; set; }
+        public FullNameQuality QualityCode { get; set; }
 
         [DataMember(Name = "surname")]
         public string Surname { get; set; }

@@ -4,7 +4,8 @@ namespace PochtaSdk.Otpravka
 {
     /// <summary>
     /// Phone number normalization quality code.
-    /// Код качества нормализации телефона
+    /// Код качества нормализации телефона.
+    /// https://otpravka.pochta.ru/specification#/enums-clean-fio-phone-quality
     /// </summary>
     [DataContract]
     public enum PhoneQuality

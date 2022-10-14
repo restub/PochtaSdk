@@ -5,6 +5,7 @@ namespace PochtaSdk.Otpravka
     /// <summary>
     /// Address normalization quality code.
     /// Код качества нормализации адреса.
+    /// https://otpravka.pochta.ru/specification#/enums-clean-address-quality
     /// </summary>
     [DataContract]
     public enum AddressQuality

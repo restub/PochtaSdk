@@ -6,6 +6,7 @@ namespace PochtaSdk.Otpravka
 {
     /// <summary>
     /// Phone number normalization response.
+    /// Нормализованный номер телефона.
     /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
     /// </summary>
     [DataContract]

@@ -34,15 +34,7 @@ namespace PochtaSdk
         /// <param name="address">Address to normalize.</param>
         /// <returns>Normalized address.</returns>
         public Address CleanAddress(string address) =>
-            Post<Address[]>("clean/address", new[]
-            {
-                new AddressRequest
-                {
-                    ID = "adr1",
-                    OriginalAddress = address,
-                }
-            })
-            .FirstOrDefault();
+            CleanAddress(new[] { address }).Single();
 
         /// <summary>
         /// Address normalization, batch mode.
@@ -71,15 +63,7 @@ namespace PochtaSdk
         /// <param name="fullName">Full name to normalize.</param>
         /// <returns>Normalized person full name.</returns>
         public FullName CleanFullName(string fullName) =>
-            Post<FullName[]>("clean/physical", new[]
-            {
-                new FullNameRequest
-                {
-                    ID = "person1",
-                    OriginalFullName = fullName,
-                }
-            })
-            .FirstOrDefault();
+            CleanFullName(new[] { fullName }).Single();
 
         /// <summary>
         /// Person full name normalization.
@@ -102,24 +86,16 @@ namespace PochtaSdk
         }
 
         /// <summary>
-        /// Phome number normalization.
+        /// Phone number normalization.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
         /// </summary>
         /// <param name="phone">Phone number to normalize.</param>
         /// <returns>Normalized person full name.</returns>
         public Phone CleanPhone(string phone) =>
-            Post<Phone[]>("clean/phone", new[]
-            {
-                new PhoneRequest
-                {
-                    ID = "phone1",
-                    OriginalPhone = phone,
-                }
-            })
-            .FirstOrDefault();
+            CleanPhone(new[] { phone }).Single();
 
         /// <summary>
-        /// Phome number normalization.
+        /// Phone number normalization.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
         /// </summary>
         /// <param name="phones">Phone numbersto normalize.</param>
@@ -136,6 +112,53 @@ namespace PochtaSdk
 
             // make sure that normalized phones are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
+        }
+
+        /// <summary>
+        /// Phone number normalization.
+        /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
+        /// </summary>
+        /// <param name="phone">Phone number to normalize.</param>
+        /// <returns>Normalized person full name.</returns>
+        public Phone CleanPhone(PhoneRequest phone) =>
+            CleanPhone(new[] { phone }).Single();
+
+        /// <summary>
+        /// Phone number normalization.
+        /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
+        /// </summary>
+        /// <param name="phones">Phone numbersto normalize.</param>
+        /// <returns>Normalized phone numbers in the same order.</returns>
+        public Phone[] CleanPhone(params PhoneRequest[] phones)
+        {
+            var divider = ":";
+            var req = phones.Select((a, i) => new PhoneRequest
+            {
+                ID = i.ToString() + divider + a.ID,
+                Area = a.Area,
+                Place = a.Place,
+                Region = a.Region,
+                OriginalPhone = a.OriginalPhone,
+            });
+
+            var result = Post<Phone[]>("clean/phone", req.ToArray());
+
+            // make sure that normalized phones are returned in the same order
+            // keep the original identities
+            return result
+                .Select(phone => new
+                {
+                    phone,
+                    id = phone.ID.Substring(0, phone.ID.IndexOf(divider)),
+                    originalId = phone.ID.Substring(phone.ID.IndexOf(divider) + 1)
+                })
+                .OrderBy(a => Convert.ToInt32(a.id))
+                .Select(a => 
+                {
+                    a.phone.ID = a.originalId;
+                    return a.phone;
+                })
+                .ToArray();
         }
     }
 }

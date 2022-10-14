@@ -4,14 +4,15 @@ using System.Runtime.Serialization;
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Phone number normalization response.
+    /// Phone number normalization request.
+    /// Номер телефона для нормализации.
     /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
     /// </summary>
     [DataContract]
     public class PhoneRequest
     {
         /// <summary>
-        /// Область/край трелефонного номера
+        /// Область/край телефонного номера
         /// </summary>
         [DataMember(Name = "area")]
         public string Area { get; set; }
@@ -23,7 +24,7 @@ namespace PochtaSdk.Otpravka
         public string ID { get; set; }
 
         /// <summary>
-        /// Оригинальные номер одной строкой
+        /// Оригинальный номер одной строкой
         /// </summary>
         [DataMember(Name = "original-phone")]
         public string OriginalPhone { get; set; }

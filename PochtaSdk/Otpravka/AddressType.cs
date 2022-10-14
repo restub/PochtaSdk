@@ -5,6 +5,7 @@ namespace PochtaSdk.Otpravka
     /// <summary>
     /// Address type.
     /// Тип адреса.
+    /// https://otpravka.pochta.ru/specification#/enums-base-address-type
     /// </summary>
     [DataContract]
     public enum AddressType
