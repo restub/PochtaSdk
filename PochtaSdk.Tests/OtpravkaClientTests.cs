@@ -31,15 +31,14 @@ namespace PochtaSdk.Tests
                 Tracer = (fmt, args) => sb.AppendFormat(fmt, args)
             };
 
-            var address = client.CleanAddress("Москва, Варшавское шоссе, 37");
-            Assert.That(address, Is.Not.Null);
-            Assert.That(address.Index, Is.EqualTo("117105"));
+            var limit = client.GetApiLimit();
+            Assert.That(limit, Is.Not.Null.Or.Empty);
 
             var log = sb.ToString();
             Assert.That(log.Length, Is.GreaterThan(0));
             Assert.That(log, Does.Contain("Authorization = AccessToken"));
             Assert.That(log, Does.Contain("X-User-Authorization"));
-            Assert.That(log, Does.Contain("<- OK 200 (OK) https://otpravka-api.pochta.ru/1.0/clean/address"));
+            Assert.That(log, Does.Contain("<- OK 200 (OK) https://otpravka-api.pochta.ru/1.0/settings/limit"));
         }
 
         [Test]
@@ -56,15 +55,24 @@ namespace PochtaSdk.Tests
                 Tracer = (fmt, args) => sb.AppendFormat(fmt, args)
             };
 
-            var address = client.CleanAddress("Москва, Варшавское шоссе, 37");
-            Assert.That(address, Is.Not.Null);
-            Assert.That(address.Index, Is.EqualTo("117105"));
+            var limit = client.GetApiLimit();
+            Assert.That(limit, Is.Not.Null.Or.Empty);
 
             var log = sb.ToString();
             Assert.That(log.Length, Is.GreaterThan(0));
             Assert.That(log, Does.Contain("Authorization = AccessToken"));
             Assert.That(log, Does.Contain("X-User-Authorization"));
-            Assert.That(log, Does.Contain("<- OK 200 (OK) https://otpravka-api.pochta.ru/1.0/clean/address"));
+            Assert.That(log, Does.Contain("<- OK 200 (OK) https://otpravka-api.pochta.ru/1.0/settings/limit"));
+        }
+
+        [Test]
+        public void OtpravkaClientGetsApiLimits()
+        {
+            var limit = Client.GetApiLimit();
+            Assert.That(limit, Is.Not.Null.Or.Empty);
+            Assert.That(limit.AllowedCount, Is.GreaterThan(0));
+            Assert.That(limit.CurrentCount, Is.GreaterThan(0));
+            Assert.That(limit.AllowedCount, Is.GreaterThan(limit.CurrentCount));
         }
 
         [Test]

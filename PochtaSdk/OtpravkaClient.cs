@@ -28,6 +28,13 @@ namespace PochtaSdk
             new OtpravkaAuthenticator(this, (OtpravkaCredentials)Credentials);
 
         /// <summary>
+        /// API request limit.
+        /// https://otpravka.pochta.ru/specification#/nogroup-count_request_api
+        /// </summary>
+        /// <returns>Request limits.</returns>
+        public ApiLimit GetApiLimit() => Get<ApiLimit>("settings/limit");
+
+        /// <summary>
         /// Address normalization.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_adress
         /// </summary>
