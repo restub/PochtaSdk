@@ -5,6 +5,9 @@ using Restub;
 
 namespace PochtaSdk.Playground
 {
+    /// <summary>
+    /// Sample Yandex Translate REST API client.
+    /// </summary>
     public class YandexTranslateClient : RestubClient, IAuthenticator
     {
         // obtain Yandex folderId and IAM token for your Yandex Cloud account
@@ -22,8 +25,6 @@ namespace PochtaSdk.Playground
         private string FolderID { get; set; }
 
         private string Token { get; set; }
-
-        protected override IAuthenticator CreateAuthenticator() => this;
 
         public void Authenticate(IRestClient client, IRestRequest request) =>
             request.AddHeader("Authorization", $"Bearer {Token}");
