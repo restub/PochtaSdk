@@ -2,6 +2,7 @@ namespace PochtaSdk.Tariff
 {
     /// <summary>
     /// OKSM Country codes
+    /// https://otpravka.pochta.ru/specification#/dictionary-countries
     /// </summary>
     public enum OksmCountryCode
     {
