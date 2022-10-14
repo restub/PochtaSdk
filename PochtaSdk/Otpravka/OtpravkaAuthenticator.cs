@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using RestSharp;
-using Restub;
+﻿using Restub;
 
 namespace PochtaSdk.Otpravka
 {
@@ -10,29 +8,21 @@ namespace PochtaSdk.Otpravka
     /// </summary>
     public class OtpravkaAuthenticator : Authenticator<OtpravkaClient, OtpravkaAuthToken>
     {
+        /// <summary>
+        /// Ininitializes a new instance of the <see cref="OtpravkaAuthenticator"/> class.
+        /// </summary>
+        /// <param name="apiClient">Rest API client.</param>
+        /// <param name="credentials"><see cref="OtpravkaCredentials"/> instance.</param>
         public OtpravkaAuthenticator(OtpravkaClient apiClient, OtpravkaCredentials credentials)
             : base(apiClient, credentials)
         {
         }
 
-        private Dictionary<string, string> Headers { get; } = new Dictionary<string, string>();
-
-        public override void SetAuthToken(OtpravkaAuthToken authToken)
+        /// <inheritdoc/>
+        public override void InitAuthHeaders(OtpravkaAuthToken authToken)
         {
-            Headers["Authorization"] = $"AccessToken {authToken.AccessToken}";
-            Headers["X-User-Authorization"] = $"Basic {authToken.AuthorizationKey}";
-            //Headers["Content-Type"] = "application/json;charset=UTF-8";
-        }
-
-        public override void Authenticate(IRestClient client, IRestRequest request)
-        {
-            base.Authenticate(client, request);
-
-            // add authorization headers, if any
-            foreach (var header in Headers)
-            {
-                request.AddOrUpdateParameter(header.Key, header.Value, ParameterType.HttpHeader);
-            }
+            AuthHeaders["Authorization"] = $"AccessToken {authToken.AccessToken}";
+            AuthHeaders["X-User-Authorization"] = $"Basic {authToken.AuthorizationKey}";
         }
     }
 }
