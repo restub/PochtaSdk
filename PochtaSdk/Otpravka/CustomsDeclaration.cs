@@ -21,7 +21,7 @@ namespace PochtaSdk.Otpravka
         /// Код валюты.
         /// </summary>
         [DataMember(Name = "currency")]
-        public string Currency { get; set; }
+        public Currency Currency { get; set; }
 
         [DataMember(Name = "customs-code")]
         public string CustomsCode { get; set; }

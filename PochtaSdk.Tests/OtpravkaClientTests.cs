@@ -73,6 +73,7 @@ namespace PochtaSdk.Tests
             Assert.That(limit.AllowedCount, Is.GreaterThan(0));
             Assert.That(limit.CurrentCount, Is.GreaterThan(0));
             Assert.That(limit.AllowedCount, Is.GreaterThan(limit.CurrentCount));
+            TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", limit.CurrentCount, limit.AllowedCount);
         }
 
         [Test]

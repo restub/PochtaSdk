@@ -3,8 +3,8 @@
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Address, normalized address.
-    /// Адрес, нормализованный адрес.
+    /// Address, normalized address, return address.
+    /// Адрес, нормализованный адрес, адрес возврата.
     /// https://otpravka.pochta.ru/specification#/orders-creating_order
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
     /// https://otpravka.pochta.ru/specification#/nogroup-normalization_adress

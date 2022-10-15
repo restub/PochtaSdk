@@ -12,18 +12,31 @@ namespace PochtaSdk
     /// </summary>
     public class OtpravkaClient : RestubClient
     {
+        /// <summary>
+        /// Base API URL.
+        /// </summary>
         public const string BaseUrl = "https://otpravka-api.pochta.ru/1.0/";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OtpravkaClient"/> class.
+        /// </summary>
+        /// <param name="credentials">Credentials.</param>
         public OtpravkaClient(OtpravkaCredentials credentials)
             : base(BaseUrl, credentials)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OtpravkaClient"/> class.
+        /// </summary>
+        /// <param name="baseUrl">Base API URL.</param>
+        /// <param name="credentials">Credentials.</param>
         public OtpravkaClient(string baseUrl, OtpravkaCredentials credentials)
             : base(baseUrl, credentials)
         {
         }
 
+        /// <inheritdoc/>
         protected override IAuthenticator GetAuthenticator() =>
             new OtpravkaAuthenticator(this, (OtpravkaCredentials)Credentials);
 
