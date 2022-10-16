@@ -43,6 +43,30 @@ var text = client.CalculateTariff(ResponseFormat.Text, new TariffRequest
 Console.WriteLine(text);
 ```
 
+## Tariff API support
+
+Documentation: https://tariff.pochta.ru/post-calculator-api.pdf
+
+* CalculateTariff, CalculateDelivery, Calculate (chapter 1)
+* GetCategories (chapter 2.3.1)
+* GetCategoryDescription (chapter 2.3.2)
+* GetObjectTypes, GetObjectType (chapter 2.4)
+* GetServices (chapter 2.6)
+* GetCountries (chapter 2.7)
+* GetPostOffices (chapter 2.8)
+
+## Otpravka API support
+
+Documentation: https://otpravka.pochta.ru/specification
+
+* Authorization: [authorization-token](https://otpravka.pochta.ru/specification#/authorization-token)
+* RequestLimits: [nogroup-count_request_api](https://otpravka.pochta.ru/specification#/nogroup-count_request_api)
+* CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
+* CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
+* CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
+* CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
+* DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
+
 ## Trace log
 
 A typical trace log looks like this:
@@ -201,30 +225,6 @@ body: {
   "place": "C5-d01-8"
 }
 ```
-
-## Tariff API support
-
-Documentation: https://tariff.pochta.ru/post-calculator-api.pdf
-
-* CalculateTariff, CalculateDelivery, Calculate (chapter 1)
-* GetCategories (chapter 2.3.1)
-* GetCategoryDescription (chapter 2.3.2)
-* GetObjectTypes, GetObjectType (chapter 2.4)
-* GetServices (chapter 2.6)
-* GetCountries (chapter 2.7)
-* GetPostOffices (chapter 2.8)
-
-## Otpravka API support
-
-Documentation: https://otpravka.pochta.ru/specification
-
-* Authorization: [authorization-token](https://otpravka.pochta.ru/specification#/authorization-token)
-* RequestLimits: [nogroup-count_request_api](https://otpravka.pochta.ru/specification#/nogroup-count_request_api)
-* CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
-* CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
-* CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
-* CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
-* DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
 
 # PochtaSdk versioning
 
