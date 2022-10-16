@@ -15,7 +15,7 @@ namespace PochtaSdk
         /// <summary>
         /// Base API URL.
         /// </summary>
-        public const string BaseUrl = "https://otpravka-api.pochta.ru/1.0/";
+        public const string BaseUrl = "https://otpravka-api.pochta.ru/";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OtpravkaClient"/> class.
@@ -45,7 +45,7 @@ namespace PochtaSdk
         /// https://otpravka.pochta.ru/specification#/nogroup-count_request_api
         /// </summary>
         /// <returns>Request limits.</returns>
-        public ApiLimit GetApiLimit() => Get<ApiLimit>("settings/limit");
+        public ApiLimit GetApiLimit() => Get<ApiLimit>("1.0/settings/limit");
 
         /// <summary>
         /// Address normalization.
@@ -70,7 +70,7 @@ namespace PochtaSdk
                 OriginalAddress = a,
             });
 
-            var result = Post<AddressClean[]>("clean/address", req.ToArray());
+            var result = Post<AddressClean[]>("1.0/clean/address", req.ToArray());
 
             // make sure that normalized addresses are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
@@ -99,7 +99,7 @@ namespace PochtaSdk
                 OriginalFullName = a,
             });
 
-            var result = Post<FullName[]>("clean/physical", req.ToArray());
+            var result = Post<FullName[]>("1.0/clean/physical", req.ToArray());
 
             // make sure that normalized names are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
@@ -128,7 +128,7 @@ namespace PochtaSdk
                 OriginalPhone = a,
             });
 
-            var result = Post<Phone[]>("clean/phone", req.ToArray());
+            var result = Post<Phone[]>("1.0/clean/phone", req.ToArray());
 
             // make sure that normalized phones are returned in the same order
             return result.OrderBy(a => Convert.ToInt32(a.ID)).ToArray();
@@ -161,7 +161,7 @@ namespace PochtaSdk
                 OriginalPhone = a.OriginalPhone,
             });
 
-            var result = Post<Phone[]>("clean/phone", req.ToArray());
+            var result = Post<Phone[]>("1.0/clean/phone", req.ToArray());
 
             // make sure that normalized phones are returned in the same order
             // keep the original identities
