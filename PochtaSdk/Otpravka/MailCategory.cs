@@ -26,7 +26,8 @@ namespace PochtaSdk.Otpravka
         /// Обыкновенное
         /// </summary>
         [EnumMember(Value = "ORDINARY")]
-        Ordimary,
+        Ordinary,
+        Regular = Ordinary,
 
         /// <summary>
         /// С объявленной ценностью

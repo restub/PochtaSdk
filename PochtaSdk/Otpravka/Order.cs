@@ -94,13 +94,13 @@ namespace PochtaSdk.Otpravka
         /// Линейные размеры
         /// </summary>
         [DataMember(Name = "dimension")]
-        public Dimension Dimension { get; set; }
+        public Dimensions Dimensions { get; set; }
 
         /// <summary>
         /// Типоразмер
         /// </summary>
         [DataMember(Name = "dimension-type")]
-        public DimensionType DimensionType { get; set; }
+        public DimensionType? DimensionType { get; set; }
 
         /// <summary>
         /// Лёгкий возврат
@@ -118,7 +118,7 @@ namespace PochtaSdk.Otpravka
         /// Тип конверта - ГОСТ Р 51506-99.
         /// </summary>
         [DataMember(Name = "envelope-type")]
-        public EnvelopeType EnvelopeType { get; set; }
+        public EnvelopeType? EnvelopeType { get; set; }
 
         /// <summary>
         /// Фискальные данные
@@ -384,7 +384,7 @@ namespace PochtaSdk.Otpravka
         /// Идентификатор временного интервала
         /// </summary>
         [DataMember(Name = "time-slot-id")]
-        public int TimeSlotID { get; set; }
+        public int? TimeSlotID { get; set; }
 
         /// <summary>
         /// Возможный вид транспортировки (для международных отправлений).

@@ -7,6 +7,7 @@ namespace PochtaSdk.Otpravka
     /// Тип отправления
     /// https://otpravka.pochta.ru/specification#/enums-base-mail-type
     /// </summary>
+    [DataContract]
     public enum MailType
     {
         /// <summary>

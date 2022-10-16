@@ -9,7 +9,7 @@ namespace PochtaSdk.Otpravka
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
     /// </summary>
     [DataContract]
-    public class Dimension
+    public class Dimensions
     {
         /// <summary>
         /// Линейная высота (сантиметры)
