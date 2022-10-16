@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Net;
+using System.Text;
 using NUnit.Framework;
 using PochtaSdk.Otpravka;
+using Restub;
 
 namespace PochtaSdk.Tests
 {
@@ -365,6 +368,104 @@ namespace PochtaSdk.Tests
             Assert.That(phone.PhoneCityCode, Is.EqualTo("499"));
             Assert.That(phone.PhoneNumber, Is.EqualTo("1131623"));
             Assert.That(phone.PhoneExtension, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public void OtpravkaClientDoesntReportErrorsWhenNoOrdersAreSpecifiedForCreation()
+        {
+            var result = Client.CreateOrders();
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Empty);
+        }
+
+        [Test]
+        public void OtpravkaClientFailsToCreateOrderWhenNoPropertiesAreSpecified()
+        {
+            // why the status code is 0? no idea!
+            Assert.That(() => Client.CreateOrders(new Order()),
+                Throws.TypeOf<RestubException>()
+                    .With.Property("StatusCode").EqualTo(HttpStatusCode.OK)
+                    .And.Message.Contains("некорректно")
+                    .And.Message.Contains("значение")
+                    .And.Message.Contains("не указан")
+                    .And.Message.Contains("короткий"));
+        }
+
+        [Test]
+        public void OtpravkaClientFailsToCreateOrderWhenRequiredPropertiesAreNotSpecified()
+        {
+            Assert.That(() => Client.CreateOrders(new Order
+            {
+                AddressFrom = new Address
+                {
+                    AddressType = AddressType.Demand,
+                    PostCode = "115162",
+                },
+                AddressTypeTo = AddressType.Demand,
+                PostCodeTo = 344038,
+            }),
+            Throws.TypeOf<RestubException>()
+                .With.Property("StatusCode").EqualTo(HttpStatusCode.OK)
+                .And.Message.Contains("некорректно")
+                .And.Message.Contains("значение")
+                .And.Message.Contains("не указан")
+                .And.Message.Contains("короткий"));
+        }
+
+        private int CreatedOrderID { get; set; } = 893249738;
+
+        [Test, Ordered]
+        public void OtpravkaClientCreatesAnOrder()
+        {
+            var result = Client.CreateOrders(new Order
+            {
+                OrderNum = "001",
+                AddressFrom = new Address
+                {
+                    AddressType = AddressType.Demand,
+                    PostCode = "115162",
+                },
+                AddressTypeTo = AddressType.Default,
+                GivenName = "Иван",
+                MiddleName = "Иванович",
+                Surname = "Иванов",
+                PostOfficeCode = "142300",
+                PostCodeTo = 117105,
+                RegionTo = "г. Москва",
+                PlaceTo = "г. Москва",
+                StreetTo = "ш Варшавское",
+                HouseTo = "37",
+                TelAddressFrom = 79871234567,
+                TelAddress = 79871234567,
+                DeclaredValue = 1000,
+                TransportType = Otpravka.TransportType.Surface,
+                MailCategory = MailCategory.Ordinary,
+                MailCountryCode = Tariff.OksmCountryCode.Russia,
+                MailType = MailType.PostalParcel,
+                Weight = 1000,
+                Dimensions = new Dimensions
+                { 
+                    Height = 3,
+                    Length = 9,
+                    Width = 73,
+                },
+                Fragile = true
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            CreatedOrderID = result.ResultIDs.First();
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientDeletesAnOrder()
+        {
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+            var result = Client.DeleteOrders(CreatedOrderID);
+            Assert.That(result, Is.Not.Null.Or.Empty);
+            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            Assert.That(result.ResultIDs.First(), Is.EqualTo(CreatedOrderID));
         }
     }
 }

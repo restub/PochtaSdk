@@ -219,8 +219,12 @@ Documentation: https://tariff.pochta.ru/post-calculator-api.pdf
 Documentation: https://otpravka.pochta.ru/specification
 
 * Authorization: [authorization-token](https://otpravka.pochta.ru/specification#/authorization-token)
+* RequestLimits: [nogroup-count_request_api](https://otpravka.pochta.ru/specification#/nogroup-count_request_api)
 * CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
 * CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
+* CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
+* CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
+* DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
 
 # PochtaSdk versioning
 
