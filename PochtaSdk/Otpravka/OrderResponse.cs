@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Restub.DataContracts;
 
@@ -15,17 +16,25 @@ namespace PochtaSdk.Otpravka
     public class OrderResponse : IHasErrors
     {
         [DataMember(Name = "errors")]
-        public ErrorWithCode[] Errors { get; set; }
+        public Error[] Errors { get; set; }
 
         [DataMember(Name = "result-ids")] // v1.0
-        public int[] ResultIDs { get; set; }
+        public long[] ResultIDs { get; set; }
 
         [DataMember(Name = "orders")] // v2.0
         public OrderShortInfo[] Orders { get; set; }
 
-        public bool HasErrors() => Errors != null && Errors.Any();
+        private IEnumerable<ErrorWithCode> ErrorsWithCodes =>
+            from err in Errors ?? Enumerable.Empty<Error>()
+            orderby err.Position
+            from ewc in err.ErrorCodes ?? Enumerable.Empty<ErrorWithCode>()
+            orderby ewc.Position
+            select ewc;
+
+        private bool HasOrders => Orders != null && Orders.Any();
+        public bool HasErrors() => !HasOrders && ErrorsWithCodes.Any();
 
         public string GetErrorMessage() =>
-            string.Join(". ", (Errors ?? Enumerable.Empty<ErrorWithCode>()).Select(e => e.Description));
+            string.Join(". ", ErrorsWithCodes.Select(e => e.Description));
     }
 }

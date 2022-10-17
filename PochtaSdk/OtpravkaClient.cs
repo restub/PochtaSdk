@@ -208,7 +208,7 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="orderIds">Order identities to delete.</param>
         /// <returns>Deleted order identities.</returns>
-        public OrderResponse DeleteOrders(params int[] orderIds) =>
+        public OrderResponse DeleteOrders(params long[] orderIds) =>
             Delete<OrderResponse>("1.0/backlog", orderIds);
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="orderId">Order identity.</param>
         /// <returns>Order details.</returns>
-        public OrderInfo GetOrder(int orderId) =>
+        public OrderInfo GetOrder(long orderId) =>
             Get<OrderInfo>("/1.0/backlog/{id}", r => r.AddUrlSegment("id", orderId));
 
         /// <inheritdoc/>

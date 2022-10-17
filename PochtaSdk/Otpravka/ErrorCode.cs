@@ -423,5 +423,11 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "CODE_1372")]
         Code1372,
+
+        /// <summary>
+        /// Ошибка добавления отправления в MMO
+        /// </summary>
+        [EnumMember(Value = "GROUPING_TO_MMO_ERROR")]
+        GroupingToMmoError,
     }
 }

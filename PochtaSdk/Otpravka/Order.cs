@@ -180,7 +180,7 @@ namespace PochtaSdk.Otpravka
         /// Объявленная ценность (копейки)
         /// </summary>
         [DataMember(Name = "insr-value")]
-        public int DeclaredValue { get; set; }
+        public int? DeclaredValue { get; set; }
 
         /// <summary>
         /// Наличие описи вложения
@@ -372,13 +372,13 @@ namespace PochtaSdk.Otpravka
         /// Телефон получателя (может быть обязательным для некоторых типов отправлений)
         /// </summary>
         [DataMember(Name = "tel-address")]
-        public long TelAddress { get; set; }
+        public long? TelAddress { get; set; }
 
         /// <summary>
         /// Телефон отправителя
         /// </summary>
         [DataMember(Name = "tel-address-from")]
-        public long TelAddressFrom { get; set; }
+        public long? TelAddressFrom { get; set; }
 
         /// <summary>
         /// Идентификатор временного интервала

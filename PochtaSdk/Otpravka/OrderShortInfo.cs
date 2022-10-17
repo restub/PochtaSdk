@@ -18,7 +18,7 @@ namespace PochtaSdk.Otpravka
         public string OrderNum { get; set; }
 
         [DataMember(Name = "result-id")]
-        public int ResultID { get; set; }
+        public long ResultID { get; set; }
 
         [DataMember(Name = "group-name")]
         public string GroupName { get; set; }

@@ -413,7 +413,7 @@ namespace PochtaSdk.Tests
                 .And.Message.Contains("короткий"));
         }
 
-        private int CreatedOrderID { get; set; } = 894604455;
+        private long CreatedOrderID { get; set; } = 894636184;
 
         [Test, Ordered]
         public void OtpravkaClientCreatesAnOrder()
@@ -483,6 +483,135 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null.Or.Empty);
             Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
             Assert.That(result.ResultIDs.First(), Is.EqualTo(CreatedOrderID));
+        }
+
+        private long[] CreatedOrders { get; set; }
+
+        [Test, Ordered, Ignore("AddToMmo doesn't work for some reason")]
+        public void OtpravkaClientCreatesMultipleOrdersAsMmo()
+        {
+            var result = Client.CreateOrders(new Order
+            {
+                AddToMmo = true,
+                OrderNum = "002",
+                GroupName = "002",
+                AddressFrom = new Address
+                {
+                    AddressType = AddressType.Demand,
+                    PostCode = "115162",
+                },
+                AddressTypeTo = AddressType.Default,
+                GivenName = "Иван",
+                MiddleName = "Иванович",
+                Surname = "Иванов",
+                PostOfficeCode = "142300",
+                PostCodeTo = 117105,
+                RegionTo = "г. Москва",
+                PlaceTo = "г. Москва",
+                StreetTo = "ш Варшавское",
+                HouseTo = "37",
+                RawAddress = "117105, Москва, Варшавское шоссе, 37",
+                TelAddressFrom = 79871234567,
+                TelAddress = 79871234567,
+                DeclaredValue = 1000,
+                TransportType = Otpravka.TransportType.Surface,
+                MailCategory = MailCategory.Ordinary,
+                MailCountryCode = Tariff.OksmCountryCode.Russia,
+                MailType = MailType.PostalParcel,
+                Mass = 500,
+                Dimensions = new Dimensions
+                {
+                    Height = 10,
+                    Length = 10,
+                    Width = 10,
+                },
+            },
+            new Order
+            {
+                AddToMmo = true,
+                OrderNum = "002",
+                GroupName = "002",
+                AddressFrom = new Address
+                {
+                    AddressType = AddressType.Demand,
+                    PostCode = "115162",
+                },
+                AddressTypeTo = AddressType.Default,
+                GivenName = "Иван",
+                MiddleName = "Иванович",
+                Surname = "Иванов",
+                PostOfficeCode = "142300",
+                PostCodeTo = 117105,
+                RegionTo = "г. Москва",
+                PlaceTo = "г. Москва",
+                StreetTo = "ш Варшавское",
+                HouseTo = "37",
+                RawAddress = "117105, Москва, Варшавское шоссе, 37",
+                TelAddressFrom = 79871234567,
+                TelAddress = 79871234567,
+                DeclaredValue = 1000,
+                TransportType = Otpravka.TransportType.Surface,
+                MailCategory = MailCategory.Ordinary,
+                MailCountryCode = Tariff.OksmCountryCode.Russia,
+                MailType = MailType.PostalParcel,
+                Mass = 500,
+                Dimensions = new Dimensions
+                {
+                    Height = 10,
+                    Length = 10,
+                    Width = 10,
+                },
+            },
+            new Order
+            {
+                AddToMmo = true,
+                OrderNum = "002",
+                GroupName = "002",
+                AddressFrom = new Address
+                {
+                    AddressType = AddressType.Demand,
+                    PostCode = "115162",
+                },
+                AddressTypeTo = AddressType.Default,
+                GivenName = "Иван",
+                MiddleName = "Иванович",
+                Surname = "Иванов",
+                PostOfficeCode = "142300",
+                PostCodeTo = 117105,
+                RegionTo = "г. Москва",
+                PlaceTo = "г. Москва",
+                StreetTo = "ш Варшавское",
+                HouseTo = "37",
+                RawAddress = "117105, Москва, Варшавское шоссе, 37",
+                TelAddressFrom = 79871234567,
+                TelAddress = 79871234567,
+                DeclaredValue = 1000,
+                TransportType = Otpravka.TransportType.Surface,
+                MailCategory = MailCategory.Ordinary,
+                MailCountryCode = Tariff.OksmCountryCode.Russia,
+                MailType = MailType.PostalParcel,
+                Mass = 500,
+                Dimensions = new Dimensions
+                {
+                    Height = 10,
+                    Length = 10,
+                    Width = 10,
+                },
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            CreatedOrders = result.ResultIDs;
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientDeletesCreatedOrders()
+        {
+            Assert.That(CreatedOrders, Is.Not.Null.Or.Empty);
+            var result = Client.DeleteOrders(CreatedOrders);
+            Assert.That(result, Is.Not.Null.Or.Empty);
+            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
         }
     }
 }

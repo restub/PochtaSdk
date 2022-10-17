@@ -173,10 +173,10 @@ namespace PochtaSdk.Otpravka
         public string HouseFrom { get; set; }
 
         /// <summary>
-        /// Код заказа?
+        /// Код заказа
         /// </summary>
         [DataMember(Name = "id")]
-        public int ID { get; set; }
+        public long ID { get; set; }
 
         /// <summary>
         /// Отправление в составе ММО (многоместного отправления)
