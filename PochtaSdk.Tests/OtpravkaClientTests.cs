@@ -413,7 +413,7 @@ namespace PochtaSdk.Tests
                 .And.Message.Contains("короткий"));
         }
 
-        private int CreatedOrderID { get; set; } = 893249738;
+        private int CreatedOrderID { get; set; } = 894604455;
 
         [Test, Ordered]
         public void OtpravkaClientCreatesAnOrder()
@@ -456,6 +456,23 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
             CreatedOrderID = result.ResultIDs.First();
+        }
+
+        [Test]
+        public void OtpravkaClientThrowsWhenOrderIsNotFound()
+        {
+            Assert.That(() => Client.GetOrder(123), 
+                Throws.TypeOf<RestubException>()
+                    .With.Message.EqualTo("Instance ComplexOrderV2 not found for params: 123"));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientReturnsAnOrderByIdentity()
+        {
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+            var result = Client.GetOrder(CreatedOrderID);
+            Assert.That(result, Is.Not.Null.Or.Empty);
+            Assert.That(result.ID, Is.EqualTo(CreatedOrderID));
         }
 
         [Test, Ordered]

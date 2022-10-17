@@ -1,16 +1,14 @@
 ﻿using System.Runtime.Serialization;
-using OksmCountryCode = PochtaSdk.Tariff.OksmCountryCode;
 
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Order details.
-    /// Заказ, подробности. Используется при запросе заказов.
-    /// https://otpravka.pochta.ru/specification#/orders-creating_order
-    /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
+    /// Order detailed information.
+    /// Заказ, подробная информация. Используется при запросе заказов.
+    /// https://otpravka.pochta.ru/specification#/orders-search_order_byid
     /// </summary>
     [DataContract]
-    public class OrderDetails : Order
+    public class OrderInfo : Order
     {
         /// <summary>
         /// Адрес получателя скорректирован в процессе очистки
@@ -183,7 +181,7 @@ namespace PochtaSdk.Otpravka
         /// <summary>
         /// Отправление в составе ММО (многоместного отправления)
         /// </summary>
-        [DataMember(Name = "id")]
+        [DataMember(Name = "in-mmo")]
         public bool InMmo { get; set; }
 
         /// <summary>
@@ -324,168 +322,106 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "place-from")]
         public string PlaceFrom { get; set; }
 
-        /*/----
+        /// <summary>
+        /// Коды отметок внутренних и международных отправлений
+        /// </summary>
+        [DataMember(Name = "postmarks")]
+        public PostMark[] PostMarks { get; set; }
 
         /// <summary>
-        /// Индекс места приема
+        /// Надбавка за "Предпочтовая подготовка" с НДС
         /// </summary>
-        [DataMember(Name = "postoffice-code")]
-        public string PostOfficeCode { get; set; }
+        [DataMember(Name = "pre-postal-preparation-with-vat")]
+        public int? PrePostalPreparationWithVat { get; set; }
 
         /// <summary>
-        /// Предпочтовая подготовка
+        /// Надбавка за "Предпочтовая подготовка" без НДС
         /// </summary>
-        [DataMember(Name = "pre-postal-preparation")]
-        public bool PrePostalPreparation { get; set; }
+        [DataMember(Name = "pre-postal-preparation-wo-vat")]
+        public int? PrePostalPreparationWithoutVat { get; set; }
+        
+        /// <summary>
+        /// Область, регион отправителя
+        /// </summary>
+        [DataMember(Name = "region-from")]
+        public string RegionFrom { get; set; }
 
         /// <summary>
-        /// Сумма частичной предоплаты
+        /// Часть здания: Номер помещения отправителя
         /// </summary>
-        [DataMember(Name = "prepaid-amount")]
-        public int PrepaidAmount { get; set; }
+        [DataMember(Name = "room-from")]
+        public string RoomFrom { get; set; }
 
         /// <summary>
-        /// Необработанный адрес получателя
+        /// Часть здания: Дробь отправителя
         /// </summary>
-        [DataMember(Name = "raw-address")]
-        public string RawAddress { get; set; }
+        [DataMember(Name = "slash-from")]
+        public string SlashFrom { get; set; }
 
         /// <summary>
-        /// Наименование получателя одной строкой (ФИО, наименование организации)
+        /// Надбавка за "Пакет смс получателю" с НДС
         /// </summary>
-        [DataMember(Name = "recipient-name")]
-        public string RecipientName { get; set; }
+        [DataMember(Name = "sms-notice-recipient-rate-with-vat")]
+        public int? SmsNoticeRecipientWithVat { get; set; }
 
         /// <summary>
-        /// Область, регион
+        /// Надбавка за "Пакет смс получателю" без НДС
         /// </summary>
-        [DataMember(Name = "region-to")]
-        public string RegionTo { get; set; }
+        [DataMember(Name = "sms-notice-recipient-rate-wo-vat")]
+        public int? SmsNoticeRecipientWithoutVat { get; set; }
 
         /// <summary>
-        /// Часть здания: Номер помещения
+        /// Часть адреса: Улица отправителя
         /// </summary>
-        [DataMember(Name = "room-to")]
-        public string RoomTo { get; set; }
+        [DataMember(Name = "street-from")]
+        public string StreetFrom { get; set; }
 
         /// <summary>
-        /// Комментарий отправителя для ЭУВ
+        /// Плата всего без НДС (коп)
         /// </summary>
-        [DataMember(Name = "sender-comment")]
-        public string SenderComment{ get; set; }
+        [DataMember(Name = "total-rate-wo-vat")]
+        public int TotalRateWithoutVat { get; set; }
 
         /// <summary>
-        /// Наименование отправителя одной строкой (ФИО, наименование организации)
+        /// Всего НДС (коп)
         /// </summary>
-        [DataMember(Name = "sender-name")]
-        public string SenderName { get; set; }
+        [DataMember(Name = "total-vat")]
+        public int TotalVat { get; set; }
 
         /// <summary>
-        /// Срок хранения отправления от 15 до 60 дней
+        /// Версия заказа
         /// </summary>
-        [DataMember(Name = "shelf-life-days")]
-        public int? ShelfLifeDays { get; set; }
+        [DataMember(Name = "version")]
+        public int Version { get; set; }
 
         /// <summary>
-        /// Часть здания: Дробь
+        /// Часть здания: Владение отправителя
         /// </summary>
-        [DataMember(Name = "slash-to")]
-        public string SlashTo { get; set; }
+        [DataMember(Name = "vladenie-from")]
+        public string VladenieFrom { get; set; }
 
         /// <summary>
-        /// Признак услуги SMS уведомления
+        /// Надбавка за "Возврат сопроводительных документов" с НДС
         /// </summary>
-        [DataMember(Name = "sms-notice-recipient")]
-        public int SmsNoticeRecipient { get; set; }
+        [DataMember(Name = "vsd-rate-with-vat")]
+        public int? DocumentReturnRateWithVat { get; set; }
 
         /// <summary>
-        /// Почтовый индекс (буквенно-цифровой)
+        /// Надбавка за "Возврат сопроводительных документов" без НДС
         /// </summary>
-        [DataMember(Name = "str-index-to")]
-        public string PostalCodeTo { get; set; }
+        [DataMember(Name = "vsd-rate-wo-vat")]
+        public int? DocumentReturnRateWithoutVat { get; set; }
 
         /// <summary>
-        /// Часть адреса: Улица
+        /// Надбавка за "Проверку вложений с примеркой" с НДС
         /// </summary>
-        [DataMember(Name = "street-to")]
-        public string StreetTo { get; set; }
+        [DataMember(Name = "with-fitting-rate-with-vat")]
+        public int? WithFittingRateWithVat { get; set; }
 
         /// <summary>
-        /// Фамилия получателя
+        /// Надбавка за "Проверку вложений с примеркой" без НДС
         /// </summary>
-        [DataMember(Name = "surname")]
-        public string Surname { get; set; }
-
-        /// <summary>
-        /// Телефон получателя (может быть обязательным для некоторых типов отправлений)
-        /// </summary>
-        [DataMember(Name = "tel-address")]
-        public long TelAddress { get; set; }
-
-        /// <summary>
-        /// Телефон отправителя
-        /// </summary>
-        [DataMember(Name = "tel-address-from")]
-        public long TelAddressFrom { get; set; }
-
-        /// <summary>
-        /// Идентификатор временного интервала
-        /// </summary>
-        [DataMember(Name = "time-slot-id")]
-        public int? TimeSlotID { get; set; }
-
-        /// <summary>
-        /// Возможный вид транспортировки (для международных отправлений).
-        /// </summary>
-        [DataMember(Name = "transport-type")]
-        public TransportType? TransportType { get; set; }
-
-        /// <summary>
-        /// Часть здания: Владение
-        /// </summary>
-        [DataMember(Name = "vladenie-to")]
-        public string VladenieTo { get; set; }
-
-        /// <summary>
-        /// Возврат сопроводительных документов
-        /// </summary>
-        [DataMember(Name = "vsd")]
-        public bool DocumentReturn { get; set; }
-
-        /// <summary>
-        /// С документами (для ЕМС международного)
-        /// </summary>
-        [DataMember(Name = "with-documents")]
-        public bool WithDocuments { get; set; }
-
-        /// <summary>
-        /// Отметка 'С электронным уведомлением'
-        /// </summary>
-        [DataMember(Name = "with-electronic-notice")]
-        public bool WithElectronicNotice { get; set; }
-
-        /// <summary>
-        /// С товарами (для ЕМС международного)
-        /// </summary>
-        [DataMember(Name = "with-goods")]
-        public bool WithGoods { get; set; }
-
-        /// <summary>
-        /// Отметка 'С заказным уведомлением'
-        /// </summary>
-        [DataMember(Name = "with-order-of-notice")]
-        public bool WithOrderOfNotice { get; set; }
-
-        /// <summary>
-        /// Отметка 'С простым уведомлением'
-        /// </summary>
-        [DataMember(Name = "with-simple-notice")]
-        public bool WithSimpleNotice { get; set; }
-
-        /// <summary>
-        /// Отметка "Без разряда"
-        /// </summary>
-        [DataMember(Name = "wo-mail-rank")]
-        public bool WithoutMailRank { get; set; }*/
+        [DataMember(Name = "with-fitting-rate-wo-vat")]
+        public int? WithFittingRateWithoutVat { get; set; }
     }
 }

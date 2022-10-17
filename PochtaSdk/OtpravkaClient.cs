@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using PochtaSdk.Otpravka;
+using RestSharp;
 using RestSharp.Authenticators;
 using Restub;
+using Restub.DataContracts;
 
 namespace PochtaSdk
 {
@@ -208,5 +210,18 @@ namespace PochtaSdk
         /// <returns>Deleted order identities.</returns>
         public OrderResponse DeleteOrders(params int[] orderIds) =>
             Delete<OrderResponse>("1.0/backlog", orderIds);
+
+        /// <summary>
+        /// Get order by identity.
+        /// https://otpravka.pochta.ru/specification#/orders-search_order_byid
+        /// </summary>
+        /// <param name="orderId">Order identity.</param>
+        /// <returns>Order details.</returns>
+        public OrderInfo GetOrder(int orderId) =>
+            Get<OrderInfo>("/1.0/backlog/{id}", r => r.AddUrlSegment("id", orderId));
+
+        /// <inheritdoc/>
+        protected override IHasErrors DeserializeErrorResponse(IRestResponse response) =>
+            Serializer.Deserialize<ErrorWithSubCode>(response);
     }
 }
