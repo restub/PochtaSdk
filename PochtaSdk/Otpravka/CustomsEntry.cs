@@ -53,5 +53,13 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "weight")]
         public int Weight { get; set; }
+
+        //---------------------------------
+
+        /// <summary>
+        /// Порядковый номер (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "entry-number")]
+        public int? EntryNumber { get; set; }
     }
 }

@@ -115,5 +115,25 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "weight")]
         public int Weight { get; set; }
+
+        // -------------------
+
+        /// <summary>
+        /// Категория товара (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "category-feature")]
+        public string CategoryFeature { get; set; }
+
+        /// <summary>
+        /// Номер товара в списке вложений (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "id")]
+        public int? ID { get; set; }
+
+        /// <summary>
+        /// Статус возврата, вложения ЕКОМ (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "returned")]
+        public bool? Returned { get; set; }
     }
 }

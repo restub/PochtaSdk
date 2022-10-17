@@ -28,5 +28,13 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "services")]
         public EcomService[] Services { get; set; }
+
+        // ------------
+
+        /// <summary>
+        /// Тип пункта выдачи (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "delivery-point-type")]
+        public DeliveryPointType? DeliveryPointType { get; set; }
     }
 }

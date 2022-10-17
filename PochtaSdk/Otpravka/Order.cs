@@ -4,8 +4,8 @@ using OksmCountryCode = PochtaSdk.Tariff.OksmCountryCode;
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Order.
-    /// Заказ.
+    /// Order, base class.
+    /// Заказ, базовый класс. Используется при создании заказов.
     /// https://otpravka.pochta.ru/specification#/orders-creating_order
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
     /// </summary>
@@ -142,7 +142,7 @@ namespace PochtaSdk.Otpravka
         /// Товарное вложение РПО
         /// </summary>
         [DataMember(Name = "goods")]
-        public object Goods { get; set; }
+        public OrderGoods Goods { get; set; }
 
         /// <summary>
         /// Наименование группы
@@ -222,7 +222,7 @@ namespace PochtaSdk.Otpravka
         /// Вес РПО (в граммах)
         /// </summary>
         [DataMember(Name = "mass")]
-        public int Weight { get; set; }
+        public int Mass { get; set; }
 
         /// <summary>
         /// Отчество получателя

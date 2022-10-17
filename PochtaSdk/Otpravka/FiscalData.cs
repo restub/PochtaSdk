@@ -33,12 +33,20 @@ namespace PochtaSdk.Otpravka
         /// Телефон плательщика
         /// </summary>
         [DataMember(Name = "customer-phone")]
-        public int CustomerPhone { get; set; }
+        public int? CustomerPhone { get; set; }
 
         /// <summary>
         /// Сумма предоплаты (копейки)
         /// </summary>
         [DataMember(Name = "payment-amount")]
-        public int PaymentAmount { get; set; }
+        public int? PaymentAmount { get; set; }
+
+        // --------------------
+
+        /// <summary>
+        /// Средства, использованные при оплате (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "fiscal-payments")]
+        public FiscalPayment[] FiscalPayments { get; set; }
     }
 }

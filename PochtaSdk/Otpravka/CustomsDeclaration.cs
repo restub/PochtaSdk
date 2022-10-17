@@ -23,11 +23,11 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "currency")]
         public Currency Currency { get; set; }
 
+        /// <summary>
+        /// Код таможенного органа
+        /// </summary>
         [DataMember(Name = "customs-code")]
         public string CustomsCode { get; set; }
-
-        [DataMember(Name = "ioss-code")]
-        public string IossCode { get; set; }
 
         /// <summary>
         /// Список вложений
@@ -35,12 +35,27 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "customs-entries")]
         public CustomsEntry[] CustomsEntries { get; set; }
 
+        /// <summary>
+        /// Категория вложения.
+        /// </summary>
         [DataMember(Name = "entries-type")]
-        public string EntriesType { get; set; }
+        public CustomsEntryType? EntriesType { get; set; }
 
+        /// <summary>
+        /// Счет (номер счета-фактуры)
+        /// </summary>
         [DataMember(Name = "invoice-number")]
         public string InvoiceNumber { get; set; }
 
+        /// <summary>
+        /// Регистрационный код продавца
+        /// </summary>
+        [DataMember(Name = "ioss-code")]
+        public string IossCode { get; set; }
+
+        /// <summary>
+        /// Лицензии, сопровождающие отправление
+        /// </summary>
         [DataMember(Name = "license-number")]
         public string LicenseNumber { get; set; }
 
@@ -61,5 +76,61 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "with-license")]
         public bool WithLicense { get; set; }
+
+        // ----------------------
+
+        /// <summary>
+        /// Комментарии (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "comments")]
+        public string Comments { get; set; }
+
+        /// <summary>
+        /// Комментарии таможенного органа (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "customs-comments")]
+        public string CustomsComments { get; set; }
+
+        /// <summary>
+        /// Решение таможенного органа (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "customs-decision")]
+        public CustomsDecision? CustomsDecision { get; set; }
+
+        /// <summary>
+        /// Дата решения таможенного органа (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "decision-date")]
+        public string DecisionDate { get; set; }
+
+        /// <summary>
+        /// Описание решения таможенного органа (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "decision-description")]
+        public string DecisionDescription { get; set; }
+
+        /// <summary>
+        /// Ошибка декларирования (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "fts-error")]
+        public string FtsError { get; set; }
+
+        /// <summary>
+        /// Описание рекомендации таможенного органа (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "recom-description")]
+        public string RecommendationDescription { get; set; }
+
+        /// <summary>
+        /// Дата регистрации документа таможенного органа (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "registration-date")]
+        public string RegistrationDate { get; set; }
+
+        /// <summary>
+        /// Статус декларации в процессе электронного декларирования (поле появляется только при запросе заказа)
+        /// </summary>
+        [DataMember(Name = "status")]
+        public CustomsDeclarationStatus? Status { get; set; }
     }
 }

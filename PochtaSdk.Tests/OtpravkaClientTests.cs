@@ -443,7 +443,7 @@ namespace PochtaSdk.Tests
                 MailCategory = MailCategory.Ordinary,
                 MailCountryCode = Tariff.OksmCountryCode.Russia,
                 MailType = MailType.PostalParcel,
-                Weight = 1000,
+                Mass = 1000,
                 Dimensions = new Dimensions
                 { 
                     Height = 3,
