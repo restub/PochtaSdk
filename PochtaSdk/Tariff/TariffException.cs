@@ -7,6 +7,7 @@ namespace PochtaSdk.Tariff
     /// <summary>
     /// Tariff REST API exception.
     /// </summary>
+    [Serializable]
     public class TariffException : RestubException
     {
         /// <summary>

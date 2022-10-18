@@ -223,5 +223,9 @@ namespace PochtaSdk
         /// <inheritdoc/>
         protected override IHasErrors DeserializeErrorResponse(IRestResponse response) =>
             Serializer.Deserialize<ErrorWithSubCode>(response);
+
+        /// <inheritdoc/>
+        protected override Exception CreateException(IRestResponse res, string msg, IHasErrors errors) =>
+            new OtpravkaException(res.StatusCode, msg, base.CreateException(res, msg, errors));
     }
 }

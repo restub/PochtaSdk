@@ -429,5 +429,23 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "GROUPING_TO_MMO_ERROR")]
         GroupingToMmoError,
+
+        /// <summary>
+        /// Недопустимое значение поля "Имя получателя". (Разрешается использовать только латинские буквы)."
+        /// </summary>
+        [EnumMember(Value = "ILLEGAL_RECIPIENT_NAME_INTL")]
+        IllegalRecipientNameIntl,
+
+        /// <summary>
+        /// Не задан адрес (Улица, дом, квартира).
+        /// </summary>
+        [EnumMember(Value = "EMPTY_STREET_TO")]
+        EmptyStreetTo,
+
+        /// <summary>
+        /// Не заданы вложения для таможенной декларации.
+        /// </summary>
+        [EnumMember(Value = "EMPTY_CUSTOMS_ENTRIES")]
+        EmptyCustomsEntries,
     }
 }
