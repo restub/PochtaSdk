@@ -452,6 +452,48 @@ namespace PochtaSdk.Otpravka
         /// Указание размеров для данного вида РПО не предусмотрено.
         /// </summary>
         [EnumMember(Value = "DIMENSION_NOT_SUPPORTED")]
-        DimensionNotSupported, 
+        DimensionNotSupported,
+
+        /// <summary>
+        /// Тип отправления для данного направления не подключен в настройках пользователя.
+        /// </summary>
+        [EnumMember(Value = "UNAVAILABLE_MAIL_TYPE")]
+        UnavailableMailType,
+
+        /// <summary>
+        /// Список товарных вложений пуст.
+        /// </summary>
+        [EnumMember(Value = "EMPTY_GOODS_ITEMS_LIST")]
+        EmptyGoodsItemsList,
+
+        /// <summary>
+        /// Не указан Идентификатор пункта выдачи заказов.
+        /// </summary>
+        [EnumMember(Value = "EMPTY_DELIVERY_POINT_INDEX")]
+        EmptyDeliveryPointIndex,
+
+        /// <summary>
+        /// Не заполнены фискальные данные.
+        /// </summary>
+        [EnumMember(Value = "EMPTY_FISCAL_DATA")]
+        EmptyFiscalData,
+
+        /// <summary>
+        /// Недопустимое значение для "Пакет смс получателю".
+        /// </summary>
+        [EnumMember(Value = "ILLEGAL_SMS_NOTICE_RECIPIENT_VALUE")]
+        IllegalSmsNoticeRecipientValue,
+
+        /// <summary>
+        /// Не указан типоразмер.
+        /// </summary>
+        [EnumMember(Value = "EMPTY_DIMENSION_TYPE")]
+        EmptyDimensionType,
+
+        /// <summary>
+        /// Некорректный способ оплаты уведомления.
+        /// </summary>
+        [EnumMember(Value = "ILLEGAL_NOTICE_PAYMENT_METHOD")]
+        IllegalNoticePaymentMethod,
     }
 }

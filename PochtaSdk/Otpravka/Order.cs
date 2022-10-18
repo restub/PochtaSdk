@@ -18,7 +18,7 @@ namespace PochtaSdk.Otpravka
         /// <remarks>
         /// Поддержка многоместных отправлений должна быть включена в профиле клиента.
         /// Кроме того, не все виды РПО поддерживают многоместные отправления.
-        /// Известно, что поддерживается в Посылке Онлайн.
+        /// Известно, что поддерживается в Посылке Онлайн, Курьер Онлайн.
         /// </remarks>
         [DataMember(Name = "add-to-mmo")]
         public bool AddToMmo { get; set; }
@@ -249,7 +249,7 @@ namespace PochtaSdk.Otpravka
         /// Способ оплаты уведомления
         /// </summary>
         [DataMember(Name = "notice-payment-method")]
-        public PaymentMethod NoticePaymentMethod { get; set; }
+        public PaymentMethod? NoticePaymentMethod { get; set; }
 
         /// <summary>
         /// Номер для а/я, войсковая часть, войсковая часть ЮЯ, полевая почта
@@ -279,7 +279,7 @@ namespace PochtaSdk.Otpravka
         /// Способ оплаты.
         /// </summary>
         [DataMember(Name = "payment-method")]
-        public PaymentMethod PaymentMethod { get; set; }
+        public PaymentMethod? PaymentMethod { get; set; }
 
         /// <summary>
         /// Населенный пункт

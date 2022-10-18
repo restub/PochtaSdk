@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using NUnit.Framework;
 using PochtaSdk.Otpravka;
-using Restub;
+using OksmCountryCode = PochtaSdk.Tariff.OksmCountryCode;
 
 namespace PochtaSdk.Tests
 {
@@ -96,6 +96,21 @@ namespace PochtaSdk.Tests
             Assert.That(address.PlaceGuid, Is.EqualTo("0c5b2444-70a0-4932-980c-b4dc0d3f02b5"));
             Assert.That(address.StreetGuid, Is.EqualTo("8fc06b0b-5de3-4a72-9e6f-9e0647a37a66"));
             Assert.That(address.AddressGuid, Is.EqualTo("990231d5-4bd1-4323-997a-217002c4094e"));
+
+            address = Client.CleanAddress("набережная реки Пряжки, 46, 1, Санкт-Петербург, 190121");
+            Assert.That(address, Is.Not.Null);
+            Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
+            Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
+            Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
+            Assert.That(address.PostCode, Is.EqualTo("190121"));
+            Assert.That(address.Region, Is.EqualTo("г Санкт-Петербург"));
+            Assert.That(address.Place, Is.EqualTo("г Санкт-Петербург"));
+            Assert.That(address.Street, Is.EqualTo("наб Реки Пряжки"));
+            Assert.That(address.House, Is.EqualTo("46"));
+            Assert.That(address.Room, Is.EqualTo("1"));
+            Assert.That(address.RegionGuid, Is.EqualTo("c2deb16a-0330-4f05-821f-1d09c93331e6"));
+            Assert.That(address.PlaceGuid, Is.EqualTo("c2deb16a-0330-4f05-821f-1d09c93331e6"));
+            Assert.That(address.StreetGuid, Is.EqualTo("ca64ff57-2d6f-40ed-81d2-66cd94c6d630"));
         }
 
         [Test]
@@ -485,12 +500,13 @@ namespace PochtaSdk.Tests
             Assert.That(result.ResultIDs.First(), Is.EqualTo(CreatedOrderID));
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 895888823, 895888824, 895888825, }; 
+        private long[] CreatedOrders { get; set; } = new long[] { 896020418, 896020419, 896020420, }; 
 
         [Test, Ordered]
         public void OtpravkaClientCreatesMultipleOrdersAsMmo()
         {
-            var result = Client.CreateOrders(new Order
+            var mailType = MailType.OnlineCourier;
+            var order = new Order
             {
                 AddToMmo = true,
                 OrderNum = "002",
@@ -516,8 +532,8 @@ namespace PochtaSdk.Tests
                 DeclaredValue = 1000,
                 TransportType = Otpravka.TransportType.Surface,
                 MailCategory = MailCategory.Ordinary,
-                MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.OnlineParcel,
+                MailCountryCode = OksmCountryCode.Russia,
+                MailType = mailType,
                 Mass = 500,
                 //Dimensions = new Dimensions
                 //{
@@ -525,79 +541,10 @@ namespace PochtaSdk.Tests
                 //    Length = 10,
                 //    Width = 10,
                 //},
-            },
-            new Order
-            {
-                AddToMmo = true,
-                OrderNum = "002",
-                GroupName = "002",
-                AddressFrom = new Address
-                {
-                    AddressType = AddressType.Demand,
-                    PostCode = "115162",
-                },
-                AddressTypeTo = AddressType.Default,
-                GivenName = "Иван",
-                MiddleName = "Иванович",
-                Surname = "Иванов",
-                PostOfficeCode = "142300",
-                PostCodeTo = 117105,
-                RegionTo = "г. Москва",
-                PlaceTo = "г. Москва",
-                StreetTo = "ш Варшавское",
-                HouseTo = "37",
-                RawAddress = "117105, Москва, Варшавское шоссе, 37",
-                TelAddressFrom = 79871234567,
-                TelAddress = 79871234567,
-                DeclaredValue = 1000,
-                TransportType = Otpravka.TransportType.Surface,
-                MailCategory = MailCategory.Ordinary,
-                MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.OnlineParcel,
-                Mass = 500,
-                //Dimensions = new Dimensions
-                //{
-                //    Height = 10,
-                //    Length = 10,
-                //    Width = 10,
-                //},
-            },
-            new Order
-            {
-                AddToMmo = true,
-                OrderNum = "002",
-                GroupName = "002",
-                AddressFrom = new Address
-                {
-                    AddressType = AddressType.Demand,
-                    PostCode = "115162",
-                },
-                AddressTypeTo = AddressType.Default,
-                GivenName = "Иван",
-                MiddleName = "Иванович",
-                Surname = "Иванов",
-                PostOfficeCode = "142300",
-                PostCodeTo = 117105,
-                RegionTo = "г. Москва",
-                PlaceTo = "г. Москва",
-                StreetTo = "ш Варшавское",
-                HouseTo = "37",
-                RawAddress = "117105, Москва, Варшавское шоссе, 37",
-                TelAddressFrom = 79871234567,
-                TelAddress = 79871234567,
-                DeclaredValue = 1000,
-                TransportType = Otpravka.TransportType.Surface,
-                MailCategory = MailCategory.Ordinary,
-                MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.OnlineParcel,
-                Mass = 500,
-                //Dimensions = new Dimensions
-                //{
-                //    Height = 10,
-                //    Length = 10,
-                //    Width = 10,
-                //},
-            });
+            };
+
+            var orders = Enumerable.Repeat(order, 3).ToArray();
+            var result = Client.CreateOrders(orders);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
