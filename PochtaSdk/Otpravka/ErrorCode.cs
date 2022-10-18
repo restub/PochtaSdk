@@ -447,5 +447,11 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "EMPTY_CUSTOMS_ENTRIES")]
         EmptyCustomsEntries,
+
+        /// <summary>
+        /// Указание размеров для данного вида РПО не предусмотрено.
+        /// </summary>
+        [EnumMember(Value = "DIMENSION_NOT_SUPPORTED")]
+        DimensionNotSupported, 
     }
 }

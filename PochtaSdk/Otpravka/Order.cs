@@ -13,8 +13,13 @@ namespace PochtaSdk.Otpravka
     public class Order
     {
         /// <summary>
-        /// Отметка 'Добавить в многоместное отправление'
+        /// Отметка 'Добавить в многоместное отправление'.
         /// </summary>
+        /// <remarks>
+        /// Поддержка многоместных отправлений должна быть включена в профиле клиента.
+        /// Кроме того, не все виды РПО поддерживают многоместные отправления.
+        /// Известно, что поддерживается в Посылке Онлайн.
+        /// </remarks>
         [DataMember(Name = "add-to-mmo")]
         public bool AddToMmo { get; set; }
 
@@ -93,6 +98,10 @@ namespace PochtaSdk.Otpravka
         /// <summary>
         /// Линейные размеры
         /// </summary>
+        /// <remarks>
+        /// Поддерживаются не для всех видов РПО.
+        /// Например, нельзя указывать размеры для Посылки Онлайн и Посылки 1 класса.
+        /// </remarks>
         [DataMember(Name = "dimension")]
         public Dimensions Dimensions { get; set; }
 

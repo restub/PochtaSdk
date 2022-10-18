@@ -485,9 +485,9 @@ namespace PochtaSdk.Tests
             Assert.That(result.ResultIDs.First(), Is.EqualTo(CreatedOrderID));
         }
 
-        private long[] CreatedOrders { get; set; }
+        private long[] CreatedOrders { get; set; } = new long[] { 895888823, 895888824, 895888825, }; 
 
-        [Test, Ordered, Ignore("AddToMmo doesn't work for some reason")]
+        [Test, Ordered]
         public void OtpravkaClientCreatesMultipleOrdersAsMmo()
         {
             var result = Client.CreateOrders(new Order
@@ -517,14 +517,14 @@ namespace PochtaSdk.Tests
                 TransportType = Otpravka.TransportType.Surface,
                 MailCategory = MailCategory.Ordinary,
                 MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.PostalParcel,
+                MailType = MailType.OnlineParcel,
                 Mass = 500,
-                Dimensions = new Dimensions
-                {
-                    Height = 10,
-                    Length = 10,
-                    Width = 10,
-                },
+                //Dimensions = new Dimensions
+                //{
+                //    Height = 10,
+                //    Length = 10,
+                //    Width = 10,
+                //},
             },
             new Order
             {
@@ -553,14 +553,14 @@ namespace PochtaSdk.Tests
                 TransportType = Otpravka.TransportType.Surface,
                 MailCategory = MailCategory.Ordinary,
                 MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.PostalParcel,
+                MailType = MailType.OnlineParcel,
                 Mass = 500,
-                Dimensions = new Dimensions
-                {
-                    Height = 10,
-                    Length = 10,
-                    Width = 10,
-                },
+                //Dimensions = new Dimensions
+                //{
+                //    Height = 10,
+                //    Length = 10,
+                //    Width = 10,
+                //},
             },
             new Order
             {
@@ -589,14 +589,14 @@ namespace PochtaSdk.Tests
                 TransportType = Otpravka.TransportType.Surface,
                 MailCategory = MailCategory.Ordinary,
                 MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.PostalParcel,
+                MailType = MailType.OnlineParcel,
                 Mass = 500,
-                Dimensions = new Dimensions
-                {
-                    Height = 10,
-                    Length = 10,
-                    Width = 10,
-                },
+                //Dimensions = new Dimensions
+                //{
+                //    Height = 10,
+                //    Length = 10,
+                //    Width = 10,
+                //},
             });
 
             Assert.That(result, Is.Not.Null);
@@ -604,7 +604,7 @@ namespace PochtaSdk.Tests
             CreatedOrders = result.ResultIDs;
         }
 
-        [Test, Ordered, Ignore("AddToMmo doesn't work for some reason")]
+        [Test, Ordered]
         public void OtpravkaClientDeletesCreatedOrders()
         {
             Assert.That(CreatedOrders, Is.Not.Null.Or.Empty);
