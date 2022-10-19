@@ -82,7 +82,7 @@ namespace PochtaSdk.Tests
                 Time = TimeSpan.FromHours(2.5),
             });
 
-            Assert.That(json, Is.Not.Null.Or.Empty);
+            Assert.That(json, Is.Not.Null.And.Not.Empty);
             Assert.That(json, Does.StartWith("{").And.EndWith("}"));
             Assert.That(json, Does.Contain("Расчет тарифов"));
             Assert.That(json, Does.Contain("Бандероль простая"));
@@ -101,7 +101,7 @@ namespace PochtaSdk.Tests
                 Time = TimeSpan.FromHours(2.5),
             });
 
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
             Assert.That(text, Does.StartWith("[Расчет тарифов, контрольных сроков доставки]"));
             Assert.That(text, Does.Contain("Бандероль простая"));
             Assert.That(text, Does.Contain("[Процесс расчета]"));
@@ -121,7 +121,7 @@ namespace PochtaSdk.Tests
                 Time = TimeSpan.FromHours(2.5),
             });
 
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
             Assert.That(html.Trim(), Does.StartWith("<").And.EndWith(">"));
             Assert.That(html, Does.Contain("<p>"));
             Assert.That(html, Does.Contain("Исходные данные"));
@@ -141,8 +141,8 @@ namespace PochtaSdk.Tests
                 Time = TimeSpan.FromHours(2.5),
                 PackageType = PackageType.BoxS,
                 Services =
-                { 
-                    ServiceType.FreeStorageForUpTo7Days, 
+                {
+                    ServiceType.FreeStorageForUpTo7Days,
                     ServiceType.SafetyGuarantee,
                     ServiceType.Delivery,
                     ServiceType.RegisteredDeliveryNotification,
@@ -188,7 +188,7 @@ namespace PochtaSdk.Tests
             Assert.That(result.GroundAmount, Is.Not.Null);
             Assert.That(result.GroundAmount.Value, Is.Not.EqualTo(0));
             Assert.That(result.GroundAmount.ValueNds, Is.Not.EqualTo(0));
-            Assert.That(result.Items, Is.Not.Null.Or.Empty);
+            Assert.That(result.Items, Is.Not.Null.And.Not.Empty);
 
             // check if we have tariffs for the services
             var svc = result.Items.FirstOrDefault(c => c.ServiceOn.Contains(ServiceType.SmsNotificationOfArrivalAtTheBranch));
@@ -232,20 +232,20 @@ namespace PochtaSdk.Tests
             Assert.That(result.GroundAmount, Is.Not.Null);
             Assert.That(result.GroundAmount.Value, Is.Not.EqualTo(0));
             Assert.That(result.GroundAmount.ValueNds, Is.Not.EqualTo(0));
-            Assert.That(result.Items, Is.Not.Null.Or.Empty);
+            Assert.That(result.Items, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
         public void GetCategories()
         {
             var cat = Client.GetCategories();
-            Assert.That(cat, Is.Not.Null.Or.Empty);
+            Assert.That(cat, Is.Not.Null);
 
             var html = Client.GetCategories(ResponseFormat.Html);
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
 
             var text = Client.GetCategories(ResponseFormat.Text);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -257,13 +257,13 @@ namespace PochtaSdk.Tests
         public void GetCategoryDescription(int id)
         {
             var cat = Client.GetCategoryDescription(id);
-            Assert.That(cat, Is.Not.Null.Or.Empty);
+            Assert.That(cat, Is.Not.Null);
 
             var html = Client.GetCategoryDescription(ResponseFormat.Html, id);
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
 
             var text = Client.GetCategoryDescription(ResponseFormat.Text, id);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -275,13 +275,13 @@ namespace PochtaSdk.Tests
         public void GetObjectTypes(int id)
         {
             var cat = Client.GetObjectTypes(id);
-            Assert.That(cat, Is.Not.Null.Or.Empty);
+            Assert.That(cat, Is.Not.Null);
 
             var html = Client.GetObjectTypes(ResponseFormat.Html, id);
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
 
             var text = Client.GetObjectTypes(ResponseFormat.Text, id);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -291,14 +291,14 @@ namespace PochtaSdk.Tests
         public void GetObjectType(ObjectType objectType, string name)
         {
             var obj = Client.GetObjectType(objectType);
-            Assert.That(obj, Is.Not.Null.Or.Empty);
+            Assert.That(obj, Is.Not.Null);
             Assert.That(obj.Name, Is.EqualTo(name));
 
             var html = Client.GetObjectType(ResponseFormat.Html, objectType);
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
 
             var text = Client.GetObjectType(ResponseFormat.Text, objectType);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
 
             var invalidObjectType = 100000 + (int)objectType;
             Assert.That(() => Client.GetObjectType((ObjectType)invalidObjectType),
@@ -309,16 +309,16 @@ namespace PochtaSdk.Tests
         public void GetServices()
         {
             var services = Client.GetServices();
-            Assert.That(services, Is.Not.Null.Or.Empty);
+            Assert.That(services, Is.Not.Null);
 
             services = Client.GetServices(ServiceType.Administrative, ServiceType.Billing, ServiceType.CombinedDelivery);
-            Assert.That(services, Is.Not.Null.Or.Empty);
+            Assert.That(services, Is.Not.Null);
 
             var html = Client.GetServices(ResponseFormat.Html);
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
 
             var text = Client.GetServices(ResponseFormat.Text, ServiceType.Administrative, ServiceType.Billing, ServiceType.CombinedDelivery);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -326,26 +326,26 @@ namespace PochtaSdk.Tests
         {
             // all countries
             var countries = Client.GetCountries();
-            Assert.That(countries, Is.Not.Null.Or.Empty);
+            Assert.That(countries, Is.Not.Null);
 
             // listed countries
             countries = Client.GetCountries(895, 40, 8);
-            Assert.That(countries, Is.Not.Null.Or.Empty);
-            Assert.That(countries.Countries, Is.Not.Null.Or.Empty);
-            Assert.That(countries.CountryIDs, Is.Not.Null.Or.Empty);
+            Assert.That(countries, Is.Not.Null);
+            Assert.That(countries.Countries, Is.Not.Null.And.Not.Empty);
+            Assert.That(countries.CountryIDs, Is.Not.Null.And.Not.Empty);
 
             var albania = countries.Countries.Single(c => c.ID == 8);
             Assert.That(albania.Name, Is.EqualTo("АЛБАНИЯ"));
 
             // all countries on the specified date
             countries = Client.GetCountries(new DateTime(2020, 01, 01));
-            Assert.That(countries, Is.Not.Null.Or.Empty);
+            Assert.That(countries, Is.Not.Null);
 
             // listed countries on the specified date
             countries = Client.GetCountries(new DateTime(2020, 01, 01), 895, 40, 8);
-            Assert.That(countries, Is.Not.Null.Or.Empty);
-            Assert.That(countries.Countries, Is.Not.Null.Or.Empty);
-            Assert.That(countries.CountryIDs, Is.Not.Null.Or.Empty);
+            Assert.That(countries, Is.Not.Null);
+            Assert.That(countries.Countries, Is.Not.Null.And.Not.Empty);
+            Assert.That(countries.CountryIDs, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -353,19 +353,19 @@ namespace PochtaSdk.Tests
         {
             // all countries
             var html = Client.GetCountries(ResponseFormat.Html);
-            Assert.That(html, Is.Not.Null.Or.Empty);
+            Assert.That(html, Is.Not.Null.And.Not.Empty);
 
             // listed countries
             var text = Client.GetCountries(ResponseFormat.Text, 895, 40, 8);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
 
             // all countries on the specified date
             var json = Client.GetCountries(ResponseFormat.JsonText, new DateTime(2020, 01, 01));
-            Assert.That(json, Is.Not.Null.Or.Empty);
+            Assert.That(json, Is.Not.Null.And.Not.Empty);
 
             // listed countries on the specified date
             var easy = Client.GetCountries(ResponseFormat.Easy, new DateTime(2020, 01, 01), 895, 40, 8);
-            Assert.That(easy, Is.Not.Null.Or.Empty);
+            Assert.That(easy, Is.Not.Null.And.Not.Empty);
         }
 
         [Test]
@@ -377,9 +377,9 @@ namespace PochtaSdk.Tests
 
             // listed post offices
             var postOffices = Client.GetPostOffices(125424, 344038);
-            Assert.That(postOffices, Is.Not.Null.Or.Empty);
-            Assert.That(postOffices.PostCodes, Is.Not.Null.Or.Empty);
-            Assert.That(postOffices.PostOffices, Is.Not.Null.Or.Empty);
+            Assert.That(postOffices, Is.Not.Null);
+            Assert.That(postOffices.PostCodes, Is.Not.Null.And.Not.Empty);
+            Assert.That(postOffices.PostOffices, Is.Not.Null.And.Not.Empty);
 
             var moscow = postOffices.PostOffices.Single(c => c.PostCode == 125424);
             Assert.That(moscow.Name, Is.EqualTo("МОСКВА 424"));
@@ -390,9 +390,9 @@ namespace PochtaSdk.Tests
 
             // listed post offices on the specified date
             postOffices = Client.GetPostOffices(new DateTime(2020, 01, 01), 125424, 344038);
-            Assert.That(postOffices, Is.Not.Null.Or.Empty);
-            Assert.That(postOffices.PostOffices, Is.Not.Null.Or.Empty);
-            Assert.That(postOffices.PostCodes, Is.Not.Null.Or.Empty);
+            Assert.That(postOffices, Is.Not.Null);
+            Assert.That(postOffices.PostOffices, Is.Not.Null.And.Not.Empty);
+            Assert.That(postOffices.PostCodes, Is.Not.Null.And.Not.Empty);
 
             var rostov = postOffices.PostOffices.Single(c => c.PostCode == 344038);
             Assert.That(rostov.Name, Is.EqualTo("РОСТОВ-НА-ДОНУ 38"));
@@ -414,7 +414,7 @@ namespace PochtaSdk.Tests
 
             // listed post offices on the specified date
             var text = Client.GetPostOffices(ResponseFormat.Text, new DateTime(2020, 01, 01), 125424, 344038);
-            Assert.That(text, Is.Not.Null.Or.Empty);
+            Assert.That(text, Is.Not.Null.And.Not.Empty);
         }
     }
 }

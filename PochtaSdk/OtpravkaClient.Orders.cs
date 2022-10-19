@@ -38,6 +38,15 @@ namespace PochtaSdk
             Delete<OrderResponse>("1.0/backlog", orderIds);
 
         /// <summary>
+        /// Search orders.
+        /// https://otpravka.pochta.ru/specification#/orders-search_order
+        /// </summary>
+        /// <param name="query">Search query (shipment barcode or internal order number).</param>
+        /// <returns>Order details.</returns>
+        public OrderInfo[] SearchOrders(string query) =>
+            Get<OrderInfo[]>("/1.0/backlog/search", r => r.AddQueryParameter("query", query));
+
+        /// <summary>
         /// Get order by identity.
         /// https://otpravka.pochta.ru/specification#/orders-search_order_byid
         /// </summary>

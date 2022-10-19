@@ -35,10 +35,10 @@ namespace PochtaSdk.Tests
             };
 
             var limit = client.GetApiLimit();
-            Assert.That(limit, Is.Not.Null.Or.Empty);
+            Assert.That(limit, Is.Not.Null);
 
             var log = sb.ToString();
-            Assert.That(log.Length, Is.GreaterThan(0));
+            Assert.That(log, Is.Not.Null.And.Not.Empty);
             Assert.That(log, Does.Contain("Authorization = AccessToken"));
             Assert.That(log, Does.Contain("X-User-Authorization"));
             Assert.That(log, Does.Contain("<- OK 200 (OK) https://otpravka-api.pochta.ru/1.0/settings/limit"));
@@ -59,10 +59,10 @@ namespace PochtaSdk.Tests
             };
 
             var limit = client.GetApiLimit();
-            Assert.That(limit, Is.Not.Null.Or.Empty);
+            Assert.That(limit, Is.Not.Null);
 
             var log = sb.ToString();
-            Assert.That(log.Length, Is.GreaterThan(0));
+            Assert.That(log, Is.Not.Null.And.Not.Empty);
             Assert.That(log, Does.Contain("Authorization = AccessToken"));
             Assert.That(log, Does.Contain("X-User-Authorization"));
             Assert.That(log, Does.Contain("<- OK 200 (OK) https://otpravka-api.pochta.ru/1.0/settings/limit"));
@@ -72,7 +72,7 @@ namespace PochtaSdk.Tests
         public void OtpravkaClientGetsApiLimits()
         {
             var limit = Client.GetApiLimit();
-            Assert.That(limit, Is.Not.Null.Or.Empty);
+            Assert.That(limit, Is.Not.Null);
             Assert.That(limit.AllowedCount, Is.GreaterThan(0));
             Assert.That(limit.CurrentCount, Is.GreaterThan(0));
             Assert.That(limit.AllowedCount, Is.GreaterThan(limit.CurrentCount));
@@ -193,7 +193,7 @@ namespace PochtaSdk.Tests
             var people = Client.CleanFullName("Христофор Бонифатьевич Врунгель", "Иван Рылов",
                 "Иванка Петкова", "Марфа Васильевна", "Достоевский Константин Константинович");
 
-            Assert.That(people, Is.Not.Null.Or.Empty);
+            Assert.That(people, Is.Not.Null.And.Not.Empty);
             Assert.That(people.Length, Is.EqualTo(5));
 
             var person = people[0];
@@ -239,7 +239,7 @@ namespace PochtaSdk.Tests
 
         [Test]
         public void OtpravkaStringPhoneCleanup()
-        { 
+        {
             var phone = Client.CleanPhone("499 12345-67");
             Assert.That(phone, Is.Not.Null);
             Assert.That(phone.QualityCode, Is.EqualTo(PhoneQuality.Good));
@@ -282,7 +282,7 @@ namespace PochtaSdk.Tests
         {
             var phones = Client.CleanPhone("499 12345-67", "+78632 21-54-55",
                 "+78632 21-54-5", "+7495 321-54-56 123");
-            Assert.That(phones, Is.Not.Null.Or.Empty);
+            Assert.That(phones, Is.Not.Null.And.Not.Empty);
             Assert.That(phones.Length, Is.EqualTo(4));
 
             var phone = phones[0];
@@ -351,7 +351,7 @@ namespace PochtaSdk.Tests
                     OriginalPhone = "+7499 1131623",
                 });
 
-            Assert.That(phones, Is.Not.Null.Or.Empty);
+            Assert.That(phones, Is.Not.Null.And.Not.Empty);
             Assert.That(phones.Length, Is.EqualTo(3));
 
             var phone = phones[0];
@@ -460,7 +460,7 @@ namespace PochtaSdk.Tests
                 MailType = MailType.PostalParcel,
                 Mass = 1000,
                 Dimensions = new Dimensions
-                { 
+                {
                     Height = 3,
                     Length = 9,
                     Width = 73,
@@ -469,14 +469,14 @@ namespace PochtaSdk.Tests
             });
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
             CreatedOrderID = result.ResultIDs.First();
         }
 
         [Test]
         public void OtpravkaClientThrowsWhenOrderIsNotFound()
         {
-            Assert.That(() => Client.GetOrder(123), 
+            Assert.That(() => Client.GetOrder(123),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Message.EqualTo("Instance ComplexOrderV2 not found for params: 123"));
         }
@@ -486,7 +486,7 @@ namespace PochtaSdk.Tests
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.GetOrder(CreatedOrderID);
-            Assert.That(result, Is.Not.Null.Or.Empty);
+            Assert.That(result, Is.Not.Null);
             Assert.That(result.ID, Is.EqualTo(CreatedOrderID));
         }
 
@@ -495,12 +495,12 @@ namespace PochtaSdk.Tests
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.DeleteOrders(CreatedOrderID);
-            Assert.That(result, Is.Not.Null.Or.Empty);
-            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
             Assert.That(result.ResultIDs.First(), Is.EqualTo(CreatedOrderID));
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 896020418, 896020419, 896020420, }; 
+        private long[] CreatedOrders { get; set; } = new long[] { 897422701, 897422702, 897422702, };
 
         [Test, Ordered]
         public void OtpravkaClientCreatesMultipleOrdersAsMmo()
@@ -547,14 +547,21 @@ namespace PochtaSdk.Tests
             var result = Client.CreateOrders(orders);
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
             CreatedOrders = result.ResultIDs;
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientSearchesForOrders()
+        {
+            var orders = Client.SearchOrders("002");
+            Assert.That(orders, Is.Not.Null.And.Not.Empty);
         }
 
         [Test, Ordered]
         public void OtpravkaClientDeletesCreatedOrders()
         {
-            Assert.That(CreatedOrders, Is.Not.Null.Or.Empty);
+            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
             var result = Client.DeleteOrders(CreatedOrders);
             Assert.That(result, Is.Not.Null.Or.Empty);
             Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);

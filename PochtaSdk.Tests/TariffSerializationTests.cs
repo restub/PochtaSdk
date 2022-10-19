@@ -36,15 +36,15 @@ namespace PochtaSdk.Tests
                 Deadline = new DateTime(2022, 12, 10, 11, 30, 00, DateTimeKind.Utc)
             });
 
-            Assert.That(json, Is.Not.Null.Or.Empty);
+            Assert.That(json, Is.Not.Null.And.Not.Empty);
             Assert.That(json, Is.EqualTo("{\"min\":1,\"max\":10,\"deadline\":\"20221210T113000\"}"));
 
             var info = Serializer.Deserialize<DeliveryTerms>(json);
-            Assert.That(info, Is.Not.Null.Or.Empty);
+            Assert.That(info, Is.Not.Null);
             Assert.That(info.Deadline, Is.InRange(new DateTime(2022, 12, 10), new DateTime(2022, 12, 11)));
 
             var tmp = Serializer.Deserialize<DeliveryTerms>(@"{""min"":4,""max"":4,""deadline"":""20221003T235900""}");
-            Assert.That(tmp, Is.Not.Null.Or.Empty);
+            Assert.That(tmp, Is.Not.Null);
         }
     }
 }

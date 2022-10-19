@@ -11,6 +11,8 @@ namespace PochtaSdk.Otpravka
     [DataContract]
     public class ErrorWithSubCode : IHasErrors
     {
+        // code + desc + sub-code — used in search_order method
+
         /// <summary>
         /// Целочисленный код ошибки.
         /// </summary>
@@ -29,10 +31,25 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "sub-code")]
         public string SubCode { get; set; }
 
-        /// <inheritdoc/>
-        public string GetErrorMessage() => Description;
+        // status + message - used in api limits
+
+        /// <summary>
+        /// Статус запроса
+        /// </summary>
+        [DataMember(Name = "status")]
+        public string Status { get; set; }
+
+        /// <summary>
+        /// Сообщение об ошибке
+        /// </summary>
+        [DataMember(Name = "message")]
+        public string Message { get; set; }
 
         /// <inheritdoc/>
-        public bool HasErrors() => !string.IsNullOrWhiteSpace(Description);
+        public string GetErrorMessage() =>
+            string.IsNullOrWhiteSpace(Description) ? Message : Description;
+
+        /// <inheritdoc/>
+        public bool HasErrors() => !string.IsNullOrWhiteSpace(GetErrorMessage());
     }
 }

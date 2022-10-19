@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Restub;
 
 namespace PochtaSdk.Otpravka
@@ -21,7 +19,7 @@ namespace PochtaSdk.Otpravka
         /// <param name="message">Error message.</param>
         /// <param name="innerException">Inner exception.</param>
         public OtpravkaException(HttpStatusCode code, string message, Exception innerException = null)
-            : base(code, message, innerException)
+            : base(code, AdjustErrorMessage509(code, message, innerException), innerException)
         {
         }
 
@@ -31,8 +29,41 @@ namespace PochtaSdk.Otpravka
         /// <param name="message">Error message.</param>
         /// <param name="innerException">Inner exception.</param>
         public OtpravkaException(string message, Exception innerException = null)
-            : base(HttpStatusCode.OK, message, innerException)
+            : this(HttpStatusCode.OK, message, innerException)
         {
+        }
+
+        /// <summary>
+        /// Adjusts API token limit exception message when obscure deserialization message is reported.
+        /// </summary>
+        /// <param name="code">Http status code</param>
+        /// <param name="message">Error message.</param>
+        /// <param name="innerException">Inner exception.</param>
+        /// <returns></returns>
+        private static string AdjustErrorMessage509(HttpStatusCode code, string message, Exception innerException)
+        {
+            if (code != (HttpStatusCode)509)
+            {
+                return message;
+            }
+
+            bool isSerializationException(Exception ex) =>
+                ex is JsonReaderException || ex is JsonSerializationException ||
+                    (ex.InnerException != null && isSerializationException(ex.InnerException));
+
+            bool isIOException(Exception ex) =>
+                ex is IOException ||
+                    (ex.InnerException != null && isSerializationException(ex.InnerException));
+
+            if (string.IsNullOrWhiteSpace(message) ||
+                isSerializationException(innerException) ||
+                isIOException(innerException))
+            {
+                return "API request limit exceeded? Error response cannot be deserialized." +
+                    (!string.IsNullOrWhiteSpace(message) ? " " + message : string.Empty);
+            }
+
+            return message;
         }
     }
 }
