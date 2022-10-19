@@ -32,6 +32,7 @@ namespace PochtaSdk.Otpravka
             select ewc;
 
         private bool HasOrders => Orders != null && Orders.Any();
+
         public bool HasErrors() => !HasOrders && ErrorsWithCodes.Any();
 
         public string GetErrorMessage() =>

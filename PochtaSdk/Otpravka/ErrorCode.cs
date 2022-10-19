@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using Restub.DataContracts;
 
 namespace PochtaSdk.Otpravka
 {
@@ -7,7 +8,7 @@ namespace PochtaSdk.Otpravka
     /// Коды ошибок.
     /// https://otpravka.pochta.ru/specification#/enums-base-envelope-type
     /// </summary>
-    [DataContract]
+    [DataContract, DefaultEnumMember(Undefined)]
     public enum ErrorCode
     {
         /// <summary>

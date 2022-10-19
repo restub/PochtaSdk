@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PochtaSdk.Tariff;
-using PochtaSdk.Toolbox;
+using Restub.Toolbox;
 
 namespace PochtaSdk.Playground
 {
