@@ -26,11 +26,13 @@ namespace PochtaSdk
         {
         }
 
+        /// <inheritdoc/>
         protected override Exception CreateException(IRestResponse response, string errorMessage, IHasErrors errorResponse) =>
             new TariffException(response.StatusCode, errorMessage, response.ErrorException);
 
+        /// <inheritdoc/>
         public override string LibraryName =>
-            $"{nameof(PochtaSdk)}.{nameof(TariffClient)} v{GetType().GetAssemblyVersion()}, {base.LibraryName}";
+            $"{nameof(PochtaSdk)}.{nameof(TariffClient)} v{LibraryVersion}, {base.LibraryName}";
 
         private string GetFormat(ResponseFormat format) =>
             ParameterHelper.GetEnumMemberValue(format) as string;

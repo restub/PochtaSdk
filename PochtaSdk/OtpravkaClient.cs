@@ -24,7 +24,7 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="credentials">Credentials.</param>
         public OtpravkaClient(OtpravkaCredentials credentials)
-            : base(BaseUrl, credentials)
+            : this(BaseUrl, credentials)
         {
         }
 
@@ -39,8 +39,20 @@ namespace PochtaSdk
         }
 
         /// <inheritdoc/>
+        public override string LibraryName =>
+            $"{nameof(PochtaSdk)}.{nameof(OtpravkaClient)} v{LibraryVersion}, {base.LibraryName}";
+
+        /// <inheritdoc/>
         protected override IAuthenticator GetAuthenticator() =>
             new OtpravkaAuthenticator(this, (OtpravkaCredentials)Credentials);
+
+        /// <inheritdoc/>
+        protected override Exception CreateException(IRestResponse res, string msg, IHasErrors errors) =>
+            new OtpravkaException(res.StatusCode, msg, base.CreateException(res, msg, errors));
+
+        /// <inheritdoc/>
+        protected override IHasErrors DeserializeErrorResponse(IRestResponse response) =>
+            Serializer.Deserialize<ErrorWithSubCode>(response);
 
         /// <summary>
         /// API request limit.
@@ -219,13 +231,5 @@ namespace PochtaSdk
         /// <returns>Order details.</returns>
         public OrderInfo GetOrder(long orderId) =>
             Get<OrderInfo>("/1.0/backlog/{id}", r => r.AddUrlSegment("id", orderId));
-
-        /// <inheritdoc/>
-        protected override IHasErrors DeserializeErrorResponse(IRestResponse response) =>
-            Serializer.Deserialize<ErrorWithSubCode>(response);
-
-        /// <inheritdoc/>
-        protected override Exception CreateException(IRestResponse res, string msg, IHasErrors errors) =>
-            new OtpravkaException(res.StatusCode, msg, base.CreateException(res, msg, errors));
     }
 }
