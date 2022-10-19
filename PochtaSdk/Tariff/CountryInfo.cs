@@ -48,7 +48,7 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "letter")]
         public CountryShippingInfo Letter { get; set; }
 
-        // <summary>
+        /// <summary>
         /// Parcel requisites.
         /// Реквизиты для посылок.
         /// </summary>

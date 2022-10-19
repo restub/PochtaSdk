@@ -20,7 +20,7 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "id")]
         public int[] ServiceIds { get; set; }
 
-        // <summary>
+        /// <summary>
         /// Services.
         /// Услуги.
         /// </summary>

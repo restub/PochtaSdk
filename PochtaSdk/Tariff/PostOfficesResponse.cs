@@ -20,7 +20,7 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "id")]
         public int[] PostCodes { get; set; }
 
-        // <summary>
+        /// <summary>
         /// Post offices.
         /// Почтовые отделения.
         /// </summary>

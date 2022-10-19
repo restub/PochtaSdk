@@ -20,7 +20,7 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "id")]
         public int RootID { get; set; }
 
-        // <summary>
+        /// <summary>
         /// Categories.
         /// Категории.
         /// </summary>

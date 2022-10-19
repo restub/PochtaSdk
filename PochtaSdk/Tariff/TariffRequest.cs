@@ -218,7 +218,7 @@ namespace PochtaSdk.Tariff
         /// Направление доставки отправления.
         /// </summary>
         [DataMember(Name = "directctg")]
-        public DirectionCategory? DirectCtg { get; set; }
+        public DirectionCategory? DirectionCategory { get; set; }
 
         /// <summary>
         /// Generic parameter 1.

@@ -20,7 +20,7 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "id")]
         public int[] CountryIDs { get; set; }
 
-        // <summary>
+        /// <summary>
         /// Countries.
         /// Страны.
         /// </summary>

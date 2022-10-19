@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using PochtaSdk.Toolbox;
 using Restub.DataContracts;
 
 namespace PochtaSdk.Tariff
@@ -15,30 +13,32 @@ namespace PochtaSdk.Tariff
     [DataContract]
     public class BaseResponse : IHasErrors
     {
-        // <summary>
+        /// <summary>
         /// API version, should be 2.
         /// Версия API, равно 2.
         /// </summary>
         [DataMember(Name = "version_api")]
         public int VersionApi { get; set; }
 
-        // <summary>
+        /// <summary>
         /// Service version.
         /// Версия сервиса.
         /// </summary>
         [DataMember(Name = "version")]
         public string Version { get; set; }
 
-        // <summary>
+        /// <summary>
         /// List of calculation errors.
         /// Список ошибок расчета.
         /// </summary>
         [DataMember(Name = "errors")]
         public ErrorReport[] Errors { get; set; }
 
+        /// <inheritdoc/>
         public bool HasErrors() =>
             Errors != null && Errors.Any();
 
+        /// <inheritdoc/>
         public string GetErrorMessage() =>
             string.Join(Environment.NewLine,
                 (Errors ?? Enumerable.Empty<ErrorReport>())

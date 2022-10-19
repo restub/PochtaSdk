@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using PochtaSdk.Toolbox;
-using Restub.DataContracts;
 
 namespace PochtaSdk.Tariff
 {
@@ -15,7 +13,7 @@ namespace PochtaSdk.Tariff
     [DataContract]
     public class TariffResponse : BaseResponse
     {
-        // <summary>
+        /// <summary>
         /// Service caption.
         /// Название сервиса.
         /// </summary>
@@ -36,14 +34,28 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Mail type.
+        /// Вид отправления, согласно РТМ-2.
+        /// Используется только для объекта вида «отправление». 
+        /// Если параметр object указан, то значение параметра mailtype игнорируется.
+        /// </summary>
         [DataMember(Name = "mailtype")]
         public int MailType { get; set; }
 
+        /// <summary>
+        /// Mail category.
+        /// Категория отправления.
+        /// </summary>
         [DataMember(Name = "mailctg")]
         public int MailCategory { get; set; }
 
+        /// <summary>
+        /// Direction category.
+        /// Направление доставки отправления.
+        /// </summary>
         [DataMember(Name = "directctg")]
-        public int DirectCategory { get; set; }
+        public DirectionCategory? DirectionCategory { get; set; }
 
         /// <summary>
         /// Source postal code.
@@ -73,9 +85,17 @@ namespace PochtaSdk.Tariff
         [DataMember(Name = "pack")]
         public PackageInfo PackageInfo { get; set; }
 
+        /// <summary>
+        /// Tarification and delivery terms calculation date.
+        /// Дата тарификации и дата расчета контрольных сроков
+        /// </summary>
         [DataMember(Name = "date"), JsonConverter(typeof(TariffDateOnlyConverter))] // date only
         public DateTime Date { get; set; }
 
+        /// <summary>
+        /// Delivery terms calculation starting time (local time).
+        /// Время начала отсчета контрольных сроков доставки (местное).
+        /// </summary>
         [DataMember(Name = "time"), JsonConverter(typeof(TariffTimeOnlyConverter))] // time only
         public TimeSpan Time { get; set; }
 
