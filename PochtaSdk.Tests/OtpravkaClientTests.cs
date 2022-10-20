@@ -423,6 +423,21 @@ namespace PochtaSdk.Tests
         [Test]
         public void OtpravkaClientFailsToCreateOrderWhenRequiredPropertiesAreNotSpecified()
         {
+            // this test ensures proper error handling for error reports like this:
+            // body: {
+            //   "errors": [
+            //     {
+            //       "error-codes": [
+            //         {
+            //           "code": "ILLEGAL_MAIL_CATEGORY",
+            //           "description": "Категория 'ORDINARY' не поддерживается для данного вида отправления на данном направлении",
+            //           "details": "ORDINARY"
+            //         }
+            //       ],
+            //       "position": 0
+            //     }
+            //   ]
+            // }
             Assert.That(() => Client.CreateOrders(new Order
             {
                 AddressFrom = new Address
@@ -503,6 +518,12 @@ namespace PochtaSdk.Tests
         [Test]
         public void OtpravkaClientThrowsWhenOrderIsNotFound()
         {
+            // this test ensures proper error handling for error reports like this:
+            // body: {
+            //   "code": "1001",
+            //   "desc": "Instance ComplexOrderV2 not found for params: 123",
+            //   "sub-code": "RESOURCE_NOT_FOUND"
+            // }
             Assert.That(() => Client.GetOrder(123),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Message.EqualTo("Instance ComplexOrderV2 not found for params: 123"));
@@ -529,6 +550,37 @@ namespace PochtaSdk.Tests
             Assert.That(result.GivenName, Is.EqualTo(name.Item1));
             Assert.That(result.MiddleName, Is.EqualTo(name.Item2));
             Assert.That(result.Surname, Is.EqualTo(name.Item3));
+        }
+
+        [Test]
+        public void OtpravkaClientReturnOrderToBacklogThrowsANotFoundError()
+        {
+            // this test ensures proper error handling for error reports like this:
+            // body: {
+            //   "errors": [
+            //   {
+            //      "error-code": "NOT_FOUND",
+            //      "position": 0
+            //   }
+            // ]
+            Assert.That(() => Client.ReturnOrdersToBacklog(123),
+                Throws.TypeOf<OtpravkaException>()
+                    .With.Message.Contains("NotFound")); // error object doesn't have a readable message
+        }
+
+        [Test, Ordered, Ignore("Throws a NotFound error for some reason, perhaps the order has an unexpected state")]
+        public void OtpravkaClientReturnsAnOrderFromShippingToBacklog()
+        {
+            // make sure that the order exists
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+            var order = Client.GetOrder(CreatedOrderID);
+            Assert.That(order, Is.Not.Null);
+
+            // return it to backlog
+            var result = Client.ReturnOrdersToBacklog(CreatedOrderID);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ResultIDs, Does.Contain(CreatedOrderID));
         }
 
         [Test, Ordered]

@@ -11,6 +11,9 @@ namespace PochtaSdk.Otpravka
     [DataContract]
     public class Error
     {
+        [DataMember(Name = "error-code")]
+        public ErrorCode? ErrorCode { get; set; }
+
         [DataMember(Name = "error-codes")]
         public ErrorWithCode[] ErrorCodes { get; set; }
 

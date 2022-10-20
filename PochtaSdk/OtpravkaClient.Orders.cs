@@ -11,6 +11,8 @@ namespace PochtaSdk
     {
         /// <summary>
         /// Create orders.
+        /// Создание заказа.
+        /// Создает новый заказ. Автоматически рассчитывает и проставляет плату за пересылку.
         /// https://otpravka.pochta.ru/specification#/orders-creating_order
         /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
         /// </summary>
@@ -29,26 +31,8 @@ namespace PochtaSdk
         }
 
         /// <summary>
-        /// Update an order.
-        /// https://otpravka.pochta.ru/specification#/orders-editing_order
-        /// </summary>
-        /// <param name="orderId">Order identity to update.</param>
-        /// <param name="order">Updated order instance.</param>
-        /// <returns>Order information.</returns>
-        public void UpdateOrder(long orderId, Order order) =>
-            Put<string>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
-
-        /// <summary>
-        /// Delete orders.
-        /// https://otpravka.pochta.ru/specification#/orders-delete_new_order
-        /// </summary>
-        /// <param name="orderIds">Order identities to delete.</param>
-        /// <returns>Deleted order identities.</returns>
-        public OrderResponse DeleteOrders(params long[] orderIds) =>
-            Delete<OrderResponse>("1.0/backlog", orderIds);
-
-        /// <summary>
         /// Search orders by barcode or internal order number.
+        /// Поиск заказа. Ищет заказы по назначенному магазином идентификатору.
         /// https://otpravka.pochta.ru/specification#/orders-search_order
         /// </summary>
         /// <param name="query">Search query (shipment barcode or internal order number).</param>
@@ -58,6 +42,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Search orders by group name.
+        /// Поиск заказов по идентификатору группы.
         /// https://otpravka.pochta.ru/specification#/orders-search_order
         /// </summary>
         /// <param name="groupName">Group name.</param>
@@ -68,11 +53,45 @@ namespace PochtaSdk
 
         /// <summary>
         /// Get order by identity.
+        /// Поиск заказа по идентификатору.
         /// https://otpravka.pochta.ru/specification#/orders-search_order_byid
         /// </summary>
         /// <param name="orderId">Order identity.</param>
         /// <returns>Order details.</returns>
         public OrderInfo GetOrder(long orderId) =>
             Get<OrderInfo>("1.0/backlog/{id}", r => r.AddUrlSegment("id", orderId));
+
+        /// <summary>
+        /// Update an order.
+        /// Редактирование заказа.
+        /// https://otpravka.pochta.ru/specification#/orders-editing_order
+        /// </summary>
+        /// <param name="orderId">Order identity to update.</param>
+        /// <param name="order">Updated order instance.</param>
+        /// <returns>Order information.</returns>
+        public void UpdateOrder(long orderId, Order order) =>
+            Put<string>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
+
+        /// <summary>
+        /// Return shipment orders to backlog state.
+        /// Возврат заказов в «Новые». 
+        /// Метод переводит заказы из партии в раздел Новые.
+        /// Партия должна быть в статусе CREATED.
+        /// https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog
+        /// </summary>
+        /// <param name="orderIds">Order identities to delete.</param>
+        /// <returns>Deleted order identities.</returns>
+        public OrderResponseBase ReturnOrdersToBacklog(params long[] orderIds) =>
+            Post<OrderResponseBase>("1.0/user/backlog", orderIds);
+
+        /// <summary>
+        /// Delete orders.
+        /// Удаление заказа.
+        /// https://otpravka.pochta.ru/specification#/orders-delete_new_order
+        /// </summary>
+        /// <param name="orderIds">Order identities to delete.</param>
+        /// <returns>Deleted order identities.</returns>
+        public OrderResponseBase DeleteOrders(params long[] orderIds) =>
+            Delete<OrderResponseBase>("1.0/backlog", orderIds);
     }
 }

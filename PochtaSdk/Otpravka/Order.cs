@@ -213,7 +213,7 @@ namespace PochtaSdk.Otpravka
         /// Категория РПО
         /// </summary>
         [DataMember(Name = "mail-category")]
-        public MailCategory? MailCategory { get; set; }
+        public MailCategory MailCategory { get; set; }
 
         /// <summary>
         /// Код страны назначения
@@ -225,7 +225,7 @@ namespace PochtaSdk.Otpravka
         /// Вид РПО
         /// </summary>
         [DataMember(Name = "mail-type")]
-        public MailType? MailType { get; set; }
+        public MailType MailType { get; set; }
 
         /// <summary>
         /// Вес РПО (в граммах)

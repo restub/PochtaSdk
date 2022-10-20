@@ -61,14 +61,18 @@ Documentation: https://otpravka.pochta.ru/specification
 
 * Authorization: [authorization-token](https://otpravka.pochta.ru/specification#/authorization-token)
 * RequestLimits: [nogroup-count_request_api](https://otpravka.pochta.ru/specification#/nogroup-count_request_api)
-* CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
-* CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
-* CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
-* CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
-* GetOrder: [orders-search_order_byid](https://otpravka.pochta.ru/specification#/orders-search_order_byid)
-* SearchOrders: [orders-search_order](https://otpravka.pochta.ru/specification#/orders-search_order)
-* SearchOrdersByGroupName: [orders-search_orders_by_group_name](https://otpravka.pochta.ru/specification#/orders-search_orders_by_group_name)
-* DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
+* Data normalization
+  * CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
+  * CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
+  * CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
+* Shipping orders
+  * CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
+  * GetOrder: [orders-search_order_byid](https://otpravka.pochta.ru/specification#/orders-search_order_byid)
+  * SearchOrders: [orders-search_order](https://otpravka.pochta.ru/specification#/orders-search_order)
+  * SearchOrdersByGroupName: [orders-search_orders_by_group_name](https://otpravka.pochta.ru/specification#/orders-search_orders_by_group_name)
+  * UpdateOrder: [orders-editing_order](https://otpravka.pochta.ru/specification#/orders-editing_order)
+  * ReturnOrdersToBacklog: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
+  * DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
 
 ## Trace log
 
