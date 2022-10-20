@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using NUnit.Framework;
@@ -8,7 +9,7 @@ using OksmCountryCode = PochtaSdk.Tariff.OksmCountryCode;
 namespace PochtaSdk.Tests
 {
     [TestFixture]
-    public class OtpravkaClientTests : TestBase
+    public class OtpravkaClientTests : TestBase, IDisposable
     {
         private OtpravkaClient Client { get; } = new OtpravkaClient(new OtpravkaCredentials
         {
@@ -19,6 +20,18 @@ namespace PochtaSdk.Tests
         {
             Tracer = TestContext.Progress.WriteLine
         };
+
+        private ApiLimit ApiLimit { get; set; }
+
+        public void Dispose() 
+        {
+            if (ApiLimit != null)
+            {
+                TestContext.Progress.WriteLine("==================");
+                TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", ApiLimit.CurrentCount, ApiLimit.AllowedCount);
+                TestContext.Progress.WriteLine("==================");
+            }
+        }
 
         [Test]
         public void OtpravkaClientAuthorizesUsingUserEmail()
@@ -34,8 +47,8 @@ namespace PochtaSdk.Tests
                 Tracer = (fmt, args) => sb.AppendFormat(fmt, args)
             };
 
-            var limit = client.GetApiLimit();
-            Assert.That(limit, Is.Not.Null);
+            ApiLimit = client.GetApiLimit();
+            Assert.That(ApiLimit, Is.Not.Null);
 
             var log = sb.ToString();
             Assert.That(log, Is.Not.Null.And.Not.Empty);
@@ -58,8 +71,8 @@ namespace PochtaSdk.Tests
                 Tracer = (fmt, args) => sb.AppendFormat(fmt, args)
             };
 
-            var limit = client.GetApiLimit();
-            Assert.That(limit, Is.Not.Null);
+            ApiLimit = client.GetApiLimit();
+            Assert.That(ApiLimit, Is.Not.Null);
 
             var log = sb.ToString();
             Assert.That(log, Is.Not.Null.And.Not.Empty);
@@ -71,12 +84,12 @@ namespace PochtaSdk.Tests
         [Test]
         public void OtpravkaClientGetsApiLimits()
         {
-            var limit = Client.GetApiLimit();
-            Assert.That(limit, Is.Not.Null);
-            Assert.That(limit.AllowedCount, Is.GreaterThan(0));
-            Assert.That(limit.CurrentCount, Is.GreaterThan(0));
-            Assert.That(limit.AllowedCount, Is.GreaterThan(limit.CurrentCount));
-            TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", limit.CurrentCount, limit.AllowedCount);
+            ApiLimit = Client.GetApiLimit();
+            Assert.That(ApiLimit, Is.Not.Null);
+            Assert.That(ApiLimit.AllowedCount, Is.GreaterThan(0));
+            Assert.That(ApiLimit.CurrentCount, Is.GreaterThan(0));
+            Assert.That(ApiLimit.AllowedCount, Is.GreaterThan(ApiLimit.CurrentCount));
+            TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", ApiLimit.CurrentCount, ApiLimit.AllowedCount);
         }
 
         [Test]
@@ -500,8 +513,6 @@ namespace PochtaSdk.Tests
             Assert.That(result.ResultIDs.First(), Is.EqualTo(CreatedOrderID));
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 897422701, 897422702, 897422702, };
-
         [Test, Ordered]
         public void OtpravkaClientCreatesMultipleOrdersAsMmo()
         {
@@ -548,14 +559,33 @@ namespace PochtaSdk.Tests
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+
             CreatedOrders = result.ResultIDs;
+            TestContext.Progress.WriteLine($"Created orders: {string.Join(", ", CreatedOrders)}");
         }
+
+        private long[] CreatedOrders { get; set; } = new long[] { 897437964, 897437965, 897437966, };
 
         [Test, Ordered]
         public void OtpravkaClientSearchesForOrders()
         {
             var orders = Client.SearchOrders("002");
             Assert.That(orders, Is.Not.Null.And.Not.Empty);
+
+            var order = orders.First();
+            Assert.That(order, Is.Not.Null);
+            Assert.That(order.OrderNum, Is.EqualTo("002"));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientSearchesForOrdersByGroupName()
+        {
+            var orders = Client.SearchOrdersByGroupName("002");
+            Assert.That(orders, Is.Not.Null.And.Not.Empty);
+
+            var order = orders.First();
+            Assert.That(order, Is.Not.Null);
+            Assert.That(order.GroupName, Is.EqualTo("002"));
         }
 
         [Test, Ordered]

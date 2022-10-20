@@ -8,7 +8,7 @@ namespace PochtaSdk.Otpravka
     /// https://otpravka.pochta.ru/specification#/nogroup-count_request_api
     /// </summary>
     [DataContract]
-    public struct ApiLimit
+    public class ApiLimit
     {
         /// <summary>
         /// Количество запросов по API разрешенных для клиента

@@ -38,13 +38,23 @@ namespace PochtaSdk
             Delete<OrderResponse>("1.0/backlog", orderIds);
 
         /// <summary>
-        /// Search orders.
+        /// Search orders by barcode or internal order number.
         /// https://otpravka.pochta.ru/specification#/orders-search_order
         /// </summary>
         /// <param name="query">Search query (shipment barcode or internal order number).</param>
         /// <returns>Order details.</returns>
         public OrderInfo[] SearchOrders(string query) =>
             Get<OrderInfo[]>("/1.0/backlog/search", r => r.AddQueryParameter("query", query));
+
+        /// <summary>
+        /// Search orders by group name.
+        /// https://otpravka.pochta.ru/specification#/orders-search_order
+        /// </summary>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>Order details.</returns>
+        public OrderInfo[] SearchOrdersByGroupName(string groupName) =>
+            Get<OrderInfo[]>("/1.0/backlog/by-group-name/{group-name}", r => r
+                .AddUrlSegment("group-name", groupName));
 
         /// <summary>
         /// Get order by identity.
