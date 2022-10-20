@@ -219,7 +219,7 @@ namespace PochtaSdk.Otpravka
         /// Код страны назначения
         /// </summary>
         [DataMember(Name = "mail-direct")]
-        public OksmCountryCode? MailCountryCode { get; set; }
+        public OksmCountryCode MailCountryCode { get; set; } = OksmCountryCode.Russia;
 
         /// <summary>
         /// Вид РПО
@@ -231,7 +231,7 @@ namespace PochtaSdk.Otpravka
         /// Вес РПО (в граммах)
         /// </summary>
         [DataMember(Name = "mass")]
-        public int? Mass { get; set; }
+        public int Mass { get; set; }
 
         /// <summary>
         /// Отчество получателя

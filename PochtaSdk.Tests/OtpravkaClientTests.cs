@@ -410,14 +410,13 @@ namespace PochtaSdk.Tests
         [Test]
         public void OtpravkaClientFailsToCreateOrderWhenNoPropertiesAreSpecified()
         {
-            // why the status code is 0? no idea!
             Assert.That(() => Client.CreateOrders(new Order()),
                 Throws.TypeOf<OtpravkaException>()
-                    .With.Property("StatusCode").EqualTo(HttpStatusCode.OK)
-                    .And.Message.Contains("некорректно")
+                    .With.Property(nameof(OtpravkaException.StatusCode)).EqualTo(HttpStatusCode.OK)
                     .And.Message.Contains("значение")
+                    .And.Message.Contains("не задан")
                     .And.Message.Contains("не указан")
-                    .And.Message.Contains("декларации"));
+                    .And.Message.Contains("не заполнен"));
         }
 
         [Test]
@@ -432,6 +431,27 @@ namespace PochtaSdk.Tests
             //           "code": "ILLEGAL_MAIL_CATEGORY",
             //           "description": "Категория 'ORDINARY' не поддерживается для данного вида отправления на данном направлении",
             //           "details": "ORDINARY"
+            //         },
+            //         {
+            //           "code": "EMPTY_POSTOFFICE_CODE",
+            //           "description": "Индекс приемного почтового отделения не задан",
+            //           "details": "102961 117042 142300"
+            //         },
+            //         {
+            //           "code": "ILLEGAL_RECIPIENT_NAME",
+            //           "description": "Недопустимое значение поля \"Имя получателя\"."
+            //         },
+            //         {
+            //           "code": "EMPTY_REGION_TO",
+            //           "description": "Регион не заполнен"
+            //         },
+            //         {
+            //           "code": "EMPTY_PLACE_TO",
+            //           "description": "Населенный пункт не указан"
+            //         },
+            //         {
+            //           "code": "EMPTY_MASS",
+            //           "description": "Масса не указана"
             //         }
             //       ],
             //       "position": 0
@@ -449,11 +469,11 @@ namespace PochtaSdk.Tests
                 PostCodeTo = 344038,
             }),
             Throws.TypeOf<OtpravkaException>()
-                .With.Property("StatusCode").EqualTo(HttpStatusCode.OK)
-                .And.Message.Contains("некорректно")
+                .With.Property(nameof(OtpravkaException.StatusCode)).EqualTo(HttpStatusCode.OK)
+                .And.Message.Contains("приемного")
                 .And.Message.Contains("значение")
                 .And.Message.Contains("не указан")
-                .And.Message.Contains("декларации"));
+                .And.Message.Contains("не заполнен"));
         }
 
         private Order CreateTestOrder(string num) => new Order
@@ -478,7 +498,7 @@ namespace PochtaSdk.Tests
             TelAddress = 79871234567,
             DeclaredValue = 1000,
             TransportType = Otpravka.TransportType.Surface,
-            MailCategory = MailCategory.Ordinary,
+            MailCategory = MailCategory.WithDeclaredValue,
             MailCountryCode = OksmCountryCode.Russia,
             MailType = MailType.PostalParcel,
             Mass = 1000,
@@ -622,7 +642,7 @@ namespace PochtaSdk.Tests
                 TelAddress = 79871234567,
                 DeclaredValue = 1000,
                 TransportType = Otpravka.TransportType.Surface,
-                MailCategory = MailCategory.Ordinary,
+                MailCategory = MailCategory.WithDeclaredValue,
                 MailCountryCode = OksmCountryCode.Russia,
                 MailType = mailType,
                 Mass = 500,

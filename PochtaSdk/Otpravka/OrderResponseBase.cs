@@ -55,6 +55,8 @@ namespace PochtaSdk.Otpravka
         public bool HasErrors() => !HasOrders && ErrorsWithCodes.Any();
 
         public string GetErrorMessage() =>
-            string.Join(". ", ErrorsWithCodes.Select(e => e.Description));
+            string.Join(". ", ErrorsWithCodes
+                .Select(e => (e.Description + string.Empty)
+                    .Trim(". \r\n\v".ToCharArray())));
     }
 }
