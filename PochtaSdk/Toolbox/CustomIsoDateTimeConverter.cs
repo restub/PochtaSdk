@@ -8,9 +8,14 @@ using Restub.Toolbox;
 
 namespace PochtaSdk.Toolbox
 {
+    /// <summary>
+    /// Custom <see cref="IsoDateTimeConverter"/>.
+    /// </summary>
     public class CustomIsoDateTimeConverter : IsoDateTimeConverter
     {
-        //###
+        /// <summary>
+        /// Allowed TimeSpan styles.
+        /// </summary>
         public TimeSpanStyles TimeSpanStyles { get; set; } = TimeSpanStyles.None;
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿namespace PochtaSdk.Tariff
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace PochtaSdk.Tariff
 {
     /// <summary>
     /// International clients.
@@ -17,3 +18,4 @@
         ShenzhenSfInternationalLogisticsCoLtd = 8,
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

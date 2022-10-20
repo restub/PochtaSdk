@@ -1,4 +1,5 @@
-﻿namespace PochtaSdk.Tariff
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+namespace PochtaSdk.Tariff
 {
     /// <summary>
     /// Tariffication object types.
@@ -1491,3 +1492,4 @@
         ДоставкаТелеграммТелеграфныйСбор = 418000,
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -30,10 +30,15 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "result-ids")]
         public long[] ResultIDs { get; set; }
 
+        /// <summary>
+        /// Возвращает true, если в списке есть элементы, обработанные без ошибки.
+        /// </summary>
         protected virtual bool HasOrders => ResultIDs != null && ResultIDs.Any();
 
+        /// <inheritdoc/>
         public bool HasErrors() => !HasOrders && Errors.Any();
 
+        /// <inheritdoc/>
         public string GetErrorMessage() =>
             string.Join(". ", Errors
                 .Select(e => (e.Description + string.Empty)

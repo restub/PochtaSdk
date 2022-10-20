@@ -15,9 +15,15 @@ namespace PochtaSdk.Otpravka
     [DataContract]
     public class OrderResponseBase : IHasErrors
     {
+        /// <summary>
+        /// Список ошибок
+        /// </summary>
         [DataMember(Name = "errors")]
         public Error[] Errors { get; set; }
 
+        /// <summary>
+        /// Список кодов заказов
+        /// </summary>
         [DataMember(Name = "result-ids")] // v1.0
         public long[] ResultIDs { get; set; }
 
@@ -50,10 +56,15 @@ namespace PochtaSdk.Otpravka
             }
         }
 
+        /// <summary>
+        /// В ответе есть коды заказов
+        /// </summary>
         protected virtual bool HasOrders => ResultIDs != null && ResultIDs.Any();
 
+        /// <inheritdoc/>
         public bool HasErrors() => !HasOrders && ErrorsWithCodes.Any();
 
+        /// <inheritdoc/>
         public string GetErrorMessage() =>
             string.Join(". ", ErrorsWithCodes
                 .Select(e => (e.Description + string.Empty)

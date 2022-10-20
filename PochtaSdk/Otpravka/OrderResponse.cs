@@ -15,9 +15,13 @@ namespace PochtaSdk.Otpravka
     [DataContract]
     public class OrderResponse : OrderResponseBase
     {
+        /// <summary>
+        /// Краткая информация по созданным заказам
+        /// </summary>
         [DataMember(Name = "orders")] // v2.0
         public OrderShortInfo[] Orders { get; set; }
 
+        /// <inheritdoc/>
         protected override bool HasOrders =>
             base.HasOrders || (Orders != null && Orders.Any());
     }

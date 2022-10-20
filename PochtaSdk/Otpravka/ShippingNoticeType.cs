@@ -21,6 +21,10 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "ORDERED")]
         Ordered,
+
+        /// <summary>
+        /// Заказное
+        /// </summary>
         Registered = Ordered,
 
         /// <summary>

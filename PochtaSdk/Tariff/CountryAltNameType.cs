@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-
+﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace PochtaSdk.Tariff
 {
     /// <summary>
@@ -26,3 +24,4 @@ namespace PochtaSdk.Tariff
         ФранцузскоеНазвание = 5,
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

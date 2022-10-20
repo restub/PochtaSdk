@@ -27,7 +27,7 @@ namespace PochtaSdk.Otpravka
         /// <summary>
         /// In progress
         /// Направлено в ФТС. Для подписания перейдите по ссылке:
-        /// https://web2.edata.customs.ru/FtsPersonalCabinetWeb2017/#?view=List&service=MpoNds
+        /// https://web2.edata.customs.ru/FtsPersonalCabinetWeb2017/#?view=List&amp;service=MpoNds
         /// </summary>
         [EnumMember(Value = "IN_PROGRESS")]
         InProgress,
