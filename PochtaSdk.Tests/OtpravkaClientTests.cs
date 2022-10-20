@@ -583,24 +583,9 @@ namespace PochtaSdk.Tests
             //      "position": 0
             //   }
             // ]
-            Assert.That(() => Client.ReturnOrdersToBacklog(123),
+            Assert.That(() => Client.RemoveFromBatch(123),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Message.Contains("NotFound")); // error object doesn't have a readable message
-        }
-
-        [Test, Ordered, Ignore("Throws a NotFound error for some reason, perhaps the order has an unexpected state")]
-        public void OtpravkaClientReturnsAnOrderFromShippingToBacklog()
-        {
-            // make sure that the order exists
-            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
-            var order = Client.GetOrder(CreatedOrderID);
-            Assert.That(order, Is.Not.Null);
-
-            // return it to backlog
-            var result = Client.ReturnOrdersToBacklog(CreatedOrderID);
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
-            Assert.That(result.ResultIDs, Does.Contain(CreatedOrderID));
         }
 
         [Test, Ordered]
@@ -664,7 +649,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created orders: {string.Join(", ", CreatedOrders)}");
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 897437964, 897437965, 897437966, };
+        private long[] CreatedOrders { get; set; } = new long[] { 898759122, 898759123, 898759124, };
 
         [Test, Ordered]
         public void OtpravkaClientSearchesForOrders()
@@ -686,6 +671,36 @@ namespace PochtaSdk.Tests
             var order = orders.First();
             Assert.That(order, Is.Not.Null);
             Assert.That(order.GroupName, Is.EqualTo("002"));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientCreatesBatch()
+        {
+            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
+
+            var response = Client.CreateBatch(CreatedOrders);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Batches, Is.Not.Null.And.Not.Empty);
+            Assert.That(response.ResultIDs, Is.Not.Null.And.Not.Empty);
+            Assert.That(response.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
+
+            var batch = response.Batches.Single();
+            Assert.That(batch.BatchStatus, Is.EqualTo(BatchStatus.Created));
+            Assert.That(batch.MailCategory, Is.EqualTo(MailCategory.Combined));
+            Assert.That(batch.MailType, Is.EqualTo(MailType.Combined));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientRemovesOrdersFromBatch()
+        {
+            // make sure that created orders list is not empty
+            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
+
+            // return orders from shipping to backlog
+            var result = Client.RemoveFromBatch(CreatedOrders);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
         }
 
         [Test, Ordered]

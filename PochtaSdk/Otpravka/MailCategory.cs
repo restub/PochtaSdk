@@ -55,6 +55,12 @@ namespace PochtaSdk.Otpravka
         WithCompulsoryPayment,
 
         /// <summary>
+        /// Комбинированное
+        /// </summary>
+        [EnumMember(Value = "COMBINED")]
+        Combined,
+
+        /// <summary>
         /// Комбинированное обыкновенное
         /// </summary>
         [EnumMember(Value = "COMBINED_ORDINARY")]

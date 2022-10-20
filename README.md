@@ -65,14 +65,16 @@ Documentation: https://otpravka.pochta.ru/specification
   * CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
   * CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
   * CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
-* Shipping orders
+* Delivery orders
   * CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
   * GetOrder: [orders-search_order_byid](https://otpravka.pochta.ru/specification#/orders-search_order_byid)
   * SearchOrders: [orders-search_order](https://otpravka.pochta.ru/specification#/orders-search_order)
   * SearchOrdersByGroupName: [orders-search_orders_by_group_name](https://otpravka.pochta.ru/specification#/orders-search_orders_by_group_name)
   * UpdateOrder: [orders-editing_order](https://otpravka.pochta.ru/specification#/orders-editing_order)
-  * ReturnOrdersToBacklog: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
   * DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
+* Shipping batches
+  * CreateBatch: [batches-create_batch_from_N_orders](https://otpravka.pochta.ru/specification#/batches-create_batch_from_N_orders)
+  * RemoveFromBatch: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
 
 ## Trace log
 

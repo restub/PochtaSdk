@@ -73,18 +73,6 @@ namespace PochtaSdk
             Put<string>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
 
         /// <summary>
-        /// Return shipment orders to backlog state.
-        /// Возврат заказов в «Новые». 
-        /// Метод переводит заказы из партии в раздел Новые.
-        /// Партия должна быть в статусе CREATED.
-        /// https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog
-        /// </summary>
-        /// <param name="orderIds">Order identities to delete.</param>
-        /// <returns>Deleted order identities.</returns>
-        public OrderResponseBase ReturnOrdersToBacklog(params long[] orderIds) =>
-            Post<OrderResponseBase>("1.0/user/backlog", orderIds);
-
-        /// <summary>
         /// Delete orders.
         /// Удаление заказа.
         /// https://otpravka.pochta.ru/specification#/orders-delete_new_order

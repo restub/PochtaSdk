@@ -3,8 +3,8 @@
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Payment method
-    /// Способ оплаты
+    /// Payment method.
+    /// Способ оплаты.
     /// https://otpravka.pochta.ru/specification#/enums-payment-methods
     /// </summary>
     [DataContract]
