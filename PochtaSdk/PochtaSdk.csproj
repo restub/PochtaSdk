@@ -24,6 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
+    v0.8.22
+    — Improved OtpravkaClient: orders, batches, more DTO classes and enums.
+
     v0.7.18
     — Implemented OtpravkaClient: address/fullname/phone normalization, orders, etc.
 
