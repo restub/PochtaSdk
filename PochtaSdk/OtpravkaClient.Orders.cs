@@ -29,6 +29,16 @@ namespace PochtaSdk
         }
 
         /// <summary>
+        /// Update an order.
+        /// https://otpravka.pochta.ru/specification#/orders-editing_order
+        /// </summary>
+        /// <param name="orderId">Order identity to update.</param>
+        /// <param name="order">Updated order instance.</param>
+        /// <returns>Order information.</returns>
+        public void UpdateOrder(long orderId, Order order) =>
+            Put<string>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
+
+        /// <summary>
         /// Delete orders.
         /// https://otpravka.pochta.ru/specification#/orders-delete_new_order
         /// </summary>

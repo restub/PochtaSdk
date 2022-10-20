@@ -7,6 +7,7 @@ namespace PochtaSdk.Otpravka
     /// Вид транспортировки
     /// https://otpravka.pochta.ru/specification#/enums-base-transport-type
     /// </summary>
+    [DataContract]
     public enum TransportType
     {
         /// <summary>

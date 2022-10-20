@@ -7,6 +7,7 @@ namespace PochtaSdk.Otpravka
     /// Коды отметок внутренних и международных отправлений
     /// https://otpravka.pochta.ru/specification#/enums-base-transport-type
     /// </summary>
+    [DataContract]
     public enum PostMark
     {
         /// <summary>

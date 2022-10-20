@@ -7,6 +7,7 @@ namespace PochtaSdk.Otpravka
     /// Категория отправления
     /// https://otpravka.pochta.ru/specification#/enums-base-mail-category
     /// </summary>
+    [DataContract]
     public enum MailCategory
     {
         /// <summary>

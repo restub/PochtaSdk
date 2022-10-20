@@ -7,6 +7,7 @@ namespace PochtaSdk.Otpravka
     /// Разряд письма
     /// https://otpravka.pochta.ru/specification#/enums-base-mail-rank
     /// </summary>
+    [DataContract]
     public enum MailRank
     {
         /// <summary>

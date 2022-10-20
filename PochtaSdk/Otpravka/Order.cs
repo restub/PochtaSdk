@@ -21,7 +21,7 @@ namespace PochtaSdk.Otpravka
         /// Известно, что поддерживается в Посылке Онлайн, Курьер Онлайн.
         /// </remarks>
         [DataMember(Name = "add-to-mmo")]
-        public bool AddToMmo { get; set; }
+        public bool? AddToMmo { get; set; }
 
         /// <summary>
         /// Адрес забора заказа
@@ -63,13 +63,13 @@ namespace PochtaSdk.Otpravka
         /// Признак услуги проверки комплектности
         /// </summary>
         [DataMember(Name = "completeness-checking")]
-        public bool CompletenessChecking { get; set; }
+        public bool? CompletenessChecking { get; set; }
 
         /// <summary>
         /// К оплате с получателя (копейки)
         /// </summary>
         [DataMember(Name = "compulsory-payment")]
-        public int CompulsoryPayment { get; set; }
+        public int? CompulsoryPayment { get; set; }
 
         /// <summary>
         /// Часть здания: Корпус
@@ -81,7 +81,7 @@ namespace PochtaSdk.Otpravka
         /// Отметка "Курьер"
         /// </summary>
         [DataMember(Name = "courier")]
-        public bool Courier { get; set; }
+        public bool? Courier { get; set; }
 
         /// <summary>
         /// Таможенная декларация (для международных отправлений)
@@ -93,7 +93,7 @@ namespace PochtaSdk.Otpravka
         /// Признак оплаты при получении
         /// </summary>
         [DataMember(Name = "delivery-with-cod")]
-        public bool DeliveryWithCod { get; set; }
+        public bool? DeliveryWithCod { get; set; }
 
         /// <summary>
         /// Линейные размеры
@@ -115,7 +115,7 @@ namespace PochtaSdk.Otpravka
         /// Лёгкий возврат
         /// </summary>
         [DataMember(Name = "easy-return")]
-        public bool EasyReturn { get; set; }
+        public bool? EasyReturn { get; set; }
 
         /// <summary>
         /// Данные отправления ЕКОМ
@@ -139,7 +139,7 @@ namespace PochtaSdk.Otpravka
         /// Установлена ли отметка "Осторожно/Хрупкое"
         /// </summary>
         [DataMember(Name = "fragile")]
-        public bool Fragile { get; set; }
+        public bool? Fragile { get; set; }
 
         /// <summary>
         /// Имя получателя
@@ -177,7 +177,7 @@ namespace PochtaSdk.Otpravka
         /// должен использоваться объект "ecom-data"
         /// </summary>
         [DataMember(Name = "index-to")]
-        public int PostCodeTo { get; set; }
+        public int? PostCodeTo { get; set; }
 
         /// <summary>
         /// Дополнительный идентификатор отправления
@@ -195,7 +195,7 @@ namespace PochtaSdk.Otpravka
         /// Наличие описи вложения
         /// </summary>
         [DataMember(Name = "inventory")]
-        public bool Inventory { get; set; }
+        public bool? Inventory { get; set; }
 
         /// <summary>
         /// Часть здания: Литера
@@ -213,25 +213,25 @@ namespace PochtaSdk.Otpravka
         /// Категория РПО
         /// </summary>
         [DataMember(Name = "mail-category")]
-        public MailCategory MailCategory { get; set; }
+        public MailCategory? MailCategory { get; set; }
 
         /// <summary>
         /// Код страны назначения
         /// </summary>
         [DataMember(Name = "mail-direct")]
-        public OksmCountryCode MailCountryCode { get; set; }
+        public OksmCountryCode? MailCountryCode { get; set; }
 
         /// <summary>
         /// Вид РПО
         /// </summary>
         [DataMember(Name = "mail-type")]
-        public MailType MailType { get; set; }
+        public MailType? MailType { get; set; }
 
         /// <summary>
         /// Вес РПО (в граммах)
         /// </summary>
         [DataMember(Name = "mass")]
-        public int Mass { get; set; }
+        public int? Mass { get; set; }
 
         /// <summary>
         /// Отчество получателя
@@ -243,7 +243,7 @@ namespace PochtaSdk.Otpravka
         /// Отметка "Возврату не подлежит"
         /// </summary>
         [DataMember(Name = "no-return")]
-        public bool NoReturn { get; set; }
+        public bool? NoReturn { get; set; }
 
         /// <summary>
         /// Способ оплаты уведомления
@@ -273,7 +273,7 @@ namespace PochtaSdk.Otpravka
         /// Сумма наложенного платежа (копейки)
         /// </summary>
         [DataMember(Name = "payment")]
-        public int Payment { get; set; }
+        public int? Payment { get; set; }
 
         /// <summary>
         /// Способ оплаты.
@@ -297,13 +297,13 @@ namespace PochtaSdk.Otpravka
         /// Предпочтовая подготовка
         /// </summary>
         [DataMember(Name = "pre-postal-preparation")]
-        public bool PrePostalPreparation { get; set; }
+        public bool? PrePostalPreparation { get; set; }
 
         /// <summary>
         /// Сумма частичной предоплаты
         /// </summary>
         [DataMember(Name = "prepaid-amount")]
-        public int PrepaidAmount { get; set; }
+        public int? PrepaidAmount { get; set; }
 
         /// <summary>
         /// Необработанный адрес получателя
@@ -357,7 +357,7 @@ namespace PochtaSdk.Otpravka
         /// Признак услуги SMS уведомления
         /// </summary>
         [DataMember(Name = "sms-notice-recipient")]
-        public int SmsNoticeRecipient { get; set; }
+        public int? SmsNoticeRecipient { get; set; }
 
         /// <summary>
         /// Почтовый индекс (буквенно-цифровой)
@@ -411,42 +411,42 @@ namespace PochtaSdk.Otpravka
         /// Возврат сопроводительных документов
         /// </summary>
         [DataMember(Name = "vsd")]
-        public bool DocumentReturn { get; set; }
+        public bool? DocumentReturn { get; set; }
 
         /// <summary>
         /// С документами (для ЕМС международного)
         /// </summary>
         [DataMember(Name = "with-documents")]
-        public bool WithDocuments { get; set; }
+        public bool? WithDocuments { get; set; }
 
         /// <summary>
         /// Отметка 'С электронным уведомлением'
         /// </summary>
         [DataMember(Name = "with-electronic-notice")]
-        public bool WithElectronicNotice { get; set; }
+        public bool? WithElectronicNotice { get; set; }
 
         /// <summary>
         /// С товарами (для ЕМС международного)
         /// </summary>
         [DataMember(Name = "with-goods")]
-        public bool WithGoods { get; set; }
+        public bool? WithGoods { get; set; }
 
         /// <summary>
         /// Отметка 'С заказным уведомлением'
         /// </summary>
         [DataMember(Name = "with-order-of-notice")]
-        public bool WithOrderOfNotice { get; set; }
+        public bool? WithOrderOfNotice { get; set; }
 
         /// <summary>
         /// Отметка 'С простым уведомлением'
         /// </summary>
         [DataMember(Name = "with-simple-notice")]
-        public bool WithSimpleNotice { get; set; }
+        public bool? WithSimpleNotice { get; set; }
 
         /// <summary>
         /// Отметка "Без разряда"
         /// </summary>
         [DataMember(Name = "wo-mail-rank")]
-        public bool WithoutMailRank { get; set; }
+        public bool? WithoutMailRank { get; set; }
     }
 }

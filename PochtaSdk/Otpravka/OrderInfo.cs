@@ -14,7 +14,7 @@ namespace PochtaSdk.Otpravka
         /// Адрес получателя скорректирован в процессе очистки
         /// </summary>
         [DataMember(Name = "address-changed")]
-        public bool AddressChanged { get; set; }
+        public bool? AddressChanged { get; set; }
 
         /// <summary>
         /// Тип адреса отправления
@@ -182,13 +182,13 @@ namespace PochtaSdk.Otpravka
         /// Отправление в составе ММО (многоместного отправления)
         /// </summary>
         [DataMember(Name = "in-mmo")]
-        public bool InMmo { get; set; }
+        public bool? InMmo { get; set; }
 
         /// <summary>
         /// Почтовый индекс отправителя
         /// </summary>
         [DataMember(Name = "index-from")]
-        public int PostCodeFrom { get; set; }
+        public int? PostCodeFrom { get; set; }
 
         /// <summary>
         /// Плата за ОЦ без НДС (для совместимости)
@@ -224,7 +224,7 @@ namespace PochtaSdk.Otpravka
         /// Заказ удален?
         /// </summary>
         [DataMember(Name = "is-deleted")]
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
 
         /// <summary>
         /// Часть здания: Литера отправителя
@@ -248,7 +248,7 @@ namespace PochtaSdk.Otpravka
         /// Разряд письма
         /// </summary>
         [DataMember(Name = "mail-rank")]
-        public MailRank MailRank { get; set; }
+        public MailRank? MailRank { get; set; }
 
         /// <summary>
         /// Почтовый сбор без НДС (для совместимости)

@@ -441,49 +441,63 @@ namespace PochtaSdk.Tests
                 .And.Message.Contains("декларации"));
         }
 
-        private long CreatedOrderID { get; set; } = 894636184;
+        private Order CreateTestOrder(string num) => new Order
+        {
+            OrderNum = num,
+            AddressFrom = new Address
+            {
+                AddressType = AddressType.Demand,
+                PostCode = "115162",
+            },
+            AddressTypeTo = AddressType.Default,
+            GivenName = "Иван",
+            MiddleName = "Иванович",
+            Surname = "Иванов",
+            PostOfficeCode = "142300",
+            PostCodeTo = 117105,
+            RegionTo = "г. Москва",
+            PlaceTo = "г. Москва",
+            StreetTo = "ш Варшавское",
+            HouseTo = "37",
+            TelAddressFrom = 79871234567,
+            TelAddress = 79871234567,
+            DeclaredValue = 1000,
+            TransportType = Otpravka.TransportType.Surface,
+            MailCategory = MailCategory.Ordinary,
+            MailCountryCode = OksmCountryCode.Russia,
+            MailType = MailType.PostalParcel,
+            Mass = 1000,
+            Dimensions = new Dimensions
+            {
+                Height = 3,
+                Length = 9,
+                Width = 73,
+            },
+            Fragile = true
+        };
 
         [Test, Ordered]
         public void OtpravkaClientCreatesAnOrder()
         {
-            var result = Client.CreateOrders(new Order
-            {
-                OrderNum = "001",
-                AddressFrom = new Address
-                {
-                    AddressType = AddressType.Demand,
-                    PostCode = "115162",
-                },
-                AddressTypeTo = AddressType.Default,
-                GivenName = "Иван",
-                MiddleName = "Иванович",
-                Surname = "Иванов",
-                PostOfficeCode = "142300",
-                PostCodeTo = 117105,
-                RegionTo = "г. Москва",
-                PlaceTo = "г. Москва",
-                StreetTo = "ш Варшавское",
-                HouseTo = "37",
-                TelAddressFrom = 79871234567,
-                TelAddress = 79871234567,
-                DeclaredValue = 1000,
-                TransportType = Otpravka.TransportType.Surface,
-                MailCategory = MailCategory.Ordinary,
-                MailCountryCode = Tariff.OksmCountryCode.Russia,
-                MailType = MailType.PostalParcel,
-                Mass = 1000,
-                Dimensions = new Dimensions
-                {
-                    Height = 3,
-                    Length = 9,
-                    Width = 73,
-                },
-                Fragile = true
-            });
+            var order = CreateTestOrder("001");
+            var result = Client.CreateOrders(order);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+
             CreatedOrderID = result.ResultIDs.First();
+            TestContext.Progress.WriteLine("Created an order: {0}", CreatedOrderID);
+        }
+
+        private long CreatedOrderID { get; set; } = 898498422;
+
+        [Test, Ordered]
+        public void OtpravkaClientReturnsAnOrderByIdentity()
+        {
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+            var result = Client.GetOrder(CreatedOrderID);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ID, Is.EqualTo(CreatedOrderID));
         }
 
         [Test]
@@ -495,12 +509,26 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientReturnsAnOrderByIdentity()
+        public void OtpravkaClientUpdatesAnOrderReturnedByGetOrder()
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.GetOrder(CreatedOrderID);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ID, Is.EqualTo(CreatedOrderID));
+
+            // update the created order
+            var name = Tuple.Create("Василий", "Васильевич", "Подгорный");
+            result.GivenName = name.Item1;
+            result.MiddleName = name.Item2;
+            result.Surname = name.Item3;
+            Client.UpdateOrder(CreatedOrderID, result);
+
+            result = Client.GetOrder(CreatedOrderID);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ID, Is.EqualTo(CreatedOrderID));
+            Assert.That(result.GivenName, Is.EqualTo(name.Item1));
+            Assert.That(result.MiddleName, Is.EqualTo(name.Item2));
+            Assert.That(result.Surname, Is.EqualTo(name.Item3));
         }
 
         [Test, Ordered]
