@@ -74,6 +74,8 @@ Documentation: https://otpravka.pochta.ru/specification
   * DeleteOrders: [orders-delete_new_order](https://otpravka.pochta.ru/specification#/orders-delete_new_order)
 * Shipping batches
   * CreateBatch: [batches-create_batch_from_N_orders](https://otpravka.pochta.ru/specification#/batches-create_batch_from_N_orders)
+  * GetBatch: [batches-find_batch](https://otpravka.pochta.ru/specification#/batches-find_batch)
+  * ChangeBatchDate: [batches-sending_date](https://otpravka.pochta.ru/specification#/batches-sending_date)
   * RemoveFromBatch: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
 
 ## Trace log

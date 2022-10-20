@@ -649,7 +649,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created orders: {string.Join(", ", CreatedOrders)}");
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 898759122, 898759123, 898759124, };
+        private long[] CreatedOrders { get; set; } = new long[] { 898780687, 898780688, 898780689, };
 
         [Test, Ordered]
         public void OtpravkaClientSearchesForOrders()
@@ -685,9 +685,34 @@ namespace PochtaSdk.Tests
             Assert.That(response.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
 
             var batch = response.Batches.Single();
+            Assert.That(batch.BatchName, Is.Not.Null.And.Not.Empty);
             Assert.That(batch.BatchStatus, Is.EqualTo(BatchStatus.Created));
             Assert.That(batch.MailCategory, Is.EqualTo(MailCategory.Combined));
             Assert.That(batch.MailType, Is.EqualTo(MailType.Combined));
+            CreatedBatchName = batch.BatchName;
+        }
+
+        private string CreatedBatchName { get; set; } = "10";
+
+        [Test, Ordered]
+        public void OtpravkaClientReturnsBatchByName()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            var response = Client.GetBatch(CreatedBatchName);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.BatchName, Is.EqualTo(CreatedBatchName));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientChangesBatchDate()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            var response = Client.ChangeBatchDate(CreatedBatchName, DateTime.Today.AddDays(3));
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.ErrorCode, Is.Null);
+            Assert.That(response.F103Sent, Is.False);
         }
 
         [Test, Ordered]
