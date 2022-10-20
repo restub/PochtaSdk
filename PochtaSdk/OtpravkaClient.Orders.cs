@@ -44,7 +44,7 @@ namespace PochtaSdk
         /// <param name="query">Search query (shipment barcode or internal order number).</param>
         /// <returns>Order details.</returns>
         public OrderInfo[] SearchOrders(string query) =>
-            Get<OrderInfo[]>("/1.0/backlog/search", r => r.AddQueryParameter("query", query));
+            Get<OrderInfo[]>("1.0/backlog/search", r => r.AddQueryParameter("query", query));
 
         /// <summary>
         /// Search orders by group name.
@@ -53,7 +53,7 @@ namespace PochtaSdk
         /// <param name="groupName">Group name.</param>
         /// <returns>Order details.</returns>
         public OrderInfo[] SearchOrdersByGroupName(string groupName) =>
-            Get<OrderInfo[]>("/1.0/backlog/by-group-name/{group-name}", r => r
+            Get<OrderInfo[]>("1.0/backlog/by-group-name/{group-name}", r => r
                 .AddUrlSegment("group-name", groupName));
 
         /// <summary>
@@ -63,6 +63,6 @@ namespace PochtaSdk
         /// <param name="orderId">Order identity.</param>
         /// <returns>Order details.</returns>
         public OrderInfo GetOrder(long orderId) =>
-            Get<OrderInfo>("/1.0/backlog/{id}", r => r.AddUrlSegment("id", orderId));
+            Get<OrderInfo>("1.0/backlog/{id}", r => r.AddUrlSegment("id", orderId));
     }
 }

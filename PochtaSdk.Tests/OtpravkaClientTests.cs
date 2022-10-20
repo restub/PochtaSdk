@@ -23,14 +23,14 @@ namespace PochtaSdk.Tests
 
         private ApiLimit ApiLimit { get; set; }
 
-        public void Dispose() 
+        public void Dispose() => DisplayApiLimit();
+
+        private void DisplayApiLimit()
         {
-            if (ApiLimit != null)
-            {
-                TestContext.Progress.WriteLine("==================");
-                TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", ApiLimit.CurrentCount, ApiLimit.AllowedCount);
-                TestContext.Progress.WriteLine("==================");
-            }
+            ApiLimit = ApiLimit ?? Client.GetApiLimit();
+            TestContext.Progress.WriteLine("========================================");
+            TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", ApiLimit.CurrentCount, ApiLimit.AllowedCount);
+            TestContext.Progress.WriteLine("========================================");
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace PochtaSdk.Tests
             Assert.That(ApiLimit.AllowedCount, Is.GreaterThan(0));
             Assert.That(ApiLimit.CurrentCount, Is.GreaterThan(0));
             Assert.That(ApiLimit.AllowedCount, Is.GreaterThan(ApiLimit.CurrentCount));
-            TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", ApiLimit.CurrentCount, ApiLimit.AllowedCount);
+            DisplayApiLimit();
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace PochtaSdk.Tests
         {
             var addresses = Client.CleanAddress("Москва, Варшавское шоссе, 37", "ул. Мясницкая, д. 26, г. Москва");
             Assert.That(addresses, Is.Not.Null);
-            Assert.That(addresses.Length, Is.EqualTo(2));
+            Assert.That(addresses, Has.Length.EqualTo(2));
 
             var address = addresses[0];
             Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
@@ -207,7 +207,7 @@ namespace PochtaSdk.Tests
                 "Иванка Петкова", "Марфа Васильевна", "Достоевский Константин Константинович");
 
             Assert.That(people, Is.Not.Null.And.Not.Empty);
-            Assert.That(people.Length, Is.EqualTo(5));
+            Assert.That(people, Has.Length.EqualTo(5));
 
             var person = people[0];
             Assert.That(person, Is.Not.Null);
@@ -296,7 +296,7 @@ namespace PochtaSdk.Tests
             var phones = Client.CleanPhone("499 12345-67", "+78632 21-54-55",
                 "+78632 21-54-5", "+7495 321-54-56 123");
             Assert.That(phones, Is.Not.Null.And.Not.Empty);
-            Assert.That(phones.Length, Is.EqualTo(4));
+            Assert.That(phones, Has.Length.EqualTo(4));
 
             var phone = phones[0];
             Assert.That(phone, Is.Not.Null);
@@ -365,7 +365,7 @@ namespace PochtaSdk.Tests
                 });
 
             Assert.That(phones, Is.Not.Null.And.Not.Empty);
-            Assert.That(phones.Length, Is.EqualTo(3));
+            Assert.That(phones, Has.Length.EqualTo(3));
 
             var phone = phones[0];
             Assert.That(phone, Is.Not.Null);
