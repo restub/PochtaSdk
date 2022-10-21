@@ -27,6 +27,7 @@ namespace PochtaSdk.Tests
 
         private void DisplayApiLimit()
         {
+            Client.Tracer = null;
             ApiLimit = ApiLimit ?? Client.GetApiLimit();
             TestContext.Progress.WriteLine("========================================");
             TestContext.Progress.WriteLine("Current API counter: {0} out of {1}", ApiLimit.CurrentCount, ApiLimit.AllowedCount);
@@ -649,7 +650,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created orders: {string.Join(", ", CreatedOrders)}");
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 898780687, 898780688, 898780689, };
+        private long[] CreatedOrders { get; set; } = new long[] { 899995883, 899995884, 899995885, };
 
         [Test, Ordered]
         public void OtpravkaClientSearchesForOrders()
@@ -689,10 +690,12 @@ namespace PochtaSdk.Tests
             Assert.That(batch.BatchStatus, Is.EqualTo(BatchStatus.Created));
             Assert.That(batch.MailCategory, Is.EqualTo(MailCategory.Combined));
             Assert.That(batch.MailType, Is.EqualTo(MailType.Combined));
+
             CreatedBatchName = batch.BatchName;
+            TestContext.Progress.WriteLine($"Created a batch: {CreatedBatchName}");
         }
 
-        private string CreatedBatchName { get; set; } = "10";
+        private string CreatedBatchName { get; set; } = "11";
 
         [Test, Ordered]
         public void OtpravkaClientReturnsBatchByName()
@@ -713,6 +716,44 @@ namespace PochtaSdk.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.ErrorCode, Is.Null);
             Assert.That(response.F103Sent, Is.False);
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientAddsOrdersToBatch()
+        {
+            // make sure that batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // create a new order to add to the batch
+            var order = Client.CreateOrders(CreateTestOrder("002"));
+
+            // add it to existing batch
+            var result = Client.AddToBatch(CreatedBatchName, order.ResultIDs);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientReturnsOrdersInTheBatch()
+        {
+            // make sure that batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // get the current orders from the batch
+            var orders = Client.GetBatchOrders(CreatedBatchName);
+            Assert.That(orders, Is.Not.Null.And.Not.Empty);
+
+            // paged request
+            orders = Client.GetBatchOrders(new BatchOrdersRequest(CreatedBatchName)
+            {
+                Size = 3,
+                Page = 1,
+            });
+
+            // page number requires page size
+            Assert.That(() => Client.GetBatchOrders(new BatchOrdersRequest("bad")),
+                Throws.TypeOf<OtpravkaException>()
+                    .With.Message.Contains("Instance ShipmentBatchTuple not found for params: bad"));
         }
 
         [Test, Ordered]

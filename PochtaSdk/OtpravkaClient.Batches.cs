@@ -34,6 +34,28 @@ namespace PochtaSdk
                 .AddQueryString(request));
 
         /// <summary>
+        /// Get batch orders.
+        /// Запрос данных о заказах в партии.
+        /// https://otpravka.pochta.ru/specification#/batches-get_info_about_orders_in_batch
+        /// </summary>
+        /// <param name="batchName">Batch creation request.</param>
+        /// <returns>Created batch.</returns>
+        public OrderInfo[] GetBatchOrders(string batchName) =>
+            GetBatchOrders(new BatchOrdersRequest(batchName));
+
+        /// <summary>
+        /// Get batch orders.
+        /// Запрос данных о заказах в партии.
+        /// https://otpravka.pochta.ru/specification#/batches-get_info_about_orders_in_batch
+        /// </summary>
+        /// <param name="request">Batch orders request.</param>
+        /// <returns>Created batch.</returns>
+        public OrderInfo[] GetBatchOrders(BatchOrdersRequest request) =>
+            Get<OrderInfo[]>("1.0/batch/{name}/shipment", r => r
+                .AddUrlSegment("name", request.BatchName)
+                .AddQueryString(request));
+
+        /// <summary>
         /// Returns shipping order batch by its name (number).
         /// Поиск партии по наименованию.
         /// https://otpravka.pochta.ru/specification#/batches-find_batch
@@ -42,6 +64,22 @@ namespace PochtaSdk
         /// <returns>Batch with the given name.</returns>
         public Batch GetBatch(string batchName) =>
             Get<Batch>("1.0/batch/{name}", r => r.AddUrlSegment("name", batchName));
+
+        /// <summary>
+        /// Add orders to batch.
+        /// Перенос заказов в партию. 
+        /// Переносит подготовленные заказы в указанную партию. 
+        /// Если часть заказов не может быть помещена в партию (тип и категория партии 
+        /// не соответствует типу и категории заказа) - возвращается json объект с указанием 
+        /// индекса заказа в переданном массиве и типом ошибки, остальные заказы помещаются 
+        /// в указанную партию. Каждому перенесенному заказу автоматически присваивается ШПИ.
+        /// https://otpravka.pochta.ru/specification#/batches-move_orders_to_batch
+        /// </summary>
+        /// <param name="batchName">Batch name (number).</param>
+        /// <param name="orderIds">Order identities to add.</param>
+        /// <returns>Order identities added to the batch.</returns>
+        public BatchResponse AddToBatch(string batchName, params long[] orderIds) =>
+            Post<BatchResponse>("1.0/batch/{name}/shipment", orderIds, r => r.AddUrlSegment("name", batchName));
 
         /// <summary>
         /// Return shipment orders to backlog state.
