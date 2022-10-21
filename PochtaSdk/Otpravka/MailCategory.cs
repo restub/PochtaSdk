@@ -23,20 +23,10 @@ namespace PochtaSdk.Otpravka
         Ordered,
 
         /// <summary>
-        /// Заказное
-        /// </summary>
-        Registered = Ordered,
-
-        /// <summary>
         /// Обыкновенное
         /// </summary>
         [EnumMember(Value = "ORDINARY")]
         Ordinary,
-
-        /// <summary>
-        /// Обыкновенное
-        /// </summary>
-        Regular = Ordinary,
 
         /// <summary>
         /// С объявленной ценностью

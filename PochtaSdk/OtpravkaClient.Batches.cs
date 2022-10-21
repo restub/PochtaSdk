@@ -66,6 +66,34 @@ namespace PochtaSdk
             Get<Batch>("1.0/batch/{name}", r => r.AddUrlSegment("name", batchName));
 
         /// <summary>
+        /// Search shipping order batches by mail type, mail category, etc.
+        /// Поиск партии по типам, категориям отправлений и пр.
+        /// https://otpravka.pochta.ru/specification#/batches-search_all_batches
+        /// </summary>
+        /// <param name="mailType">Mail type.</param>
+        /// <param name="mailCategory">Mail category.</param>
+        /// <returns>Batches mathing the search criteria.</returns>
+        public Batch[] SearchBatches(MailType? mailType = null, MailCategory? mailCategory = null) =>
+            SearchBatches(new BatchSearchRequest
+            {
+                MailCategory = mailCategory,
+                MailType = mailType
+            });
+
+        /// <summary>
+        /// Search shipping order batches by mail type, mail category, etc.
+        /// Поиск партии по типам, категориям отправлений и пр.
+        /// https://otpravka.pochta.ru/specification#/batches-search_all_batches
+        /// </summary>
+        /// <param name="request">Batch search request.</param>
+        /// <returns>Batches mathing the search criteria.</returns>
+        public Batch[] SearchBatches(BatchSearchRequest request) =>
+            Get<Batch[]>("1.0/batch", r =>
+            {
+                r.AddQueryString(request);
+            });
+
+        /// <summary>
         /// Add orders to batch.
         /// Перенос заказов в партию. 
         /// Переносит подготовленные заказы в указанную партию. 

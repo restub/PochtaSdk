@@ -708,6 +708,22 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
+        public void OtpravkaClientFindsAllBatches()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            var batches = Client.SearchBatches();
+            Assert.That(batches, Is.Not.Null.And.Not.Empty);
+
+            var batch = batches.FirstOrDefault(b => b.BatchName == CreatedBatchName);
+            Assert.That(batch, Is.Not.Null);
+            Assert.That(batch.BatchName, Is.EqualTo(CreatedBatchName));
+
+            batches = Client.SearchBatches(MailType.Ems, MailCategory.Ordinary);
+            Assert.That(batches, Is.Not.Null.And.Empty);
+        }
+
+        [Test, Ordered]
         public void OtpravkaClientChangesBatchDate()
         {
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
