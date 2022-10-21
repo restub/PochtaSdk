@@ -1,5 +1,4 @@
-﻿#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-namespace PochtaSdk.Tariff
+﻿namespace PochtaSdk.Tariff
 {
     /// <summary>
     /// Country alternative name types.
@@ -24,4 +23,3 @@ namespace PochtaSdk.Tariff
         ФранцузскоеНазвание = 5,
     }
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
