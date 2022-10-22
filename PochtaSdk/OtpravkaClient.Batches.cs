@@ -135,15 +135,5 @@ namespace PochtaSdk
                 .AddUrlSegment("year", newDate.Year)
                 .AddUrlSegment("month", newDate.Month)
                 .AddUrlSegment("dayOfMonth", newDate.Day));
-
-        /// <summary>
-        /// Delete batch (not supported).
-        /// Удаление партии (не поддерживается).
-        /// https://otpravka.pochta.ru/specification#/batches-undocumented
-        /// </summary>
-        /// <param name="batchName">Batch name (number) to delete.</param>
-        /// <returns>Deleted batch names.</returns>
-        private BatchDeletionResponse DeleteBatch(string batchName) =>
-            Delete<BatchDeletionResponse>("1.0/batch/{name}", null, r => r.AddUrlSegment("name", batchName));
     }
 }

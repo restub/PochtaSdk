@@ -773,19 +773,6 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientRemovesOrdersFromBatch()
-        {
-            // make sure that created orders list is not empty
-            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
-
-            // return orders from shipping to backlog
-            var result = Client.RemoveFromBatch(CreatedOrders);
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
-            Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
-        }
-
-        [Test, Ordered]
         public void OtpravkaClientPutsBatchToArchive()
         {
             // make sure that batch exists
@@ -837,6 +824,34 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
+        public void OtpravkaClientRemovesOrdersFromBatch()
+        {
+            // make sure that created orders list is not empty
+            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
+
+            // return orders from shipping to backlog
+            var result = Client.RemoveFromBatch(CreatedOrders);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
+
+            // make sure that created batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+            var orders = Client.GetBatchOrders(CreatedBatchName);
+            Assert.That(orders, Is.Not.Null.And.Not.Empty);
+
+            // remove remaining orders from the batch
+            var orderIds = orders.Select(o => o.ID).ToArray();
+            result = Client.RemoveFromBatch(orderIds);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ResultIDs.Sum(), Is.EqualTo(orderIds.Sum()));
+
+            // delete these orders
+            Client.DeleteOrders(orderIds);
+        }
+
+        [Test, Ordered]
         public void OtpravkaClientDeletesCreatedOrders()
         {
             Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
@@ -845,17 +860,5 @@ namespace PochtaSdk.Tests
             Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
             Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
         }
-
-        //[Test, Ordered, Ignore("Website has batch deletion functionality, but the API apparently does not")]
-        //public void OtpravkaClientDeletesCreatedBatch()
-        //{
-        //    // make sure that batch exists
-        //    Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
-
-        //    // delete created batch
-        //    var result = Client.DeleteBatch("12");
-        //    Assert.That(result, Is.Not.Null.And.Not.Empty);
-        //    Assert.That(result.BatchNames, Has.Length.EqualTo(1));
-        //}
     }
 }
