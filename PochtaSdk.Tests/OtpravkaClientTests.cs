@@ -786,6 +786,57 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
+        public void OtpravkaClientPutsBatchToArchive()
+        {
+            // make sure that batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // archive created batch
+            var result = Client.ArchiveBatches(CreatedBatchName);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            Assert.That(result, Has.Length.EqualTo(1));
+
+            // make sure it's archived
+            var batch = result.First();
+            Assert.That(batch, Is.Not.Null);
+            Assert.That(batch.BatchName, Is.EqualTo(CreatedBatchName));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientListsArchivedBatches()
+        {
+            // make sure that batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // get the current archived batches
+            var result = Client.GetArchivedBatches();
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            Assert.That(result, Has.Length.GreaterThanOrEqualTo(1));
+
+            // verify that our last batch is there
+            var batch = result.FirstOrDefault(b => b.BatchName == CreatedBatchName);
+            Assert.That(batch, Is.Not.Null);
+            Assert.That(batch.BatchName, Is.EqualTo(CreatedBatchName));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientRemovesBatchesFromArchive()
+        {
+            // make sure that batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // remove the last created batch from archive
+            var result = Client.UnarchiveBatches(CreatedBatchName);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            Assert.That(result, Has.Length.EqualTo(1));
+
+            // verify that the batch is returned
+            var batch = result.First();
+            Assert.That(batch, Is.Not.Null);
+            Assert.That(batch.BatchName, Is.EqualTo(CreatedBatchName));
+        }
+
+        [Test, Ordered]
         public void OtpravkaClientDeletesCreatedOrders()
         {
             Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
@@ -794,5 +845,17 @@ namespace PochtaSdk.Tests
             Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
             Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
         }
+
+        //[Test, Ordered, Ignore("Website has batch deletion functionality, but the API apparently does not")]
+        //public void OtpravkaClientDeletesCreatedBatch()
+        //{
+        //    // make sure that batch exists
+        //    Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+        //    // delete created batch
+        //    var result = Client.DeleteBatch("12");
+        //    Assert.That(result, Is.Not.Null.And.Not.Empty);
+        //    Assert.That(result.BatchNames, Has.Length.EqualTo(1));
+        //}
     }
 }

@@ -77,6 +77,10 @@ Documentation: https://otpravka.pochta.ru/specification
   * GetBatch: [batches-find_batch](https://otpravka.pochta.ru/specification#/batches-find_batch)
   * ChangeBatchDate: [batches-sending_date](https://otpravka.pochta.ru/specification#/batches-sending_date)
   * RemoveFromBatch: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
+* Archive
+  * GetArchivedBatches: [archive-search_batches](https://otpravka.pochta.ru/specification#/archive-search_batches)
+  * ArchiveBatches: [archive-batch_to_archive](https://otpravka.pochta.ru/specification#/archive-batch_to_archive)
+  * UnarchiveBatches: [archive-revert_batch](https://otpravka.pochta.ru/specification#/archive-revert_batch)
 
 ## Trace log
 

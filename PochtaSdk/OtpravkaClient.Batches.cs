@@ -4,10 +4,10 @@ using Restub.Toolbox;
 
 namespace PochtaSdk
 {
-    /// <summary>
+    /// <remarks>
     /// Pochta.ru Otpravka API client. REST API methods related to batches.
     /// https://otpravka.pochta.ru/specification
-    /// </summary>
+    /// </remarks>
     public partial class OtpravkaClient
     {
         /// <summary>
@@ -135,5 +135,15 @@ namespace PochtaSdk
                 .AddUrlSegment("year", newDate.Year)
                 .AddUrlSegment("month", newDate.Month)
                 .AddUrlSegment("dayOfMonth", newDate.Day));
+
+        /// <summary>
+        /// Delete batch (not supported).
+        /// Удаление партии (не поддерживается).
+        /// https://otpravka.pochta.ru/specification#/batches-undocumented
+        /// </summary>
+        /// <param name="batchName">Batch name (number) to delete.</param>
+        /// <returns>Deleted batch names.</returns>
+        private BatchDeletionResponse DeleteBatch(string batchName) =>
+            Delete<BatchDeletionResponse>("1.0/batch/{name}", null, r => r.AddUrlSegment("name", batchName));
     }
 }

@@ -3,10 +3,10 @@ using PochtaSdk.Otpravka;
 
 namespace PochtaSdk
 {
-    /// <summary>
+    /// <remarks>
     /// Pochta.ru Otpravka API client. REST API methods related to shipping orders.
     /// https://otpravka.pochta.ru/specification
-    /// </summary>
+    /// </remarks>
     public partial class OtpravkaClient
     {
         /// <summary>
