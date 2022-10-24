@@ -36,7 +36,7 @@ namespace PochtaSdk.Otpravka
         protected virtual bool HasOrders => ResultIDs != null && ResultIDs.Any();
 
         /// <inheritdoc/>
-        public bool HasErrors() => !HasOrders && Errors.Any();
+        public bool HasErrors() => !HasOrders && Errors != null && Errors.Any();
 
         /// <inheritdoc/>
         public string GetErrorMessage() =>

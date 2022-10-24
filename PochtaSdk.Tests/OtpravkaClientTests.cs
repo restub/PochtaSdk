@@ -650,7 +650,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created orders: {string.Join(", ", CreatedOrders)}");
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 899995883, 899995884, 899995885, };
+        private long[] CreatedOrders { get; set; } = new long[] { 901819878, 901819879, 901819880, };
 
         [Test, Ordered]
         public void OtpravkaClientSearchesForOrders()
@@ -695,7 +695,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created a batch: {CreatedBatchName}");
         }
 
-        private string CreatedBatchName { get; set; } = "11";
+        private string CreatedBatchName { get; set; } = "26";
 
         [Test, Ordered]
         public void OtpravkaClientReturnsBatchByName()
@@ -735,7 +735,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientAddsOrdersToBatch()
+        public void OtpravkaClientAddsExistingOrdersToTheBatch()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -745,6 +745,25 @@ namespace PochtaSdk.Tests
 
             // add it to existing batch
             var result = Client.AddToBatch(CreatedBatchName, order.ResultIDs);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+
+            // adding the same order again throws an exception with no readable description
+            Assert.That(() => Client.AddToBatch(CreatedBatchName, "NewGroupName", order.ResultIDs),
+                Throws.TypeOf<OtpravkaException>().With.Message.EqualTo("null"));
+        }
+
+        [Test, Ordered]
+        public void OtpravkaClientAddsOrdersToTheBatch()
+        {
+            // make sure that batch exists
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // create a few orders to add to the batch
+            var orders = new[] { CreateTestOrder("003"), CreateTestOrder("004") };
+
+            // add it to existing batch
+            var result = Client.AddToBatch(CreatedBatchName, orders);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
         }
@@ -766,7 +785,7 @@ namespace PochtaSdk.Tests
                 Page = 1,
             });
 
-            // page number requires page size
+            // invalid batch name/number throws an exception
             Assert.That(() => Client.GetBatchOrders(new BatchOrdersRequest("bad")),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Message.Contains("Instance ShipmentBatchTuple not found for params: bad"));
