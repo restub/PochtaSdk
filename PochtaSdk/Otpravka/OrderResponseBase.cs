@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using PochtaSdk.Toolbox;
 using Restub.DataContracts;
+using Restub.Toolbox;
 
 namespace PochtaSdk.Otpravka
 {
@@ -49,7 +51,7 @@ namespace PochtaSdk.Otpravka
                     select new ErrorWithCode
                     {
                         Code = err.ErrorCode.Value,
-                        Description = err.ErrorCode.ToString(),
+                        Description = err.ErrorCode.Value.GetDisplayName(),
                     };
 
                 return errorsWithCodes.Concat(moreErrors);
@@ -67,7 +69,7 @@ namespace PochtaSdk.Otpravka
         /// <inheritdoc/>
         public string GetErrorMessage() =>
             string.Join(". ", ErrorsWithCodes
-                .Select(e => (e.Description + string.Empty)
+                .Select(e => e.Description.Coalesce(e.Code.GetDisplayName(), string.Empty)
                     .Trim(". \r\n\v".ToCharArray())));
     }
 }

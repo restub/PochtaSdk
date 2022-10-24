@@ -1,9 +1,11 @@
 ﻿using System;
 using PochtaSdk.Otpravka;
+using PochtaSdk.Toolbox;
 using RestSharp;
 using RestSharp.Authenticators;
 using Restub;
 using Restub.DataContracts;
+using Restub.Toolbox;
 
 namespace PochtaSdk
 {
@@ -50,7 +52,11 @@ namespace PochtaSdk
             new OtpravkaException(res.StatusCode, msg, base.CreateException(res, msg, errors));
 
         /// <inheritdoc/>
-        protected override IHasErrors DeserializeErrorResponse(IRestResponse response) =>
-            Serializer.Deserialize<ErrorWithSubCode>(response);
+        protected override IHasErrors DeserializeErrorResponse(IRestResponse response)
+        {
+            var error = Serializer.Deserialize<ErrorWithSubCode>(response);
+            error.Description = error.Description.Coalesce(error.SubCode.GetDisplayName(), string.Empty);
+            return error;
+        }
     }
 }

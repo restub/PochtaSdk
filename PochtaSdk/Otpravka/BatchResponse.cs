@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
+using PochtaSdk.Toolbox;
 using Restub.DataContracts;
+using Restub.Toolbox;
 
 namespace PochtaSdk.Otpravka
 {
@@ -42,7 +44,7 @@ namespace PochtaSdk.Otpravka
         /// <inheritdoc/>
         public string GetErrorMessage() =>
             string.Join(". ", Errors
-                .Select(e => (e.Description + string.Empty)
+                .Select(e => e.Description.Coalesce(e.Code.GetDisplayName(), string.Empty)
                     .Trim(". \r\n\v".ToCharArray())));
     }
 }

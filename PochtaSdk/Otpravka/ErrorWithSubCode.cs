@@ -29,7 +29,7 @@ namespace PochtaSdk.Otpravka
         /// Субкод ошибки
         /// </summary>
         [DataMember(Name = "sub-code")]
-        public string SubCode { get; set; }
+        public ErrorCode SubCode { get; set; }
 
         // status + message - used in api limits
 

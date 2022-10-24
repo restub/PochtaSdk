@@ -587,7 +587,7 @@ namespace PochtaSdk.Tests
             // ]
             Assert.That(() => Client.RemoveFromBatch(123),
                 Throws.TypeOf<OtpravkaException>()
-                    .With.Message.Contains("NotFound")); // error object doesn't have a readable message
+                    .With.Message.Contains("Не найден")); // error object doesn't have a readable message and falls back to DisplayName
         }
 
         [Test, Ordered]
