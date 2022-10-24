@@ -76,6 +76,10 @@ Documentation: https://otpravka.pochta.ru/specification
   * CreateBatch: [batches-create_batch_from_N_orders](https://otpravka.pochta.ru/specification#/batches-create_batch_from_N_orders)
   * GetBatch: [batches-find_batch](https://otpravka.pochta.ru/specification#/batches-find_batch)
   * ChangeBatchDate: [batches-sending_date](https://otpravka.pochta.ru/specification#/batches-sending_date)
+  * AddToBatch: [batches-move_orders_to_batch](https://otpravka.pochta.ru/specification#/batches-move_orders_to_batch)
+  * AddToBatch: [batches-add_orders_to_batch](https://otpravka.pochta.ru/specification#/batches-add_orders_to_batch)
+  * GetBatchOrders: [batches-get_info_about_orders_in_batch](https://otpravka.pochta.ru/specification#/batches-get_info_about_orders_in_batch)
+  * SearchBatches: [batches-search_all_batches](https://otpravka.pochta.ru/specification#/batches-search_all_batches)
   * RemoveFromBatch: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
 * Archive
   * GetArchivedBatches: [archive-search_batches](https://otpravka.pochta.ru/specification#/archive-search_batches)
