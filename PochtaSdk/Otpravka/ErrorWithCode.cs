@@ -5,6 +5,7 @@ namespace PochtaSdk.Otpravka
     /// <summary>
     /// Error with code.
     /// Код и описание ошибки.
+    /// Такие ошибки возвращают методы, работающие с заказами на отправку.
     /// https://otpravka.pochta.ru/specification#/orders-creating_order
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
     /// </summary>

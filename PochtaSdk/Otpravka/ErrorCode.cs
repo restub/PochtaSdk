@@ -496,5 +496,11 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "ILLEGAL_NOTICE_PAYMENT_METHOD")]
         IllegalNoticePaymentMethod,
+
+        /// <summary>
+        /// Группа не найдена.
+        /// </summary>
+        [EnumMember(Value = "GROUP_NOT_FOUND")]
+        GroupNotFound,
     }
 }

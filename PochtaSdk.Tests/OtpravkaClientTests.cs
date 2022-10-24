@@ -477,9 +477,10 @@ namespace PochtaSdk.Tests
                 .And.Message.Contains("не заполнен"));
         }
 
-        private Order CreateTestOrder(string num) => new Order
+        private Order CreateTestOrder(string num = "002", string groupName = null) => new Order
         {
             OrderNum = num,
+            GroupName = groupName,
             AddressFrom = new Address
             {
                 AddressType = AddressType.Demand,
@@ -741,15 +742,23 @@ namespace PochtaSdk.Tests
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
 
             // create a new order to add to the batch
-            var order = Client.CreateOrders(CreateTestOrder("002"));
+            var order = Client.CreateOrders(CreateTestOrder("002", "0032"));
 
             // add it to existing batch
             var result = Client.AddToBatch(CreatedBatchName, order.ResultIDs);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
 
+            // create a new order to add to the batch
+            order = Client.CreateOrders(CreateTestOrder("003", "0033"));
+
+            // add it to existing batch with group-name "0032" — throws GROUP_NOT_FOUND for some reason
+            result = Client.AddToBatch(CreatedBatchName, order.ResultIDs);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
+
             // adding the same order again throws an exception with no readable description
-            Assert.That(() => Client.AddToBatch(CreatedBatchName, "NewGroupName", order.ResultIDs),
+            Assert.That(() => Client.AddToBatch(CreatedBatchName, "0032", order.ResultIDs),
                 Throws.TypeOf<OtpravkaException>().With.Message.EqualTo("null"));
         }
 

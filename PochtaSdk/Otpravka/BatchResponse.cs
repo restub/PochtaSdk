@@ -8,6 +8,7 @@ namespace PochtaSdk.Otpravka
     /// Batch creation response.
     /// Ответ метода создания партий.
     /// https://otpravka.pochta.ru/specification#/batches-create_batch_from_N_orders
+    /// https://otpravka.pochta.ru/specification#/batches-move_orders_to_batch
     /// </summary>
     [DataContract]
     public class BatchResponse : IHasErrors
@@ -22,7 +23,7 @@ namespace PochtaSdk.Otpravka
         /// Ошибки
         /// </summary>
         [DataMember(Name = "errors")]
-        public ErrorWithCode[] Errors { get; set; }
+        public ErrorWithCode2[] Errors { get; set; }
 
         /// <summary>
         /// Коды заказов
