@@ -928,6 +928,48 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
+        public void GetPostOfficeServiceGroupsByPostCode()
+        {
+            // в отделениях предоставляется целая куча услуг
+            var result = Client.GetPostOfficeServices("125047");
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            var service = result.FirstOrDefault(s => s.Code == "1010700");
+            Assert.That(service, Is.Not.Null);
+            Assert.That(service.Name, Is.Not.Null.And.Not.Empty);
+
+            result = Client.GetPostOfficeServices("196070");
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            service = result.FirstOrDefault(s => s.Code == "3060100");
+            Assert.That(service, Is.Not.Null);
+            Assert.That(service.Name, Is.Not.Null.And.Not.Empty);
+
+            // почтомат никаких услуг не предоставляет
+            result = Client.GetPostOfficeServices("912471");
+            Assert.That(result, Is.Not.Null.And.Empty);
+        }
+
+        [Test]
+        public void GetPostOfficeServiceGroupsByPostCodeAndGroupCode()
+        {
+            // в отделениях предоставляется целая куча услуг
+            var result = Client.GetPostOfficeServices("125047", 2259);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            var service = result.FirstOrDefault(s => s.Code == "2010400");
+            Assert.That(service, Is.Not.Null);
+            Assert.That(service.Name, Is.Not.Null.And.Not.Empty); 
+
+            result = Client.GetPostOfficeServices("196070", 2315);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            service = result.FirstOrDefault(s => s.Code == "3060400");
+            Assert.That(service, Is.Not.Null);
+            Assert.That(service.Name, Is.Not.Null.And.Not.Empty);
+
+            // почтомат никаких услуг не предоставляет
+            result = Client.GetPostOfficeServices("912471", 2101);
+            Assert.That(result, Is.Not.Null.And.Empty);
+        }
+
+        [Test]
         public void SearchPostOfficesByAddress()
         {
             var result = Client.SearchPostOffices("Москва, Тверская-Ямская, 1");
@@ -945,7 +987,8 @@ namespace PochtaSdk.Tests
             Assert.That(result.IsMatched, Is.False);
             Assert.That(result.PostOffices, Is.Not.Null.And.Not.Empty);
 
-            // по этому адресу расположен почтомат, но он не находится
+            // по этому адресу расположен почтомат, но он не находится,
+            // а находится ближайшее почтовое отделение
             result = Client.SearchPostOffices("Москва, Волоколамский пр-д, 4, к.3", top: 10);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.IsMatched, Is.False);

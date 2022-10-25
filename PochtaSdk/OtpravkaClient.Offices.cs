@@ -11,7 +11,7 @@ namespace PochtaSdk
     public partial class OtpravkaClient
     {
         /// <summary>
-        /// Get post offices by postal code.
+        /// Get post office by postal code.
         /// Получить информацию об ОПС по индексу.
         /// https://otpravka.pochta.ru/specification#/services-postoffice
         /// </summary>
@@ -24,7 +24,7 @@ namespace PochtaSdk
             });
 
         /// <summary>
-        /// Get post offices by postal code.
+        /// Get post office by postal code.
         /// Получить информацию об ОПС по индексу.
         /// https://otpravka.pochta.ru/specification#/services-postoffice
         /// </summary>
@@ -34,6 +34,30 @@ namespace PochtaSdk
             Get<PostOffice>("postoffice/1.0/{postal-code}", r => r
                 .AddUrlSegment("postal-code", request.PostalCode)
                 .AddQueryString(request));
+
+        /// <summary>
+        /// Get post office services by postal code.
+        /// Получить информацию о сервисах ОПС по индексу.
+        /// https://otpravka.pochta.ru/specification#/services-postoffice-service
+        /// </summary>
+        /// <param name="postalCode">Postal code.</param>
+        /// <returns>Post office service information.</returns>
+        public PostOfficeService[] GetPostOfficeServices(string postalCode) =>
+            Get<PostOfficeService[]>("postoffice/1.0/{postal-code}/services", r => r
+                .AddUrlSegment("postal-code", postalCode));
+
+        /// <summary>
+        /// Get post office services by postal code and service group code.
+        /// Получить информацию о сервисах ОПС по индексу и коду группы.
+        /// https://otpravka.pochta.ru/specification#/services-postoffice-service-group
+        /// </summary>
+        /// <param name="postalCode">Postal code.</param>
+        /// <param name="serviceGroupId">Service group identity.</param>
+        /// <returns>Post office service information.</returns>
+        public PostOfficeService[] GetPostOfficeServices(string postalCode, int serviceGroupId) =>
+            Get<PostOfficeService[]>("postoffice/1.0/{postal-code}/services/{service-group-id}", r => r
+                .AddUrlSegment("postal-code", postalCode)
+                .AddUrlSegment("service-group-id", serviceGroupId));
 
         /// <summary>
         /// Search post offices by address.
