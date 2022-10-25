@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -1085,6 +1086,30 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null.And.Not.Empty);
             Assert.That(result, Does.Contain("125009"));
             Assert.That(result, Does.Contain("125047"));
+        }
+
+        [Test]
+        public void DownloadPostOfficesArchive()
+        {
+            void download(PostOfficeType type)
+            {
+                using (var fileStream = File.Create($"PochtaSdk-temp-PostOffices-{type}.zip"))
+                using (var writer = new BinaryWriter(fileStream))
+                {
+                    var bytes = Client.DownloadPostOffices(type);
+                    writer.Write(bytes);
+                    writer.Flush();
+                    Assert.That(bytes.Length, Is.GreaterThan(0));
+
+                    TestContext.Progress.WriteLine("Wrote file: {0}", fileStream.Name);
+                    TestContext.Progress.WriteLine("Size: {0} bytes", fileStream.Length);
+                }
+            }
+
+            download(PostOfficeType.Postamat);
+            download(PostOfficeType.PickupPoint);
+            download(PostOfficeType.PostOffice);
+            download(PostOfficeType.All);
         }
     }
 }

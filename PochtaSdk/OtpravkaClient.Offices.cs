@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using PochtaSdk.Otpravka;
+using RestSharp;
 using Restub.Toolbox;
 
 namespace PochtaSdk
@@ -108,5 +110,24 @@ namespace PochtaSdk
         /// <returns>Matching post office codes.</returns>
         public string[] SearchPostOffices(PostOfficeByRegion request) =>
             Get<string[]>("postoffice/1.0/settlement.offices.codes", r => r.AddQueryString(request));
+
+        /// <summary>
+        /// Downloads zip arhive with all post offices.
+        /// Загружает zip-архив со списком почтовых отделений.
+        /// </summary>
+        public byte[] DownloadPostOffices(PostOfficeType type)
+        {
+            var request = new RestRequest("1.0/unloading-passport/zip", Method.GET);
+            request.AddHeader("Accept", "application/octet-stream");
+            //request.AddHeader("Accept", "*/*");
+            request.AddQueryString(new { type = (PostOfficeType?)type });
+
+            var response = Client.Execute(request);
+            ThrowOnFailure(response);
+            return response.RawBytes;
+
+            //return Client.DownloadData(request);
+        }
+
     }
 }

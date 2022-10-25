@@ -91,6 +91,7 @@ Documentation: https://otpravka.pochta.ru/specification
   * GetPostOfficeServices [services-postoffice-service-group](https://otpravka.pochta.ru/specification#/services-postoffice-service-group)
   * SearchPostOffices [services-postoffice-by-address](https://otpravka.pochta.ru/specification#/services-postoffice-by-address)
   * SearchPostOffices [services-postoffice-nearby](https://otpravka.pochta.ru/specification#/services-postoffice-nearby)
+  * SearchPostOffices [services-postoffice-settlement.offices.codes](https://otpravka.pochta.ru/specification#/services-postoffice-settlement.offices.codes)
 
 ## Trace log
 
