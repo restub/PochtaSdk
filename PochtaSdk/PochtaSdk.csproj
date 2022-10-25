@@ -24,16 +24,19 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
-    v0.9.19
+    v0.10
+    — Improved OtpravkaClient: added methods related to post offices.
+
+    v0.9
     — Improved OtpravkaClient: more methods related to batches, archive, etc.
 
-    v0.8.22
+    v0.8
     — Improved OtpravkaClient: orders, batches, more DTO classes and enums.
 
-    v0.7.18
+    v0.7
     — Implemented OtpravkaClient: address/fullname/phone normalization, orders, etc.
 
-    v0.5.10
+    v0.5
     — Implemented TariffClient: tariffs, delivery terms, countries, post offices, etc.
     </PackageReleaseNotes>
   </PropertyGroup>

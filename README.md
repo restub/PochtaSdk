@@ -85,6 +85,12 @@ Documentation: https://otpravka.pochta.ru/specification
   * GetArchivedBatches: [archive-search_batches](https://otpravka.pochta.ru/specification#/archive-search_batches)
   * ArchiveBatches: [archive-batch_to_archive](https://otpravka.pochta.ru/specification#/archive-batch_to_archive)
   * UnarchiveBatches: [archive-revert_batch](https://otpravka.pochta.ru/specification#/archive-revert_batch)
+* Post offices
+  * GetPostOffice [services-postoffice](https://otpravka.pochta.ru/specification#/services-postoffice)
+  * GetPostOfficeServices [services-postoffice-service](https://otpravka.pochta.ru/specification#/services-postoffice-service)
+  * GetPostOfficeServices [services-postoffice-service-group](https://otpravka.pochta.ru/specification#/services-postoffice-service-group)
+  * SearchPostOffices [services-postoffice-by-address](https://otpravka.pochta.ru/specification#/services-postoffice-by-address)
+  * SearchPostOffices [services-postoffice-nearby](https://otpravka.pochta.ru/specification#/services-postoffice-nearby)
 
 ## Trace log
 
