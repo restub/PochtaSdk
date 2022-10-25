@@ -119,15 +119,14 @@ namespace PochtaSdk
         {
             var request = new RestRequest("1.0/unloading-passport/zip", Method.GET);
             request.AddHeader("Accept", "application/octet-stream");
-            //request.AddHeader("Accept", "*/*");
-            request.AddQueryString(new { type = (PostOfficeType?)type });
+            request.AddQueryString(new
+            {
+                type = (PostOfficeType?)type,
+            });
 
             var response = Client.Execute(request);
             ThrowOnFailure(response);
             return response.RawBytes;
-
-            //return Client.DownloadData(request);
         }
-
     }
 }

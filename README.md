@@ -92,6 +92,7 @@ Documentation: https://otpravka.pochta.ru/specification
   * SearchPostOffices [services-postoffice-by-address](https://otpravka.pochta.ru/specification#/services-postoffice-by-address)
   * SearchPostOffices [services-postoffice-nearby](https://otpravka.pochta.ru/specification#/services-postoffice-nearby)
   * SearchPostOffices [services-postoffice-settlement.offices.codes](https://otpravka.pochta.ru/specification#/services-postoffice-settlement.offices.codes)
+  * DownloadPostOffices [postoffice_passport-unload_passport](https://otpravka.pochta.ru/specification#/postoffice_passport-unload_passport)
 
 ## Trace log
 
