@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using PochtaSdk.Toolbox;
 using Restub.DataContracts;
+using Restub.Toolbox;
 
 namespace PochtaSdk.Otpravka
 {
@@ -29,7 +31,7 @@ namespace PochtaSdk.Otpravka
         /// Субкод ошибки
         /// </summary>
         [DataMember(Name = "sub-code")]
-        public ErrorCode SubCode { get; set; }
+        public ErrorCode? SubCode { get; set; }
 
         // status + message - used in api limits
 
@@ -47,7 +49,7 @@ namespace PochtaSdk.Otpravka
 
         /// <inheritdoc/>
         public string GetErrorMessage() =>
-            string.IsNullOrWhiteSpace(Description) ? Message : Description;
+            Description.Coalesce(Message, SubCode?.GetDisplayName(), string.Empty);
 
         /// <inheritdoc/>
         public bool HasErrors() => !string.IsNullOrWhiteSpace(GetErrorMessage());

@@ -4,19 +4,14 @@ using System.Runtime.Serialization;
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Search post offices by address response.
-    /// Поиск ОПС по адресу.
-    /// https://otpravka.pochta.ru/specification#/services-postoffice-by-address
+    /// Search post office request base.
+    /// Базовый класс запроса для поиска ОПС.
+    /// https://otpravka.pochta.ru/specification#/services-postoffice
+    /// https://otpravka.pochta.ru/specification#/services-postoffice-nearby
     /// </summary>
     [DataContract]
-    public class PostOfficeRequest
+    public class PostOfficeRequestBase
     {
-        /// <summary>
-        /// Индекс почтового отделения
-        /// </summary>
-        [IgnoreDataMember]
-        public string PostalCode { get; set; }
-
         /// <summary>
         /// Широта
         /// </summary>
@@ -43,12 +38,5 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "filter-by-office-type")]
         public bool? FilterByOfficeType { get; set; }
-
-        /// <summary>
-        /// true: добавлять в ответ индекс УФПС для найдённого отделения, 
-        /// false: не добавлять. Значение по-умолчанию: false.
-        /// </summary>
-        [DataMember(Name = "ufps-postal-code")]
-        public bool? UfpsPostalCode { get; set; }
     }
 }

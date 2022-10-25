@@ -16,17 +16,17 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "address-source")]
         public string AddressSource { get; set; }
 
-        /// <summary>
-        /// Рабочие часы в текущее время
-        /// </summary>
-        [DataMember(Name = "current-day-working-hours")]
-        public PostOfficeSchedule CurrentDayWorkingHours { get; set; }
+        ///// <summary>
+        ///// Рабочие часы в текущее время — Нет данных от API
+        ///// </summary>
+        //[DataMember(Name = "current-day-working-hours")]
+        //public PostOfficeSchedule CurrentDayWorkingHours { get; set; }
 
         /// <summary>
         /// Расстояние до отделения
         /// </summary>
         [DataMember(Name = "distance")]
-        public int Distance { get; set; }
+        public decimal Distance { get; set; }
 
         /// <summary>
         /// Округ
@@ -70,23 +70,23 @@ namespace PochtaSdk.Otpravka
         [DataMember(Name = "longitude")]
         public decimal Longitude { get; set; }
 
-        /// <summary>
-        /// Индекс ближайшего почтового отделения
-        /// </summary>
-        [DataMember(Name = "nearest-office-postalcode")]
-        public string NearestOfficePostalCode { get; set; }
+        ///// <summary>
+        ///// Индекс ближайшего почтового отделения — Нет данных от API
+        ///// </summary>
+        //[DataMember(Name = "nearest-office-postalcode")]
+        //public string NearestOfficePostalCode { get; set; }
 
-        /// <summary>
-        /// Ближайшее почтовое отделение
-        /// </summary>
-        [DataMember(Name = "nearest-postoffice")]
-        public PostOffice NearestPostoffice { get; set; }
+        ///// <summary>
+        ///// Ближайшее почтовое отделение — Нет данных от API
+        ///// </summary>
+        //[DataMember(Name = "nearest-postoffice")]
+        //public PostOffice NearestPostOffice { get; set; }
 
-        /// <summary>
-        /// Рабочие часы в следующий рабочий день
-        /// </summary>
-        [DataMember(Name = "next-day-working-hours")]
-        public PostOfficeSchedule NextDayWorkingHours { get; set; }
+        ///// <summary>
+        ///// Рабочие часы в следующий рабочий день — Нет данных от API
+        ///// </summary>
+        //[DataMember(Name = "next-day-working-hours")]
+        //public PostOfficeSchedule NextDayWorkingHours { get; set; }
 
         /// <summary>
         /// Телефоны

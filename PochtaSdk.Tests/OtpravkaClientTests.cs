@@ -903,7 +903,7 @@ namespace PochtaSdk.Tests
             Assert.That(result.TypeCode, Is.EqualTo("ГОПС"));
             Assert.That(result.TypeID, Is.EqualTo(8));
 
-            result = Client.GetPostOffice(new PostOfficeRequest { PostalCode = "196070" });
+            result = Client.GetPostOffice(new PostOfficeByCode { PostalCode = "196070" });
             Assert.That(result, Is.Not.Null);
             Assert.That(result.PostalCode, Is.EqualTo("196070"));
             Assert.That(result.AddressSource, Is.Not.Null.And.Not.Empty);
@@ -993,6 +993,67 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.IsMatched, Is.False);
             Assert.That(result.PostOffices, Is.Not.Null.And.Not.Empty);
+        }
+
+        [Test]
+        public void SearchPostOfficesByLocation()
+        {
+            // по этим координатам расположен почтомат, он находится в первую очередь
+            // кроме того, находятся ближайшие почтовые отделения и пункты выдачи заказов
+            var result = Client.SearchPostOffices(55.825927m, 37.434163m, radius: 0.5m);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+
+            var office = result.FirstOrDefault(po => po.PostalCode == "912471");
+            Assert.That(office, Is.Not.Null);
+            Assert.That(office.AddressSource, Is.EqualTo("Волоколамский пр-д, 4, к.3"));
+            Assert.That(office.TypeCode, Is.EqualTo("ПОЧТОМАТ"));
+            Assert.That(office.TypeID, Is.EqualTo(33));
+
+            office = result.FirstOrDefault(po => po.PostalCode == "125424");
+            Assert.That(office, Is.Not.Null);
+            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 92, к.2"));
+            Assert.That(office.TypeCode, Is.EqualTo("ГОПС"));
+            Assert.That(office.TypeID, Is.EqualTo(8));
+
+            office = result.FirstOrDefault(po => po.PostalCode == "966446");
+            Assert.That(office, Is.Not.Null);
+            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 94"));
+            Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
+            Assert.That(office.TypeID, Is.EqualTo(37));
+        }
+
+        [Test]
+        public void SearchPostOfficesByLocationRequest()
+        {
+            // по этим координатам расположен пвз, он находится в первую очередь
+            // кроме того, находятся ближайшие почтовые отделения и пункты выдачи заказов
+            var result = Client.SearchPostOffices(new PostOfficeByLocation
+            {
+                Latitude = 55.827398m,
+                Longitude = 37.435053m,
+                SearchRadius = 0.5m,
+                Top = 5,
+            });
+
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+
+            var office = result.FirstOrDefault(po => po.PostalCode == "911713");
+            Assert.That(office, Is.Not.Null);
+            Assert.That(office.AddressSource, Is.EqualTo("Стратонавтов пр-д, 11, стр.1"));
+            Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
+            Assert.That(office.TypeID, Is.EqualTo(37));
+
+            office = result.FirstOrDefault(po => po.PostalCode == "125424");
+            Assert.That(office, Is.Not.Null);
+            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 92, к.2"));
+            Assert.That(office.TypeCode, Is.EqualTo("ГОПС"));
+            Assert.That(office.TypeID, Is.EqualTo(8));
+
+            office = result.FirstOrDefault(po => po.PostalCode == "966446");
+            Assert.That(office, Is.Not.Null);
+            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 94"));
+            Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
+            Assert.That(office.TypeID, Is.EqualTo(37));
         }
     }
 }

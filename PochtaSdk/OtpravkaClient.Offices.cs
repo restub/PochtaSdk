@@ -18,7 +18,7 @@ namespace PochtaSdk
         /// <param name="postalCode">Postal code.</param>
         /// <returns>Post office information.</returns>
         public PostOffice GetPostOffice(string postalCode) =>
-            GetPostOffice(new PostOfficeRequest
+            GetPostOffice(new PostOfficeByCode
             {
                 PostalCode = postalCode,
             });
@@ -30,7 +30,7 @@ namespace PochtaSdk
         /// </summary>
         /// <param name="request">Search request.</param>
         /// <returns>Post office information.</returns>
-        public PostOffice GetPostOffice(PostOfficeRequest request) =>
+        public PostOffice GetPostOffice(PostOfficeByCode request) =>
             Get<PostOffice>("postoffice/1.0/{postal-code}", r => r
                 .AddUrlSegment("postal-code", request.PostalCode)
                 .AddQueryString(request));
@@ -69,5 +69,34 @@ namespace PochtaSdk
         /// <returns>Matching post office codes.</returns>
         public PostOfficeResponse SearchPostOffices(string address, int? top = null) =>
             Get<PostOfficeResponse>("postoffice/1.0/by-address", r => r.AddQueryString(new { address, top }));
+
+        /// <summary>
+        /// Search post offices by location.
+        /// Поиск обслуживающего ОПС по расположению.
+        /// https://otpravka.pochta.ru/specification#/services-postoffice-nearby
+        /// </summary>
+        /// <param name="latitude">Latitude.</param>
+        /// <param name="longitude">Longitude.</param>
+        /// <param name="radius">Optional search radius, km.</param>
+        /// <param name="top">Optional number of top results to return.</param>
+        /// <returns>Matching post offices.</returns>
+        public PostOffice[] SearchPostOffices(decimal latitude, decimal longitude, decimal? radius = null, int? top = null) =>
+            SearchPostOffices(new PostOfficeByLocation
+            {
+                Latitude = latitude,
+                Longitude = longitude,
+                SearchRadius = radius,
+                Top = top,
+            });
+
+        /// <summary>
+        /// Search post offices by location.
+        /// Поиск обслуживающего ОПС по расположению.
+        /// https://otpravka.pochta.ru/specification#/services-postoffice-nearby
+        /// </summary>
+        /// <param name="request">Search request.</param>
+        /// <returns>Matching post office codes.</returns>
+        public PostOffice[] SearchPostOffices(PostOfficeByLocation request) =>
+            Get<PostOffice[]>("postoffice/1.0/nearby", r => r.AddQueryString(request));
     }
 }
