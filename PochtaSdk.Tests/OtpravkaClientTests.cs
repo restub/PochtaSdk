@@ -1055,5 +1055,36 @@ namespace PochtaSdk.Tests
             Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
             Assert.That(office.TypeID, Is.EqualTo(37));
         }
+
+        [Test]
+        public void SearchPostOfficesByRegion()
+        {
+            var result = Client.SearchPostOffices(new PostOfficeByRegion
+            {
+                Settlement = "Краснодар",
+            });
+
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            Assert.That(result, Does.Contain("350000"));
+            Assert.That(result, Does.Contain("350053"));
+            
+            result = Client.SearchPostOffices(new PostOfficeByRegion
+            {
+                Settlement = "Пластуновская",
+            });
+
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            Assert.That(result, Does.Contain("353206"));
+
+            result = Client.SearchPostOffices(new PostOfficeByRegion
+            {
+                District = "Тверская область",
+                Settlement = "Москва",
+            });
+
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            Assert.That(result, Does.Contain("125009"));
+            Assert.That(result, Does.Contain("125047"));
+        }
     }
 }

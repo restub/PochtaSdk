@@ -98,5 +98,15 @@ namespace PochtaSdk
         /// <returns>Matching post office codes.</returns>
         public PostOffice[] SearchPostOffices(PostOfficeByLocation request) =>
             Get<PostOffice[]>("postoffice/1.0/nearby", r => r.AddQueryString(request));
+
+        /// <summary>
+        /// Search post offices by region/district/settlement name.
+        /// Поиск ОПС по названию региона/района/населенного пункта.
+        /// https://otpravka.pochta.ru/specification#/services-postoffice-settlement.offices.codes
+        /// </summary>
+        /// <param name="request">Search request.</param>
+        /// <returns>Matching post office codes.</returns>
+        public string[] SearchPostOffices(PostOfficeByRegion request) =>
+            Get<string[]>("postoffice/1.0/settlement.offices.codes", r => r.AddQueryString(request));
     }
 }
