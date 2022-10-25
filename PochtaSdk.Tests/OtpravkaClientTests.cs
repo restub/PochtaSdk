@@ -35,7 +35,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientAuthorizesUsingUserEmail()
+        public void AuthorizeUsingUserEmail()
         {
             var sb = new StringBuilder();
             var client = new OtpravkaClient(new OtpravkaCredentials
@@ -59,7 +59,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientAuthorizesUsingUserPhone()
+        public void AuthorizeUsingUserPhone()
         {
             var sb = new StringBuilder();
             var client = new OtpravkaClient(new OtpravkaCredentials
@@ -83,7 +83,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientGetsApiLimits()
+        public void GetApiLimits()
         {
             ApiLimit = Client.GetApiLimit();
             Assert.That(ApiLimit, Is.Not.Null);
@@ -94,7 +94,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientAddressCleanup()
+        public void AddressCleanup()
         {
             var address = Client.CleanAddress("Москва, Варшавское шоссе, 37");
             Assert.That(address, Is.Not.Null);
@@ -128,7 +128,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientAddressBatchCleanup()
+        public void AddressBatchCleanup()
         {
             var addresses = Client.CleanAddress("Москва, Варшавское шоссе, 37", "ул. Мясницкая, д. 26, г. Москва");
             Assert.That(addresses, Is.Not.Null);
@@ -166,7 +166,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaFullNameCleanup()
+        public void FullNameCleanup()
         {
             var person = Client.CleanFullName("Христофор Бонифатиевич Врунгель");
             Assert.That(person, Is.Not.Null);
@@ -202,7 +202,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaFullNameBatchCleanup()
+        public void FullNameBatchCleanup()
         {
             var people = Client.CleanFullName("Христофор Бонифатьевич Врунгель", "Иван Рылов",
                 "Иванка Петкова", "Марфа Васильевна", "Достоевский Константин Константинович");
@@ -252,7 +252,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaStringPhoneCleanup()
+        public void StringPhoneCleanup()
         {
             var phone = Client.CleanPhone("499 12345-67");
             Assert.That(phone, Is.Not.Null);
@@ -292,7 +292,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaStringPhoneBatchCleanup()
+        public void StringPhoneBatchCleanup()
         {
             var phones = Client.CleanPhone("499 12345-67", "+78632 21-54-55",
                 "+78632 21-54-5", "+7495 321-54-56 123");
@@ -337,7 +337,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaPhoneBatchCleanup()
+        public void PhoneBatchCleanup()
         {
             var phones = Client.CleanPhone(
                 new PhoneRequest
@@ -400,7 +400,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientDoesntReportErrorsWhenNoOrdersAreSpecifiedForCreation()
+        public void NoErrorsReportedWhenNoOrdersAreSpecifiedForCreation()
         {
             var result = Client.CreateOrders();
             Assert.That(result, Is.Not.Null);
@@ -409,7 +409,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientFailsToCreateOrderWhenNoPropertiesAreSpecified()
+        public void CantCreateOrderWhenNoPropertiesAreSpecified()
         {
             Assert.That(() => Client.CreateOrders(new Order()),
                 Throws.TypeOf<OtpravkaException>()
@@ -421,7 +421,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientFailsToCreateOrderWhenRequiredPropertiesAreNotSpecified()
+        public void CantCreateOrderWhenRequiredPropertiesAreNotSpecified()
         {
             // this test ensures proper error handling for error reports like this:
             // body: {
@@ -514,7 +514,7 @@ namespace PochtaSdk.Tests
         };
 
         [Test, Ordered]
-        public void OtpravkaClientCreatesAnOrder()
+        public void CreateAnOrder()
         {
             var order = CreateTestOrder("001");
             var result = Client.CreateOrders(order);
@@ -529,7 +529,7 @@ namespace PochtaSdk.Tests
         private long CreatedOrderID { get; set; } = 898498422;
 
         [Test, Ordered]
-        public void OtpravkaClientReturnsAnOrderByIdentity()
+        public void ReturnAnOrderByIdentity()
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.GetOrder(CreatedOrderID);
@@ -538,7 +538,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientThrowsWhenOrderIsNotFound()
+        public void ThrowWhenOrderIsNotFound()
         {
             // this test ensures proper error handling for error reports like this:
             // body: {
@@ -552,7 +552,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientUpdatesAnOrderReturnedByGetOrder()
+        public void UpdateAnOrderReturnedByGetOrder()
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.GetOrder(CreatedOrderID);
@@ -575,7 +575,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void OtpravkaClientReturnOrderToBacklogThrowsANotFoundError()
+        public void ReturnOrderToBacklogThrowsANotFoundError()
         {
             // this test ensures proper error handling for error reports like this:
             // body: {
@@ -591,7 +591,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientDeletesAnOrder()
+        public void DeleteAnOrder()
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.DeleteOrders(CreatedOrderID);
@@ -601,7 +601,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientCreatesMultipleOrdersAsMmo()
+        public void CreateMultipleOrdersAsMmo()
         {
             var mailType = MailType.OnlineCourier;
             var order = new Order
@@ -654,7 +654,7 @@ namespace PochtaSdk.Tests
         private long[] CreatedOrders { get; set; } = new long[] { 901819878, 901819879, 901819880, };
 
         [Test, Ordered]
-        public void OtpravkaClientSearchesForOrders()
+        public void SearchForOrders()
         {
             var orders = Client.SearchOrders("002");
             Assert.That(orders, Is.Not.Null.And.Not.Empty);
@@ -665,7 +665,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientSearchesForOrdersByGroupName()
+        public void SearchForOrdersByGroupName()
         {
             var orders = Client.SearchOrdersByGroupName("002");
             Assert.That(orders, Is.Not.Null.And.Not.Empty);
@@ -676,7 +676,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientCreatesBatch()
+        public void CreateABatch()
         {
             Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
 
@@ -699,7 +699,7 @@ namespace PochtaSdk.Tests
         private string CreatedBatchName { get; set; } = "26";
 
         [Test, Ordered]
-        public void OtpravkaClientReturnsBatchByName()
+        public void ReturnBatchByName()
         {
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
 
@@ -709,7 +709,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientFindsAllBatches()
+        public void FindAllBatches()
         {
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
 
@@ -725,7 +725,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientChangesBatchDate()
+        public void ChangeBatchDate()
         {
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
 
@@ -736,7 +736,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientAddsExistingOrdersToTheBatch()
+        public void AddExistingOrdersToTheBatch()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -763,7 +763,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientAddsOrdersToTheBatch()
+        public void AddNewOrdersToTheBatch()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -778,7 +778,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientReturnsOrdersInTheBatch()
+        public void ReturnOrdersInTheBatch()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -801,7 +801,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientPutsBatchToArchive()
+        public void PutBatchToArchive()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -818,7 +818,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientListsArchivedBatches()
+        public void ListArchivedBatches()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -835,7 +835,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientRemovesBatchesFromArchive()
+        public void RemoveBatchesFromArchive()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -852,7 +852,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientRemovesOrdersFromBatch()
+        public void RemoveOrdersFromBatch()
         {
             // make sure that created orders list is not empty
             Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
@@ -880,13 +880,76 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void OtpravkaClientDeletesCreatedOrders()
+        public void DeleteCreatedOrders()
         {
             Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
             var result = Client.DeleteOrders(CreatedOrders);
-            Assert.That(result, Is.Not.Null.Or.Empty);
-            Assert.That(result.ResultIDs, Is.Not.Null.Or.Empty);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
             Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
+        }
+
+        [Test]
+        public void GetPostOfficeByPostCode()
+        {
+            var result = Client.GetPostOffice("125047");
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.PostalCode, Is.EqualTo("125047"));
+            Assert.That(result.AddressSource, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ServiceGroups, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.WorkingHours, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.WorksOnSaturdays, Is.True);
+            Assert.That(result.WorksOnSundays, Is.False);
+            Assert.That(result.TypeCode, Is.EqualTo("ГОПС"));
+            Assert.That(result.TypeID, Is.EqualTo(8));
+
+            result = Client.GetPostOffice(new PostOfficeRequest { PostalCode = "196070" });
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.PostalCode, Is.EqualTo("196070"));
+            Assert.That(result.AddressSource, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ServiceGroups, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.WorkingHours, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.WorksOnSaturdays, Is.False);
+            Assert.That(result.WorksOnSundays, Is.False);
+            Assert.That(result.TypeCode, Is.EqualTo("ГОПС"));
+            Assert.That(result.TypeID, Is.EqualTo(8));
+
+            // это почтомат, по его индексу можно получить детальную информацию
+            result = Client.GetPostOffice("912471");
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.PostalCode, Is.EqualTo("912471"));
+            Assert.That(result.AddressSource, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.ServiceGroups, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.WorkingHours, Is.Not.Null.And.Not.Empty);
+            Assert.That(result.WorksOnSaturdays, Is.True);
+            Assert.That(result.WorksOnSundays, Is.True);
+            Assert.That(result.TypeCode, Is.EqualTo("ПОЧТОМАТ"));
+            Assert.That(result.TypeID, Is.EqualTo(33));
+        }
+
+        [Test]
+        public void SearchPostOfficesByAddress()
+        {
+            var result = Client.SearchPostOffices("Москва, Тверская-Ямская, 1");
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.IsMatched, Is.False);
+            Assert.That(result.PostOffices, Is.Not.Null.And.Not.Empty);
+
+            result = Client.SearchPostOffices("г Москва, ш Волоколамское, дом 92 к. 2");
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.IsMatched, Is.False);
+            Assert.That(result.PostOffices, Is.Not.Null.And.Not.Empty);
+
+            result = Client.SearchPostOffices("Санкт-Петербург, улица Победы, 15к1");
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.IsMatched, Is.False);
+            Assert.That(result.PostOffices, Is.Not.Null.And.Not.Empty);
+
+            // по этому адресу расположен почтомат, но он не находится
+            result = Client.SearchPostOffices("Москва, Волоколамский пр-д, 4, к.3", top: 10);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.IsMatched, Is.False);
+            Assert.That(result.PostOffices, Is.Not.Null.And.Not.Empty);
         }
     }
 }
