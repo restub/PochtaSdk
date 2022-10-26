@@ -1089,27 +1089,23 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void DownloadPostOfficesArchive()
+        [TestCase(PostOfficeType.Postamat)]
+        [TestCase(PostOfficeType.PickupPoint)]
+        [TestCase(PostOfficeType.PostOffice)]
+        [TestCase(PostOfficeType.All)]
+        public void DownloadPostOfficesArchive(PostOfficeType type)
         {
-            void download(PostOfficeType type)
+            using (var fileStream = File.Create($"PochtaSdk-temp-PostOffices-{type}.zip"))
+            using (var writer = new BinaryWriter(fileStream))
             {
-                using (var fileStream = File.Create($"PochtaSdk-temp-PostOffices-{type}.zip"))
-                using (var writer = new BinaryWriter(fileStream))
-                {
-                    var bytes = Client.DownloadPostOffices(type);
-                    writer.Write(bytes);
-                    writer.Flush();
-                    Assert.That(bytes.Length, Is.GreaterThan(0));
+                var bytes = Client.DownloadPostOffices(type);
+                writer.Write(bytes);
+                writer.Flush();
+                Assert.That(bytes.Length, Is.GreaterThan(0));
 
-                    TestContext.Progress.WriteLine("Wrote file: {0}", fileStream.Name);
-                    TestContext.Progress.WriteLine("Size: {0} bytes", fileStream.Length);
-                }
+                TestContext.Progress.WriteLine("Wrote file: {0}", fileStream.Name);
+                TestContext.Progress.WriteLine("Size: {0} bytes", fileStream.Length);
             }
-
-            download(PostOfficeType.Postamat);
-            download(PostOfficeType.PickupPoint);
-            download(PostOfficeType.PostOffice);
-            download(PostOfficeType.All);
         }
     }
 }

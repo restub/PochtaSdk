@@ -115,18 +115,9 @@ namespace PochtaSdk
         /// Downloads zip arhive with all post offices.
         /// Загружает zip-архив со списком почтовых отделений.
         /// </summary>
-        public byte[] DownloadPostOffices(PostOfficeType type)
-        {
-            var request = new RestRequest("1.0/unloading-passport/zip", Method.GET);
-            request.AddHeader("Accept", "application/octet-stream");
-            request.AddQueryString(new
-            {
-                type = (PostOfficeType?)type,
-            });
-
-            var response = Client.Execute(request);
-            ThrowOnFailure(response);
-            return response.RawBytes;
-        }
+        public byte[] DownloadPostOffices(PostOfficeType type) =>
+            Get<byte[]>("1.0/unloading-passport/zip", r => r
+                .AddHeader("Accept", "application/octet-stream")
+                .AddQueryString(new { type = (PostOfficeType?)type, }));
     }
 }
