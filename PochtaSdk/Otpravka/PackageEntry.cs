@@ -10,7 +10,7 @@ namespace PochtaSdk.Otpravka
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
     /// </summary>
     [DataContract]
-    public class CustomsEntry
+    public class PackageEntry
     {
         /// <summary>
         /// Количество

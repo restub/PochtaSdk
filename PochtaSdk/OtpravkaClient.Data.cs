@@ -12,6 +12,7 @@ namespace PochtaSdk
     {
         /// <summary>
         /// API request limit.
+        /// Запрос текущих лимитов вызовов API.
         /// https://otpravka.pochta.ru/specification#/nogroup-count_request_api
         /// </summary>
         /// <returns>Request limits.</returns>
@@ -19,6 +20,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Address normalization.
+        /// Нормализация адреса.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_adress
         /// </summary>
         /// <param name="address">Address to normalize.</param>
@@ -28,6 +30,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Address normalization, batch mode.
+        /// Нормализация адресов, пакетный режим.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_adress
         /// </summary>
         /// <param name="addresses">Addresses to normalize.</param>
@@ -48,6 +51,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Person full name normalization.
+        /// Нормализация ФИО.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_fio
         /// </summary>
         /// <param name="fullName">Full name to normalize.</param>
@@ -57,6 +61,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Person full name normalization.
+        /// Нормализация ФИО.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_fio
         /// </summary>
         /// <param name="fullNames">Full names to normalize.</param>
@@ -77,6 +82,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Phone number normalization.
+        /// Нормализация номера телефона.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
         /// </summary>
         /// <param name="phone">Phone number to normalize.</param>
@@ -86,6 +92,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Phone number normalization.
+        /// Нормализация номера телефона.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
         /// </summary>
         /// <param name="phones">Phone numbersto normalize.</param>
@@ -106,6 +113,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Phone number normalization.
+        /// Нормализация номера телефона.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
         /// </summary>
         /// <param name="phone">Phone number to normalize.</param>
@@ -115,6 +123,7 @@ namespace PochtaSdk
 
         /// <summary>
         /// Phone number normalization.
+        /// Нормализация номера телефона.
         /// https://otpravka.pochta.ru/specification#/nogroup-normalization_phone
         /// </summary>
         /// <param name="phones">Phone numbersto normalize.</param>
@@ -150,5 +159,15 @@ namespace PochtaSdk
                 })
                 .ToArray();
         }
+
+        /// <summary>
+        /// Shipping rate calculation.
+        /// Расчет стоимости доставки
+        /// https://otpravka.pochta.ru/specification#/nogroup-rate_calculate
+        /// </summary>
+        /// <param name="request">Shipping request.</param>
+        /// <returns>Request limits.</returns>
+        public ShippingRateResponse CalculateShipping(ShippingRateRequest request) =>
+            Post<ShippingRateResponse>("1.0/tariff", request);
     }
 }

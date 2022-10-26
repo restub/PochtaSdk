@@ -3,12 +3,13 @@
 namespace PochtaSdk.Otpravka
 {
     /// <summary>
-    /// Entry types for customs declarations.
-    /// Типы вложений для таможенной декларации.
+    /// Package entry types for rate calculation and for customs declarations.
+    /// Типы вложений посылок для расчета тарифов и для таможенной декларации.
     /// https://otpravka.pochta.ru/specification#/enums-base-entries-type
+    /// https://otpravka.pochta.ru/specification#/nogroup-rate_calculate
     /// </summary>
     [DataContract]
-    public enum CustomsEntryType
+    public enum PackageEntryType
     {
         /// <summary>
         /// Gift

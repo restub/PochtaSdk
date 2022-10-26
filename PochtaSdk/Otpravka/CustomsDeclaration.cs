@@ -33,13 +33,13 @@ namespace PochtaSdk.Otpravka
         /// Список вложений
         /// </summary>
         [DataMember(Name = "customs-entries")]
-        public CustomsEntry[] CustomsEntries { get; set; }
+        public PackageEntry[] CustomsEntries { get; set; }
 
         /// <summary>
         /// Категория вложения.
         /// </summary>
         [DataMember(Name = "entries-type")]
-        public CustomsEntryType? EntriesType { get; set; }
+        public PackageEntryType? EntriesType { get; set; }
 
         /// <summary>
         /// Счет (номер счета-фактуры)

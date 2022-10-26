@@ -11,16 +11,16 @@ namespace PochtaSdk.Otpravka
     public enum PaymentMethod
     {
         /// <summary>
-        /// Безналичный расчет
-        /// </summary>
-        [EnumMember(Value = "CASHLESS")]
-        Cashless,
-
-        /// <summary>
         /// Оплата марками
         /// </summary>
         [EnumMember(Value = "STAMP")]
         Stamp,
+
+        /// <summary>
+        /// Безналичный расчет
+        /// </summary>
+        [EnumMember(Value = "CASHLESS")]
+        Cashless,
 
         /// <summary>
         /// Франкирование
@@ -35,7 +35,7 @@ namespace PochtaSdk.Otpravka
         ToFranking,
 
         /// <summary>
-        /// Знак онлайн оплаты
+        /// Знак онлайн-оплаты
         /// </summary>
         [EnumMember(Value = "ONLINE_PAYMENT_MARK")]
         OnlinePaymentMark,

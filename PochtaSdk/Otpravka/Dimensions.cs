@@ -7,6 +7,7 @@ namespace PochtaSdk.Otpravka
     /// Линейные размеры.
     /// https://otpravka.pochta.ru/specification#/orders-creating_order
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
+    /// https://otpravka.pochta.ru/specification#/nogroup-rate_calculate
     /// </summary>
     [DataContract]
     public class Dimensions

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using NUnit.Framework;
 using PochtaSdk.Otpravka;
+using HttpStatusCode = System.Net.HttpStatusCode;
 using OksmCountryCode = PochtaSdk.Tariff.OksmCountryCode;
 
 namespace PochtaSdk.Tests
@@ -1106,6 +1106,26 @@ namespace PochtaSdk.Tests
                 TestContext.Progress.WriteLine("Wrote file: {0}", fileStream.Name);
                 TestContext.Progress.WriteLine("Size: {0} bytes", fileStream.Length);
             }
+        }
+
+        [Test]
+        public void CalculateShippingReturns()
+        {
+            var result = Client.CalculateShipping(new ShippingRateRequest
+            {
+                MailCategory = MailCategory.Simple,
+                MailType = MailType.Letter,
+                Courier = true,
+                PostCodeFrom = "353206",
+                PostCodeTo = "344038",
+                DeclaredValue = 10000,
+                Mass = 100,
+                PaymentMethod = PaymentMethod.Stamp,
+                TransportType = TransportType.Express,
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.TotalRate, Is.GreaterThan(0));
         }
     }
 }
