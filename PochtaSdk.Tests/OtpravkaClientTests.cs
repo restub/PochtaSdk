@@ -1109,23 +1109,41 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
-        public void CalculateShippingReturns()
+        public void CalculateShippingReturnsTheSameAmountAsTariffClient()
         {
             var result = Client.CalculateShipping(new ShippingRateRequest
             {
                 MailCategory = MailCategory.Simple,
                 MailType = MailType.Letter,
-                Courier = true,
+                Courier = false,
                 PostCodeFrom = "353206",
                 PostCodeTo = "344038",
                 DeclaredValue = 10000,
                 Mass = 100,
                 PaymentMethod = PaymentMethod.Stamp,
-                TransportType = TransportType.Express,
+                TransportType = TransportType.Standard,
             });
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.TotalRate, Is.GreaterThan(0));
+
+            // verify the results using alternative API
+            var tariffClient = new TariffClient
+            {
+                Tracer = TestContext.Progress.WriteLine
+            };
+
+            var altResult = tariffClient.Calculate(new Tariff.TariffRequest
+            {
+                ObjectType = Tariff.ObjectType.LetterRegular,
+                FromPostCode = 353206,
+                ToPostCode = 344038,
+                SumOc = 10000,
+                Weight = 100,
+            });
+
+            Assert.That(altResult, Is.Not.Null);
+            Assert.That(altResult.GroundAmount.Value, Is.EqualTo(result.GroundRate.Rate));
         }
     }
 }
