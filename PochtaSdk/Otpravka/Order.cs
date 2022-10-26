@@ -172,8 +172,8 @@ namespace PochtaSdk.Otpravka
         public string HouseTo { get; set; }
 
         /// <summary>
-        /// Целое число (Опционально) Почтовый индекс, 
-        /// для отправлений адресованных в почтомат или пункт выдачи, 
+        /// Целое число (Опционально) Почтовый индекс,
+        /// для отправлений адресованных в почтомат или пункт выдачи,
         /// должен использоваться объект "ecom-data"
         /// </summary>
         [DataMember(Name = "index-to")]
@@ -363,7 +363,7 @@ namespace PochtaSdk.Otpravka
         /// Почтовый индекс (буквенно-цифровой)
         /// </summary>
         [DataMember(Name = "str-index-to")]
-        public string PostalCodeTo { get; set; }
+        public string StrPostCodeTo { get; set; }
 
         /// <summary>
         /// Часть адреса: Улица

@@ -15,7 +15,7 @@ namespace PochtaSdk.Otpravka
         /// Идентификатор пункта выдачи заказов
         /// </summary>
         [DataMember(Name = "delivery-point-index")]
-        public string DeliveryPointIndex { get; set; }
+        public string DeliveryPointPostCode { get; set; }
 
         /// <summary>
         /// Методы идентификации
