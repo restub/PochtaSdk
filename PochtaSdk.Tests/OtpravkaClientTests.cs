@@ -649,10 +649,13 @@ namespace PochtaSdk.Tests
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
 
             CreatedOrders = result.ResultIDs;
+            CreatedOrderBarcodes = result.Orders.Select(o => o.Barcode).ToArray();
             TestContext.Progress.WriteLine($"Created orders: {string.Join(", ", CreatedOrders)}");
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 901819878, 901819879, 901819880, };
+        private long[] CreatedOrders { get; set; } = new long[] { 905959482, 905959483, 905959484, };
+
+        private string[] CreatedOrderBarcodes { get; set; } = new[] { "80105177235609", "80105177235616", "80105177235623", };
 
         [Test, Ordered]
         public void SearchForOrders()
@@ -677,7 +680,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void CreateABatch()
+        public void CreateBatch()
         {
             Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
 
@@ -697,16 +700,29 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created a batch: {CreatedBatchName}");
         }
 
-        private string CreatedBatchName { get; set; } = "26";
+        private string CreatedBatchName { get; set; } = "59";
 
         [Test, Ordered]
-        public void ReturnBatchByName()
+        public void GetBatchByName()
         {
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
 
             var response = Client.GetBatch(CreatedBatchName);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.BatchName, Is.EqualTo(CreatedBatchName));
+        }
+
+        [Test, Ordered]
+        public void SearchBatchOrders()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+            Assert.That(CreatedOrderBarcodes, Is.Not.Null.And.Not.Empty);
+
+            var orders = Client.SearchBatchOrders(CreatedOrderBarcodes.First());
+            Assert.That(orders, Is.Not.Null.And.Not.Empty);
+
+            var order = orders.First();
+            Assert.That(order.Barcode, Is.EqualTo(CreatedOrderBarcodes.First()));
         }
 
         [Test, Ordered]
@@ -863,21 +879,22 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
             Assert.That(result.ResultIDs.Sum(), Is.EqualTo(CreatedOrders.Sum()));
+        }
 
+        [Test, Ordered]
+        public void DeleteOrdersFromBatch()
+        {
             // make sure that created batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
             var orders = Client.GetBatchOrders(CreatedBatchName);
             Assert.That(orders, Is.Not.Null.And.Not.Empty);
 
-            // remove remaining orders from the batch
+            // delete remaining orders from the batch
             var orderIds = orders.Select(o => o.ID).ToArray();
-            result = Client.RemoveFromBatch(orderIds);
+            var result = Client.DeleteFromBatch(orderIds);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ResultIDs, Is.Not.Null.And.Not.Empty);
             Assert.That(result.ResultIDs.Sum(), Is.EqualTo(orderIds.Sum()));
-
-            // delete these orders
-            Client.DeleteOrders(orderIds);
         }
 
         [Test, Ordered]

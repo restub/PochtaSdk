@@ -136,6 +136,16 @@ namespace PochtaSdk
                 .AddQueryString(request));
 
         /// <summary>
+        /// Search batched orders by barcode.
+        /// Поиск заказа в партиях по штрих-коду ШПИ.
+        /// https://otpravka.pochta.ru/specification#/batches-find_orders_with_barcode
+        /// </summary>
+        /// <param name="query">Search query (shipment barcode).</param>
+        /// <returns>Order details.</returns>
+        public OrderInfo[] SearchBatchOrders(string query) =>
+            Get<OrderInfo[]>("1.0/shipment/search", r => r.AddQueryParameter("query", query));
+
+        /// <summary>
         /// Search shipping order batches by mail type, mail category, etc.
         /// Поиск партии по типам, категориям отправлений и пр.
         /// https://otpravka.pochta.ru/specification#/batches-search_all_batches
@@ -164,15 +174,26 @@ namespace PochtaSdk
             });
 
         /// <summary>
-        /// Return shipment orders to backlog state.
-        /// Возврат заказов в «Новые». 
+        /// Remove orders from shipment batch and return to backlog state.
+        /// Удаление заказов из партии и возврат их в состояние «Новые». 
         /// Метод переводит заказы из партии в раздел Новые.
         /// Партия должна быть в статусе CREATED.
         /// https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog
         /// </summary>
-        /// <param name="orderIds">Order identities to delete.</param>
-        /// <returns>Deleted order identities.</returns>
+        /// <param name="orderIds">Order identities to remove from batch.</param>
+        /// <returns>Removed order identities.</returns>
         public OrderResponseBase RemoveFromBatch(params long[] orderIds) =>
             Post<OrderResponseBase>("1.0/user/backlog", orderIds);
+
+        /// <summary>
+        /// Deletes orders from shipment batch.
+        /// Удаление заказов, находящихся в составе партии.
+        /// https://otpravka.pochta.ru/specification#/batches-delete_order_from_batch
+        /// </summary>
+        /// <param name="orderIds">Order identities to delete.</param>
+        /// <returns>Deleted order identities.</returns>
+        public BatchResponse DeleteFromBatch(params long[] orderIds) =>
+            Delete<BatchResponse>("1.0/shipment", orderIds);
+        
     }
 }

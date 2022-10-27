@@ -5,7 +5,7 @@ namespace PochtaSdk.Otpravka
     /// <summary>
     /// Batch search request.
     /// Запрос метода поиска партий.
-    /// https://otpravka.pochta.ru/specification#/batches-create_batch_from_N_orders
+    /// https://otpravka.pochta.ru/specification#/batches-search_all_batches
     /// </summary>
     [DataContract]
     public class BatchSearchRequest
