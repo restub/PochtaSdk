@@ -27,7 +27,10 @@ namespace PochtaSdk
 
         /// <inheritdoc/>
         protected override Exception CreateException(IRestResponse response, string errorMessage, IHasErrors errorResponse) =>
-            new TariffException(response.StatusCode, errorMessage, response.ErrorException);
+            new TariffException(response.StatusCode, errorMessage, response.ErrorException)
+            {
+                ErrorResponseText = response.Content,
+            };
 
         /// <inheritdoc/>
         public override string LibraryName =>
