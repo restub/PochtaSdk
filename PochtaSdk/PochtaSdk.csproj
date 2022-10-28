@@ -24,6 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
+    v0.12
+    — Improved OtpravkaClient: added more batched methods, better error reporting.
+
     v0.11
     — Improved OtpravkaClient: added tariff calculation and more batched methods.
 
