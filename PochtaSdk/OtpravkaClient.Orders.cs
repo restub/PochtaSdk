@@ -43,8 +43,12 @@ namespace PochtaSdk
         /// <summary>
         /// Search orders by group name.
         /// Поиск заказов по идентификатору группы.
-        /// https://otpravka.pochta.ru/specification#/orders-search_order
+        /// https://otpravka.pochta.ru/specification#/orders-search_orders_by_group_name
         /// </summary>
+        /// <remarks>
+        /// Doesn't return batched orders.
+        /// Этот метод не возвращает заказы, находящиеся в составе партии.
+        /// </remarks>
         /// <param name="groupName">Group name.</param>
         /// <returns>Order details.</returns>
         public OrderInfo[] SearchOrdersByGroupName(string groupName) =>
@@ -56,6 +60,10 @@ namespace PochtaSdk
         /// Поиск заказа по идентификатору.
         /// https://otpravka.pochta.ru/specification#/orders-search_order_byid
         /// </summary>
+        /// <remarks>
+        /// Doesn't return batched orders.
+        /// Этот метод не возвращает заказы, находящиеся в составе партии.
+        /// </remarks>
         /// <param name="orderId">Order identity.</param>
         /// <returns>Order details.</returns>
         public OrderInfo GetOrder(long orderId) =>

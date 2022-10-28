@@ -194,6 +194,34 @@ namespace PochtaSdk
         /// <returns>Deleted order identities.</returns>
         public BatchResponse DeleteFromBatch(params long[] orderIds) =>
             Delete<BatchResponse>("1.0/shipment", orderIds);
-        
+
+        /// <summary>
+        /// Get batched order by identity.
+        /// Поиск заказа в составе партии по идентификатору.
+        /// https://otpravka.pochta.ru/specification#/batches-find_order_by_id
+        /// </summary>
+        /// <remarks>
+        /// Doesn't return unbatched orders.
+        /// Этот метод не возвращает заказы, не находящиеся в составе партии.
+        /// </remarks>
+        /// <param name="orderId">Order identity.</param>
+        /// <returns>Order details.</returns>
+        public OrderInfo GetBatchOrder(long orderId) =>
+            Get<OrderInfo>("1.0/shipment/{id}", r => r.AddUrlSegment("id", orderId));
+
+        /// <summary>
+        /// Search batched orders by group name.
+        /// Поиск заказов в партии по идентификатору группы
+        /// https://otpravka.pochta.ru/specification#/batches-find_orders_by_group_name
+        /// </summary>
+        /// <remarks>
+        /// Doesn't return unbatched orders.
+        /// Этот метод не возвращает заказы, не находящиеся в составе партии.
+        /// </remarks>
+        /// <param name="groupName">Group name.</param>
+        /// <returns>Order details.</returns>
+        public OrderInfo[] SearchBatchOrdersByGroupName(string groupName) =>
+            Get<OrderInfo[]>("1.0/shipment/by-group-name/{group-name}", r => r
+                .AddUrlSegment("group-name", groupName));
     }
 }
