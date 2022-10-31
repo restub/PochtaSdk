@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Restub.Toolbox;
 using OksmCountryCode = PochtaSdk.Tariff.OksmCountryCode;
 
 namespace PochtaSdk.Otpravka
@@ -356,8 +358,11 @@ namespace PochtaSdk.Otpravka
         /// <summary>
         /// Признак услуги SMS уведомления
         /// </summary>
-        [DataMember(Name = "sms-notice-recipient")]
-        public int? SmsNoticeRecipient { get; set; }
+        /// <remarks>
+        /// Сериализуется как 1 или 0
+        /// </remarks>
+        [DataMember(Name = "sms-notice-recipient"), JsonConverter(typeof(BoolIntConverter))]
+        public bool? SmsNoticeRecipient;
 
         /// <summary>
         /// Почтовый индекс (буквенно-цифровой)

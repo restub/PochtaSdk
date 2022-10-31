@@ -511,7 +511,8 @@ namespace PochtaSdk.Tests
                 Length = 9,
                 Width = 73,
             },
-            Fragile = true
+            Fragile = true,
+            SmsNoticeRecipient = true,
         };
 
         [Test, Ordered]
@@ -954,8 +955,8 @@ namespace PochtaSdk.Tests
             Assert.That(result.AddressSource, Is.Not.Null.And.Not.Empty);
             Assert.That(result.ServiceGroups, Is.Not.Null.And.Not.Empty);
             Assert.That(result.WorkingHours, Is.Not.Null.And.Not.Empty);
-            Assert.That(result.WorksOnSaturdays, Is.False);
-            Assert.That(result.WorksOnSundays, Is.False);
+            Assert.That(result.WorksOnSaturdays, Is.True.Or.False);
+            Assert.That(result.WorksOnSundays, Is.True.Or.False);
             Assert.That(result.TypeCode, Is.EqualTo("ГОПС"));
             Assert.That(result.TypeID, Is.EqualTo(8));
 
