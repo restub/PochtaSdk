@@ -9,6 +9,7 @@ namespace PochtaSdk.Otpravka
     /// Ошибка.
     /// https://otpravka.pochta.ru/specification#/orders-creating_order
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
+    /// https://otpravka.pochta.ru/specification#/orders-editing_order
     /// </summary>
     [DataContract]
     public class Error : IHasErrors
@@ -32,7 +33,8 @@ namespace PochtaSdk.Otpravka
         public int Position { get; set; }
 
         public string GetErrorMessage() =>
-            string.Join(". ", (ErrorCodes ?? Enumerable.Empty<ErrorWithCode>()).Select(e => e.Description));
+            string.Join(". ", (ErrorCodes ?? Enumerable.Empty<ErrorWithCode>())
+                .Select(e => (e.Description + string.Empty).Trim(' ', '.', '\r', '\n')));
 
         public bool HasErrors() => ErrorCode != null || (ErrorCodes != null && ErrorCodes.Any());
     }
