@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -513,10 +514,30 @@ namespace PochtaSdk.Tests
             },
             Fragile = true,
             SmsNoticeRecipient = true,
+            //Inventory = true,
+            //Goods = new OrderGoods
+            //{
+            //    Items = new List<OrderGoodsItem>
+            //    {
+            //        new OrderGoodsItem
+            //        {
+            //            Code = "123",
+            //            CountryCode = OksmCountryCode.Russia,
+            //            Description = "Пылесос карманный",
+            //            GoodsType = OrderGoodsItemType.Goods,
+            //            LineAttr = OrderGoodsLineAttr.GoodsWithoutExcise,
+            //            ItemNumber = "123",
+            //            DeclaredValue = 3000,
+            //            Quantity = 3,
+            //            Value = 1000,
+            //            Weight = 500,
+            //        },
+            //    },
+            //},
         };
 
         [Test, Ordered]
-        public void CreateAnOrder()
+        public void CreateOrder()
         {
             var order = CreateTestOrder("001");
             var result = Client.CreateOrders(order);
@@ -528,7 +549,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine("Created an order: {0}", CreatedOrderID);
         }
 
-        private long CreatedOrderID { get; set; } = 905978995;
+        private long CreatedOrderID { get; set; } = 910194024;
 
         [Test, Ordered]
         public void GetOrderByIdentity()
@@ -608,7 +629,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void DeleteAnOrder()
+        public void DeleteOrder()
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.DeleteOrders(CreatedOrderID);

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace PochtaSdk.Otpravka
 {
@@ -15,6 +16,6 @@ namespace PochtaSdk.Otpravka
         /// Список вложений
         /// </summary>
         [DataMember(Name = "items")]
-        public OrderGoodsItem Items { get; set; }
+        public List<OrderGoodsItem> Items { get; set; }
     }
 }
