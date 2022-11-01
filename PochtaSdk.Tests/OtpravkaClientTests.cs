@@ -576,6 +576,21 @@ namespace PochtaSdk.Tests
             Assert.That(result.Surname, Is.EqualTo(name.Item3));
         }
 
+        [Test, Ordered]
+        public void UpdateOrderThrowsErrorOnInvalidParameters()
+        {
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+
+            var order = CreateTestOrder();
+            order.MailType = MailType.OnlineParcel;
+            order.MailCategory = MailCategory.Ordered;
+            order.SmsNoticeRecipient = true;
+
+            Assert.That(() => Client.UpdateOrder(CreatedOrderID, order), 
+                Throws.TypeOf<OtpravkaException>().With
+                    .Message.Contains("не поддерживается"));
+        }
+
         [Test]
         public void ReturnOrderToBacklogThrowsANotFoundError()
         {
@@ -1146,7 +1161,7 @@ namespace PochtaSdk.Tests
                 var bytes = Client.DownloadPostOffices(type);
                 writer.Write(bytes);
                 writer.Flush();
-                Assert.That(bytes.Length, Is.GreaterThan(0));
+                Assert.That(bytes, Has.Length.GreaterThan(0));
 
                 TestContext.Progress.WriteLine("Wrote file: {0}", fileStream.Name);
                 TestContext.Progress.WriteLine("Size: {0} bytes", fileStream.Length);

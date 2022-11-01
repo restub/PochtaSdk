@@ -48,6 +48,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Otpravka\UpdateOrderResponse.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="restub" Version="0.15.5" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>

@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Linq;
+using System.Runtime.Serialization;
+using Restub.DataContracts;
 
 namespace PochtaSdk.Otpravka
 {
@@ -9,7 +11,7 @@ namespace PochtaSdk.Otpravka
     /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
     /// </summary>
     [DataContract]
-    public class Error
+    public class Error : IHasErrors
     {
         /// <summary>
         /// Код ошибки
@@ -28,5 +30,10 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "position")]
         public int Position { get; set; }
+
+        public string GetErrorMessage() =>
+            string.Join(". ", (ErrorCodes ?? Enumerable.Empty<ErrorWithCode>()).Select(e => e.Description));
+
+        public bool HasErrors() => ErrorCode != null || (ErrorCodes != null && ErrorCodes.Any());
     }
 }

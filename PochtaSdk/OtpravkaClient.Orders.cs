@@ -78,7 +78,7 @@ namespace PochtaSdk
         /// <param name="order">Updated order instance.</param>
         /// <returns>Order information.</returns>
         public void UpdateOrder(long orderId, Order order) =>
-            Put<string>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
+            Put<Error>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
 
         /// <summary>
         /// Delete orders.
