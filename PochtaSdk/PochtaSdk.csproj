@@ -24,6 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
+    v0.14
+    — Improved OtpravkaClient error reporting, added more display names to enum members.
+
     v0.13
     — Improved OtpravkaClient: UpdateOrder now reports errors properly.
 

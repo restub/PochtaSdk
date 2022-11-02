@@ -1191,8 +1191,10 @@ namespace PochtaSdk.Tests
 
         [Test]
         [TestCase(MailType.OnlineParcel, MailCategory.WithDeclaredValue, true, null)] // до двери
+        [TestCase(MailType.ParcelClass1, MailCategory.WithDeclaredValue, true, null)] // до двери
         [TestCase(MailType.Ems, MailCategory.WithDeclaredValue, true, null)] // до двери
-        [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "915698")] // до постомата
+        [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "915698")] // до местного почтомата
+        [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "914289")] // до Московского почтомата
         public void CalculateShipping(MailType mt, MailCategory mc, bool courier, string dpc)
         {
             var result = Client.CalculateShipping(new ShippingRateRequest

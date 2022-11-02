@@ -1,4 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Linq;
+using System.Runtime.Serialization;
+using Restub.DataContracts;
+using Restub.Toolbox;
 
 namespace PochtaSdk.Otpravka
 {
@@ -8,7 +11,7 @@ namespace PochtaSdk.Otpravka
     /// https://otpravka.pochta.ru/specification#/nogroup-rate_calculate
     /// </summary>
     [DataContract]
-    public class ShippingRateResponse
+    public class ShippingRateResponse : IHasErrors
     {
         /// <summary>
         /// Плата за Авиа-пересылку (коп)
@@ -105,5 +108,19 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "vsd-rate")]
         public ShippingRateAmounts DocumentReturnRate { get; set; }
+
+        /// <summary>
+        /// Список ошибок расчета тарифов.
+        /// </summary>
+        [DataMember(Name = "errors")]
+        public ErrorCode[] ErrorCodes { get; set; }
+
+        /// <inheritdoc/>
+        public string GetErrorMessage() => string.Join(". ",
+            (ErrorCodes ?? Enumerable.Empty<ErrorCode>()).Select(ec => ec.GetDisplayName()));
+
+        /// <inheritdoc/>
+        public bool HasErrors() =>
+            ErrorCodes != null && ErrorCodes.Any();
     }
 }
