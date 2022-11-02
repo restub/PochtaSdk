@@ -1190,6 +1190,31 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
+        [TestCase(MailType.OnlineParcel, MailCategory.WithDeclaredValue, true, null)] // до двери
+        [TestCase(MailType.Ems, MailCategory.WithDeclaredValue, true, null)] // до двери
+        [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "915698")] // до постомата
+        public void CalculateShipping(MailType mt, MailCategory mc, bool courier, string dpc)
+        {
+            var result = Client.CalculateShipping(new ShippingRateRequest
+            {
+                MailCategory = mc,
+                MailType = mt,
+                Courier = courier,
+                PostCodeFrom = "117042",
+                PostCodeTo = "301264",
+                DeliveryPointPostCode = dpc,
+                DeclaredValue = 10000,
+                Mass = 1000,
+                TransportType = TransportType.Standard,
+                PaymentMethod = PaymentMethod.Cashless,
+                NoticePaymentMethod = PaymentMethod.Cashless,
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.TotalRate, Is.GreaterThan(100));
+        }
+
+        [Test]
         public void CalculateShippingReturnsTheSameAmountAsTariffClient()
         {
             var result = Client.CalculateShipping(new ShippingRateRequest

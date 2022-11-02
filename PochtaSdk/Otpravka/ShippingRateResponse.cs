@@ -89,7 +89,7 @@ namespace PochtaSdk.Otpravka
         public ShippingRateAmounts SmsNoticeRate { get; set; }
 
         /// <summary>
-        /// Плата всего (коп)
+        /// Плата всего без НДС (коп)
         /// </summary>
         [DataMember(Name = "total-rate")]
         public int TotalRate { get; set; }
