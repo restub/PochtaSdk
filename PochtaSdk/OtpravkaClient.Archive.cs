@@ -10,7 +10,7 @@ namespace PochtaSdk
     {
         /// <summary>
         /// Search archived batches.
-        /// Возвращает партии из архива.
+        /// Поиск партий в архиве.
         /// https://otpravka.pochta.ru/specification#/archive-search_batches
         /// </summary>
         /// <returns>Archived batches.</returns>
@@ -36,5 +36,16 @@ namespace PochtaSdk
         /// <returns>Archived batches.</returns>
         public BatchNameErrorCode[] UnarchiveBatches(params string[] batchNames) =>
             Post<BatchNameErrorCode[]>("1.0/archive/revert", batchNames);
+
+        /// <summary>
+        /// Search orders in the long-term archive.
+        /// Поиск отправлений в долгосрочном архиве.
+        /// https://otpravka.pochta.ru/specification#/long-term-archive-search_shipments
+        /// </summary>
+        /// <param name="query">Search query: order number or barcode.</param>
+        /// <returns>Archived orders.</returns>
+        public OrderInfo[] SearchArchivedOrders(string query) =>
+            Get<OrderInfo[]>("1.0/long-term-archive/shipment/search", r => r
+                .AddQueryParameter("query", query));
     }
 }

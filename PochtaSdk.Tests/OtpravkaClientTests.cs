@@ -916,7 +916,7 @@ namespace PochtaSdk.Tests
         }
 
         [Test, Ordered]
-        public void UnrchiveBatches()
+        public void UnarchiveBatches()
         {
             // make sure that batch exists
             Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
@@ -930,6 +930,26 @@ namespace PochtaSdk.Tests
             var batch = result.First();
             Assert.That(batch, Is.Not.Null);
             Assert.That(batch.BatchName, Is.EqualTo(CreatedBatchName));
+        }
+
+        [Test]
+        public void HandleErrorProperlyWhenUrlIsMalformed()
+        {
+            void error(string query) =>
+                Client.Get<OrderInfo[]>("1.0/long-term-archive/shipment", r => r
+                    .AddQueryParameter("query", query));
+
+            Assert.That(() => error("123"), 
+                Throws.TypeOf<OtpravkaException>()
+                    .With.Message.EqualTo("Error namespace or mask or method not found").And
+                        .With.Property(nameof(OtpravkaException.StatusCode))
+                            .EqualTo((HttpStatusCode)407));
+        }
+
+        [Test]
+        public void SearchArchivedOrders()
+        {
+            Assert.That(Client.SearchArchivedOrders("856055"), Is.Not.Null);
         }
 
         [Test, Ordered]
