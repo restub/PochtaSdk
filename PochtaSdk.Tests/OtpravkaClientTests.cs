@@ -1159,6 +1159,14 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
+        public void SearchPostOfficeByPostCodeThenByLocation()
+        {
+            var po = Client.GetPostOffice("125424");
+            var nearestOffices = Client.SearchPostOffices(po.Latitude, po.Longitude, top: 10);
+            Assert.That(nearestOffices, Is.Not.Null.And.Not.Empty);
+        }
+
+        [Test]
         public void SearchPostOfficesByRegion()
         {
             var result = Client.SearchPostOffices(new PostOfficeByRegion
