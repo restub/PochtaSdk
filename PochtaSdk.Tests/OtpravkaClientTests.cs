@@ -549,7 +549,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine("Created an order: {0}", CreatedOrderID);
         }
 
-        private long CreatedOrderID { get; set; } = 910194024;
+        private long CreatedOrderID { get; set; } = 919017044;
 
         [Test, Ordered]
         public void GetOrderByIdentity()
@@ -1134,7 +1134,7 @@ namespace PochtaSdk.Tests
                 Latitude = 55.827398m,
                 Longitude = 37.435053m,
                 SearchRadius = 0.5m,
-                Top = 5,
+                Top = 10,
             });
 
             Assert.That(result, Is.Not.Null.And.Not.Empty);
@@ -1161,8 +1161,15 @@ namespace PochtaSdk.Tests
         [Test]
         public void SearchPostOfficeByPostCodeThenByLocation()
         {
-            var po = Client.GetPostOffice("125424");
-            var nearestOffices = Client.SearchPostOffices(po.Latitude, po.Longitude, top: 10);
+            var postOffice = Client.GetPostOffice("125424");
+            var nearestOffices = Client.SearchPostOffices(new PostOfficeByLocation
+            {
+                Latitude = postOffice.Latitude,
+                Longitude = postOffice.Longitude,
+                FilterByOfficeType = true,
+                Top = 20,
+            });
+
             Assert.That(nearestOffices, Is.Not.Null.And.Not.Empty);
         }
 
@@ -1223,6 +1230,7 @@ namespace PochtaSdk.Tests
         [TestCase(MailType.Ems, MailCategory.WithDeclaredValue, true, null)] // до двери
         [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "915698")] // до местного почтомата
         [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "914289")] // до Московского почтомата
+        [TestCase(MailType.OnlineParcel, MailCategory.CombinedWithDeclaredValue, false, "920178")] // до Московского почтомата
         public void CalculateShipping(MailType mt, MailCategory mc, bool courier, string dpc)
         {
             var result = Client.CalculateShipping(new ShippingRateRequest
@@ -1230,11 +1238,91 @@ namespace PochtaSdk.Tests
                 MailCategory = mc,
                 MailType = mt,
                 Courier = courier,
-                PostCodeFrom = "117042",
-                PostCodeTo = "301264",
+                PostCodeFrom = "117042", // "115407" — не работает, тк не указан в профиле
+                PostCodeTo = "301264", // "117545", // "301264",
                 DeliveryPointPostCode = dpc,
+                DimensionType = DimensionType.Small,
                 DeclaredValue = 10000,
                 Mass = 1000,
+                TransportType = TransportType.Standard,
+                PaymentMethod = PaymentMethod.Cashless,
+                NoticePaymentMethod = PaymentMethod.Cashless,
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.TotalRate, Is.GreaterThan(100));
+        }
+
+        [Test]
+        public void CalculateShippingToPostamat()
+        {
+            /*
+            body: {
+              "completeness-checking": false,
+              "contents-checking": false,
+              "courier": false,
+              "declared-value": 10000,
+              "delivery-point-index": "301264",
+              "dimension": null,
+              "dimension-type": "S",
+              "entries-type": "GIFT",
+              "fragile": false,
+              "index-from": "117042",
+              "index-to": "301264",
+              "inventory": false,
+              "mail-category": "COMBINED_WITH_DECLARED_VALUE",
+              "mail-direct": 643,
+              "mail-type": "ONLINE_PARCEL",
+              "mass": 12050,
+              "notice-payment-method": "CASHLESS",
+              "payment-method": "CASHLESS",
+              "sms-notice-recipient": 0,
+              "transport-type": "STANDARD",
+              "vsd": false,
+              "with-electronic-notice": false,
+              "with-order-of-notice": false,
+              "with-simple-notice": false
+            }
+
+            body: {
+              "completeness-checking": false,
+              "contents-checking": false,
+              "courier": false,
+              "declared-value": 10000,
+              "delivery-point-index": "912521",
+              "dimension": null,
+              "dimension-type": "S",
+              "entries-type": "GIFT",
+              "fragile": false,
+              "index-from": "117042",
+              "index-to": "115551",
+              "inventory": false,
+              "mail-category": "COMBINED_WITH_DECLARED_VALUE",
+              "mail-direct": 643,
+              "mail-type": "ONLINE_PARCEL",
+              "mass": 12050,
+              "notice-payment-method": "CASHLESS",
+              "payment-method": "CASHLESS",
+              "sms-notice-recipient": 0,
+              "transport-type": "STANDARD",
+              "vsd": false,
+              "with-electronic-notice": false,
+              "with-order-of-notice": false,
+              "with-simple-notice": false
+            }
+             */
+
+            var result = Client.CalculateShipping(new ShippingRateRequest
+            {
+                MailCategory = MailCategory.CombinedWithDeclaredValue,
+                MailType = MailType.OnlineParcel,
+                Courier = false,
+                PostCodeFrom = "117042",
+                PostCodeTo = "912521", // null, // "301264", // "301264, Тульская область, Липки, ул. Мира"
+                DeliveryPointPostCode = "920178", // "912521" — не работает, // "920178" - работает, // "976367" и "301264" — не работает, пишет: почтовый индекс не указан
+                DimensionType = DimensionType.Small,
+                DeclaredValue = 10000,
+                Mass = 5000,
                 TransportType = TransportType.Standard,
                 PaymentMethod = PaymentMethod.Cashless,
                 NoticePaymentMethod = PaymentMethod.Cashless,
@@ -1280,6 +1368,16 @@ namespace PochtaSdk.Tests
 
             Assert.That(altResult, Is.Not.Null);
             Assert.That(altResult.GroundAmount.Value, Is.EqualTo(result.GroundRate.Rate));
+        }
+
+        [Test, Explicit("The test should be run for the orders added to a batch")]
+        public void GetPrintFormF7P()
+        {
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+
+            // заказ должен быть внутри партии
+            var result = Client.GetPrintFormF7P(CreatedOrderID);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
         }
     }
 }
