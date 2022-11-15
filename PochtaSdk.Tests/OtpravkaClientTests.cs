@@ -549,7 +549,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine("Created an order: {0}", CreatedOrderID);
         }
 
-        private long CreatedOrderID { get; set; } = 919017044;
+        private long CreatedOrderID { get; set; } = 920755995;
 
         [Test, Ordered]
         public void GetOrderByIdentity()
@@ -692,9 +692,9 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Order barcodes: {string.Join(", ", CreatedOrderBarcodes)}");
         }
 
-        private long[] CreatedOrders { get; set; } = new long[] { 905978995, 905978996, 905978997, };
+        private long[] CreatedOrders { get; set; } = new long[] { 920047016, 920047017, 920047018, };
 
-        private string[] CreatedOrderBarcodes { get; set; } = new[] { "80105177236354", "80105177236361", "80105177236378", };
+        private string[] CreatedOrderBarcodes { get; set; } = new[] { "80092578900475", "80092578900482", "80092578900499", };
 
         [Test, Ordered]
         public void SearchOrders()
@@ -739,7 +739,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created a batch: {CreatedBatchName}");
         }
 
-        private string CreatedBatchName { get; set; } = "69";
+        private string CreatedBatchName { get; set; } = "105";
 
         [Test, Ordered]
         public void GetBatchByName()
@@ -950,6 +950,49 @@ namespace PochtaSdk.Tests
         public void SearchArchivedOrders()
         {
             Assert.That(Client.SearchArchivedOrders("856055"), Is.Not.Null);
+        }
+
+        [Test, Ordered]
+        public void GetPrintFormF7P()
+        {
+            // make sure that created orders list is not empty
+            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
+
+            // заказ должен быть внутри партии
+            var result = Client.GetPrintFormF7P(CreatedOrders.First());
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            ValidatePdfSignature(result);
+        }
+
+        [Test, Ordered, Ignore("Работает только для заказов с наложенным платежом")]
+        public void GetPrintFormF112EK()
+        {
+            // make sure that created orders list is not empty
+            Assert.That(CreatedOrders, Is.Not.Null.And.Not.Empty);
+
+            // заказ должен быть внутри партии
+            var result = Client.GetPrintFormF112EK(CreatedOrders.First());
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            ValidatePdfSignature(result);
+        }
+
+        [Test, Ordered, Ignore(@"Returns internal error 1002: Forbidden mail type")]
+        public void GetPrintForms()
+        {
+            // make sure that created orders list is not empty
+            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
+
+            // заказ не должен быть внутри партии
+            var result = Client.GetPrintForms(CreatedOrderID); // .First());
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            ValidatePdfSignature(result);
+        }
+
+        private void ValidatePdfSignature(byte[] pdf)
+        {
+            // убедимся, что это PDF-файл
+            var signature = Encoding.UTF8.GetString(pdf.Take(8).ToArray());
+            Assert.That(signature, Does.StartWith("%PDF-"));
         }
 
         [Test, Ordered]
@@ -1368,16 +1411,6 @@ namespace PochtaSdk.Tests
 
             Assert.That(altResult, Is.Not.Null);
             Assert.That(altResult.GroundAmount.Value, Is.EqualTo(result.GroundRate.Rate));
-        }
-
-        [Test, Explicit("The test should be run for the orders added to a batch")]
-        public void GetPrintFormF7P()
-        {
-            Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
-
-            // заказ должен быть внутри партии
-            var result = Client.GetPrintFormF7P(CreatedOrderID);
-            Assert.That(result, Is.Not.Null.And.Not.Empty);
         }
     }
 }
