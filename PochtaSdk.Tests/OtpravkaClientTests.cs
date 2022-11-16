@@ -1412,5 +1412,14 @@ namespace PochtaSdk.Tests
             Assert.That(altResult, Is.Not.Null);
             Assert.That(altResult.GroundAmount.Value, Is.EqualTo(result.GroundRate.Rate));
         }
+
+        [Test]
+        public void GetUserShippingPoints()
+        {
+            var points = Client.GetShippingPoints();
+            Assert.That(points, Is.Not.Null.And.Not.Empty);
+            Assert.That(points.All(p => !string.IsNullOrWhiteSpace(p.OperatorPostCode)), Is.True);
+            Assert.That(points.Any(p => p.Enabled), Is.True);
+        }
     }
 }

@@ -169,5 +169,14 @@ namespace PochtaSdk
         /// <returns>Request limits.</returns>
         public ShippingRateResponse CalculateShipping(ShippingRateRequest request) =>
             Post<ShippingRateResponse>("1.0/tariff", request);
+
+        /// <summary>
+        /// Get current user's shipping points.
+        /// Возвращает текущие точки сдачи пользователя.
+        /// https://otpravka.pochta.ru/specification#/settings-shipping_points
+        /// </summary>
+        /// <returns>Shipping points.</returns>
+        public ShippingPoint[] GetShippingPoints() =>
+            Get<ShippingPoint[]>("1.0/user-shipping-points");
     }
 }
