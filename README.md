@@ -17,6 +17,7 @@ This is a beta version that covers basic API features.
 * Add the Nuget package: https://www.nuget.org/packages/PochtaSdk
 * Use `TariffClient` class to calculate delivery tariffs and terms
 * Use `OtpravkaClient` class to register packages (requires authentication)
+* Use `TrackingClient` class for mail tracking (requires authentication)
 
 ## Sample usage
 
@@ -98,6 +99,10 @@ Documentation: https://otpravka.pochta.ru/specification
   * SearchPostOffices [services-postoffice-nearby](https://otpravka.pochta.ru/specification#/services-postoffice-nearby)
   * SearchPostOffices [services-postoffice-settlement.offices.codes](https://otpravka.pochta.ru/specification#/services-postoffice-settlement.offices.codes)
   * DownloadPostOffices [postoffice_passport-unload_passport](https://otpravka.pochta.ru/specification#/postoffice_passport-unload_passport)
+
+## Tracking API support
+
+* GetOperationHistory
 
 ## Trace log
 

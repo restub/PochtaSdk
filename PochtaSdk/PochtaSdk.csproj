@@ -24,6 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
+    v0.15
+    — Added simple TrackingClient for mail tracking API.
+
     v0.14
     — Improved OtpravkaClient error reporting, added more display names to enum members.
 
