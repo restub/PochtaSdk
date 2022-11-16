@@ -115,6 +115,9 @@ namespace PochtaSdk
         public byte[] DownloadPostOffices(PostOfficeType type) =>
             Get<byte[]>("1.0/unloading-passport/zip", r => r
                 .AddHeader("Accept", "application/octet-stream")
-                .AddQueryString(new { type = (PostOfficeType?)type, }));
+                .AddQueryString(new
+                { 
+                    type = (PostOfficeType?)type,
+                }));
     }
 }

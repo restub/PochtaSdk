@@ -933,6 +933,23 @@ namespace PochtaSdk.Tests
         }
 
         [Test]
+        public void CreateOrderAndBatchWithShippingDateThenDeleteOrderAndBatch()
+        {
+            var orders = Client.CreateOrders(CreateTestOrder());
+            Assert.That(orders.ResultIDs, Is.Not.Null.And.Not.Empty);
+
+            // проверяем создание партии заказов с указанной датой передачи в отделение
+            var batch = Client.CreateBatch(new BatchRequest
+            {
+                OrderIDs = orders.ResultIDs,
+                SendingDate = DateTime.Today.AddDays(1),
+            });
+
+            Assert.That(batch.Batches, Is.Not.Null.And.Not.Empty);
+            Client.DeleteFromBatch(orders.ResultIDs);
+        }
+
+        [Test]
         public void HandleErrorProperlyWhenUrlIsMalformed()
         {
             void error(string query) =>

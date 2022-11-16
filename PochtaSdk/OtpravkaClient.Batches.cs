@@ -30,8 +30,15 @@ namespace PochtaSdk
         /// <param name="request">Batch creation request.</param>
         /// <returns>Created batch.</returns>
         public BatchResponse CreateBatch(BatchRequest request) =>
-            Post<BatchResponse>("1.0/user/shipment", request.OrderIDs, r => r
-                .AddQueryString(request));
+            Post<BatchResponse>("1.0/user/shipment", request.OrderIDs, r =>
+            {
+                r.AddQueryString(request);
+                if (request.SendingDate.HasValue)
+                {
+                    r.AddQueryParameter("sending-date",
+                        request.SendingDate.Value.ToString("yyyy-MM-dd"));
+                }
+            });
 
         /// <summary>
         /// Changes batch sending date.

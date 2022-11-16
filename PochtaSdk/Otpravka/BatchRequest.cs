@@ -16,7 +16,8 @@ namespace PochtaSdk.Otpravka
         /// <summary>
         /// Дата сдачи в почтовое отделение (yyyy-MM-dd), опционально
         /// </summary>
-        [DataMember(Name = "sending-date"), JsonConverter(typeof(DateOnlyConverter))]
+        ///[DataMember(Name = "sending-date"), JsonConverter(typeof(DateOnlyConverter))]
+        [IgnoreDataMember]
         public DateTime? SendingDate { get; set; }
 
         /// <summary>
