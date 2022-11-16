@@ -1165,23 +1165,25 @@ namespace PochtaSdk.Tests
             var result = Client.SearchPostOffices(55.825927m, 37.434163m, radius: 0.5m);
             Assert.That(result, Is.Not.Null.And.Not.Empty);
 
-            var office = result.FirstOrDefault(po => po.PostalCode == "912471");
-            Assert.That(office, Is.Not.Null);
-            Assert.That(office.AddressSource, Is.EqualTo("Волоколамский пр-д, 4, к.3"));
-            Assert.That(office.TypeCode, Is.EqualTo("ПОЧТОМАТ"));
-            Assert.That(office.TypeID, Is.EqualTo(33));
+            // эти данные часто обновляются, нельзя на них полагаться
+            // оставляю здесь для примера, как они выглядят
+            //var office = result.FirstOrDefault(po => po.PostalCode == "912471");
+            //Assert.That(office, Is.Not.Null);
+            //Assert.That(office.AddressSource, Is.EqualTo("Волоколамский пр-д, 4, к.3"));
+            //Assert.That(office.TypeCode, Is.EqualTo("ПОЧТОМАТ"));
+            //Assert.That(office.TypeID, Is.EqualTo(33));
 
-            office = result.FirstOrDefault(po => po.PostalCode == "125424");
-            Assert.That(office, Is.Not.Null);
-            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 92, к.2"));
-            Assert.That(office.TypeCode, Is.EqualTo("ГОПС"));
-            Assert.That(office.TypeID, Is.EqualTo(8));
+            //office = result.FirstOrDefault(po => po.PostalCode == "125424");
+            //Assert.That(office, Is.Not.Null);
+            //Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 92, к.2"));
+            //Assert.That(office.TypeCode, Is.EqualTo("ГОПС"));
+            //Assert.That(office.TypeID, Is.EqualTo(8));
 
-            office = result.FirstOrDefault(po => po.PostalCode == "966446");
-            Assert.That(office, Is.Not.Null);
-            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 94"));
-            Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
-            Assert.That(office.TypeID, Is.EqualTo(37));
+            //office = result.FirstOrDefault(po => po.PostalCode == "966446");
+            //Assert.That(office, Is.Not.Null);
+            //Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 94"));
+            //Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
+            //Assert.That(office.TypeID, Is.EqualTo(37));
         }
 
         [Test]
@@ -1199,23 +1201,25 @@ namespace PochtaSdk.Tests
 
             Assert.That(result, Is.Not.Null.And.Not.Empty);
 
-            var office = result.FirstOrDefault(po => po.PostalCode == "911713");
-            Assert.That(office, Is.Not.Null);
-            Assert.That(office.AddressSource, Is.EqualTo("Стратонавтов пр-д, 11, стр.1"));
-            Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
-            Assert.That(office.TypeID, Is.EqualTo(37));
+            // эти данные часто обновляются, нельзя на них полагаться
+            // оставляю здесь для примера, как они выглядят
+            //var office = result.FirstOrDefault(po => po.PostalCode == "911713");
+            //Assert.That(office, Is.Not.Null);
+            //Assert.That(office.AddressSource, Is.EqualTo("Стратонавтов пр-д, 11, стр.1"));
+            //Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
+            //Assert.That(office.TypeID, Is.EqualTo(37));
 
-            office = result.FirstOrDefault(po => po.PostalCode == "125424");
-            Assert.That(office, Is.Not.Null);
-            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 92, к.2"));
-            Assert.That(office.TypeCode, Is.EqualTo("ГОПС"));
-            Assert.That(office.TypeID, Is.EqualTo(8));
+            //office = result.FirstOrDefault(po => po.PostalCode == "125424");
+            //Assert.That(office, Is.Not.Null);
+            //Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 92, к.2"));
+            //Assert.That(office.TypeCode, Is.EqualTo("ГОПС"));
+            //Assert.That(office.TypeID, Is.EqualTo(8));
 
-            office = result.FirstOrDefault(po => po.PostalCode == "966446");
-            Assert.That(office, Is.Not.Null);
-            Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 94"));
-            Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
-            Assert.That(office.TypeID, Is.EqualTo(37));
+            //office = result.FirstOrDefault(po => po.PostalCode == "966446");
+            //Assert.That(office, Is.Not.Null);
+            //Assert.That(office.AddressSource, Is.EqualTo("Волоколамское ш, 94"));
+            //Assert.That(office.TypeCode, Is.EqualTo("ПВЗ"));
+            //Assert.That(office.TypeID, Is.EqualTo(37));
         }
 
         [Test]
@@ -1264,7 +1268,7 @@ namespace PochtaSdk.Tests
             Assert.That(result, Does.Contain("125047"));
         }
 
-        [Test]
+        [Test, Explicit("No need to download a few megabytes of data on every test run")]
         [TestCase(PostOfficeType.Postamat)]
         [TestCase(PostOfficeType.PickupPoint)]
         [TestCase(PostOfficeType.PostOffice)]

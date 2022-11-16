@@ -17,6 +17,8 @@ jobs:
       OTPRAVKA_USER_PHONE: '${{secrets.OTPRAVKA_USER_PHONE}}'
       OTPRAVKA_ACCESS_TOKEN: '${{secrets.OTPRAVKA_ACCESS_TOKEN}}'
       OTPRAVKA_USER_EMAIL: '${{secrets.OTPRAVKA_USER_EMAIL}}'
+      TRACKING_USER_NAME: '${{secrets.TRACKING_USER_NAME}}'
+      TRACKING_USER_PASSWORD: '${{secrets.TRACKING_USER_PASSWORD}}'
 
     steps:
     - name: Checkout source

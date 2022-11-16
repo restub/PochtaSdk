@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net462</TargetFrameworks>
+    <!-- OtpravkaClient has limited request counter, so let's disable .net 6.0 tests for now
     <TargetFrameworks>net462;net6.0</TargetFrameworks>
+    -->
   </PropertyGroup>
 
   <ItemGroup>
