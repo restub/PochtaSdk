@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,12 +12,10 @@ namespace PochtaSdk.Tests
     [TestFixture]
     public class OtpravkaClientTests : TestBase, IDisposable
     {
-        private OtpravkaClient Client { get; } = new OtpravkaClient(new OtpravkaCredentials
-        {
-            AccessToken = Env("OTPRAVKA_ACCESS_TOKEN"),
-            UserName = Env("OTPRAVKA_USER_EMAIL"),
-            Password = Env("OTPRAVKA_USER_PASSWORD"),
-        })
+        private OtpravkaClient Client { get; } = new OtpravkaClient(
+            accessToken: Env("OTPRAVKA_ACCESS_TOKEN"),
+            userName: Env("OTPRAVKA_USER_EMAIL"),
+            password: Env("OTPRAVKA_USER_PASSWORD"))
         {
             Tracer = TestContext.Progress.WriteLine
         };

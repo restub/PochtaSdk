@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using PochtaSdk.Tracking;
 using PochtaSdk.Tracking.BatchRequest;
 using PochtaSdk.Tracking.SingleRequest;
 
@@ -28,15 +30,24 @@ namespace PochtaSdk
 
         private OperationHistory12Client SingleRequestClient { get; } = new OperationHistory12Client();
 
-        private FederalClientClient BatchRequestClient { get; } = new FederalClientClient();
+        // currently not used
+        //private FederalClientClient BatchRequestClient { get; } = new FederalClientClient();
 
         /// <summary>
         /// Gets operation history for the given tracking barcode.
+        /// Возвращает историю операций для указанного ШПИ, или, опционально, для заказного уведомления о вручении этого ШПИ.
+        /// https://tracking.pochta.ru/specification#getOperationHistory
         /// </summary>
-        /// <param name="barcode">Mail tracking barcode.</param>
+        /// <param name="barcode">Mail tracking barcode. ШПИ отправления.</param>
+        /// <param name="notification">Track mail notification history. Показать историю заказного уведомления.</param>
         /// <returns>Operation history records.</returns>
-        public OperationHistoryRecord[] GetOperationHistory(string barcode) =>
-            GetOperationHistoryAsync(barcode, 0).ConfigureAwait(false).GetAwaiter().GetResult();
+        public HistoryRecord[] GetOperationHistory(string barcode, bool notification = false) =>
+            GetOperationHistoryAsync(barcode, notification ? 1 : 0)
+                .ConfigureAwait(false)
+                .GetAwaiter()
+                .GetResult()
+                .Flatten()
+                .ToArray();
 
         private async Task<OperationHistoryRecord[]> GetOperationHistoryAsync(string barcode, int messageType = 0)
         {

@@ -21,6 +21,22 @@ namespace PochtaSdk
         /// <summary>
         /// Initializes a new instance of the <see cref="OtpravkaClient"/> class.
         /// </summary>
+        /// <param name="accessToken">Access token.</param>
+        /// <param name="userName">User name.</param>
+        /// <param name="password">Password.</param>
+        public OtpravkaClient(string accessToken, string userName, string password)
+            : this(new OtpravkaCredentials
+            {
+                AccessToken = accessToken,
+                UserName = userName,
+                Password = password,
+            })
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OtpravkaClient"/> class.
+        /// </summary>
         /// <param name="credentials">Credentials.</param>
         public OtpravkaClient(OtpravkaCredentials credentials)
             : this(BaseUrl, credentials)
