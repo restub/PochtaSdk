@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://github.com/restub/PochtaSdk</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/restub/PochtaSdk.git</RepositoryUrl>
-    <PackageTags>pochta.ru; rest; api; client; framework; tracing; logging</PackageTags>
+    <PackageTags>pochta.ru; restub; rest; api; client; framework; tracing; logging</PackageTags>
     <PackageIcon>PochtaSdk.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Title>PochtaSdk</Title>
@@ -61,7 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="restub" Version="0.16.5" />
+    <PackageReference Include="restub" Version="0.17.5" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
