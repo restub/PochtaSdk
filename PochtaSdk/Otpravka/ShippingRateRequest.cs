@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using PochtaSdk.Tariff;
 
 namespace PochtaSdk.Otpravka
@@ -154,5 +155,42 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [DataMember(Name = "with-simple-notice")]
         public bool WithSimpleNotice { get; set; }
+
+        /// <summary>
+        /// Формирует запрос для аналогичного расчета через тарификатор.
+        /// </summary>
+        /// <returns>Запрос для тарификатора.</returns>
+        internal TariffRequest GetTariffRequest()
+        {
+            var req = new TariffRequest
+            {
+                ObjectType = MailType.GetObjectType(MailCategory),
+                Date = DateTime.Today.AddDays(1),
+                ErrorCode = true,
+                FromPostCode = int.TryParse(PostCodeFrom, out var pcf) ? pcf : 0,
+                ToPostCode = int.TryParse(PostCodeTo, out var pct) ? pct : 0,
+                Weight = Mass,
+                SumOc = DeclaredValue,
+            };
+
+            void s(bool flag, ServiceType st)
+            {
+                if (flag)
+                {
+                    req.Services.Add(st);
+                }
+            }
+
+            s(CompletenessChecking, ServiceType.CheckingTheCompleteness);
+            s(ContentsChecking, ServiceType.CheckingTheComplianceOfTheInventoryAttachment);
+            s(DocumentReturn, ServiceType.ReturnOfAccompanyingDocuments);
+            s(Fragile, ServiceType.MarkCarefulFragile);
+            s(Inventory, ServiceType.MakingAnInventoryOfTheAttachment);
+            s(SmsNoticeRecipient > 0, ServiceType.SmsServicePackage);
+            s(WithElectronicNotice, ServiceType.ElectronicDeliveryNotification);
+            s(WithOrderOfNotice, ServiceType.RegisteredDeliveryNotification);
+            s(WithSimpleNotice, ServiceType.SimpleDeliveryNotification);
+            return req;
+        }
     }
 }

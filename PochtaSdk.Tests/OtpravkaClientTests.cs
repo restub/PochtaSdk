@@ -604,7 +604,7 @@ namespace PochtaSdk.Tests
             order.MailCategory = MailCategory.Ordered;
             order.SmsNoticeRecipient = true;
 
-            Assert.That(() => Client.UpdateOrder(CreatedOrderID, order), 
+            Assert.That(() => Client.UpdateOrder(CreatedOrderID, order),
                 Throws.TypeOf<OtpravkaException>().With
                     .Message.Contains("не поддерживается"));
         }
@@ -953,7 +953,7 @@ namespace PochtaSdk.Tests
                 Client.Get<OrderInfo[]>("1.0/long-term-archive/shipment", r => r
                     .AddQueryParameter("query", query));
 
-            Assert.That(() => error("123"), 
+            Assert.That(() => error("123"),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Message.EqualTo("Error namespace or mask or method not found").And
                         .With.Property(nameof(OtpravkaException.StatusCode))
@@ -1115,7 +1115,7 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null.And.Not.Empty);
             var service = result.FirstOrDefault(s => s.Code == "2010400");
             Assert.That(service, Is.Not.Null);
-            Assert.That(service.Name, Is.Not.Null.And.Not.Empty); 
+            Assert.That(service.Name, Is.Not.Null.And.Not.Empty);
 
             result = Client.GetPostOfficeServices("196070", 2315);
             Assert.That(result, Is.Not.Null.And.Not.Empty);
@@ -1245,7 +1245,7 @@ namespace PochtaSdk.Tests
             Assert.That(result, Is.Not.Null.And.Not.Empty);
             Assert.That(result, Does.Contain("350000"));
             Assert.That(result, Does.Contain("350053"));
-            
+
             result = Client.SearchPostOffices(new PostOfficeByRegion
             {
                 Settlement = "Пластуновская",
@@ -1429,6 +1429,64 @@ namespace PochtaSdk.Tests
 
             Assert.That(altResult, Is.Not.Null);
             Assert.That(altResult.GroundAmount.Value, Is.EqualTo(result.GroundRate.Rate));
+        }
+
+        [Test]
+        public void CalculateShippingTariffSucceeds()
+        {
+            var result = Client.CalculateShippingTariff(new ShippingRateRequest
+            {
+                MailCategory = MailCategory.CombinedWithDeclaredValue,
+                MailType = MailType.OnlineParcel,
+                Courier = false,
+                PostCodeFrom = "117042",
+                PostCodeTo = "912521",
+                DeliveryPointPostCode = "920178",
+                DimensionType = DimensionType.Small,
+                DeclaredValue = 10000,
+                Mass = 5000,
+                TransportType = TransportType.Standard,
+                PaymentMethod = PaymentMethod.Cashless,
+                NoticePaymentMethod = PaymentMethod.Cashless,
+            });
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.TotalRate, Is.GreaterThan(100));
+
+            // обычный CalculateShipping сроки доставки не вернет
+            Assert.That(result.DeliveryTime, Is.Not.Null);
+            Assert.That(result.DeliveryTime.MinDays, Is.GreaterThan(0));
+            Assert.That(result.DeliveryTime.MaxDays, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void CalculateShippingTariffFails()
+        {
+            var req = new ShippingRateRequest
+            {
+                MailCategory = MailCategory.WithDeclaredValue,
+                MailType = MailType.ParcelClass1,
+                Courier = false,
+                PostCodeFrom = "117042",
+                PostCodeTo = "912521",
+                DeliveryPointPostCode = "920178",
+                DimensionType = DimensionType.Small,
+                DeclaredValue = 10000,
+                Mass = 5000,
+                TransportType = TransportType.Standard,
+                PaymentMethod = PaymentMethod.Cashless,
+                NoticePaymentMethod = PaymentMethod.Cashless,
+            };
+
+            // обычный расчет тарифа сообщает просто: ошибка
+            Assert.That(() => Client.CalculateShipping(req),
+                Throws.TypeOf<OtpravkaException>().With
+                    .Message.EqualTo("Ошибка при расчете тарифа"));
+
+            // расчет через тарификатор сообщает, в чем конкретно ошибка
+            Assert.That(() => Client.CalculateShippingTariff(req),
+                Throws.TypeOf<OtpravkaException>().With
+                    .Message.Contains("нельзя доставить в почтомат"));
         }
 
         [Test]
