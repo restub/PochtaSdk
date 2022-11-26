@@ -26,7 +26,7 @@ namespace PochtaSdk.Tests
             Assert.That(MailType.OnlineParcel.GetObjectType(MailCategory.WithDeclaredValueAndCashOnDelivery), Is.EqualTo(ObjectType.ParcelOnlineWithDeclaredValueAndCashOnDelivery));
             Assert.That(MailType.OnlineCourier.GetObjectType(MailCategory.WithDeclaredValue), Is.EqualTo(ObjectType.CourierOnlineWithDeclaredValue));
 
-            Assert.That(MailCategory.Ordinary.GetObjectType(MailType.PostalParcel), Is.EqualTo(ObjectType.ParcelStandard));
+            Assert.That(MailCategory.Ordinary.GetObjectType(MailType.PostalParcel), Is.EqualTo(ObjectType.Parcel));
             Assert.That(MailCategory.CombinedOrdinary.GetObjectType(MailType.OnlineParcel), Is.EqualTo(ObjectType.ParcelOnlineCombined));
             Assert.That(MailCategory.CombinedWithDeclaredValue.GetObjectType(MailType.OnlineParcel), Is.EqualTo(ObjectType.ParcelOnlineCombinedWithDeclaredValue));
             Assert.That(MailCategory.Ordered.GetObjectType(MailType.Letter), Is.EqualTo(ObjectType.LetterRegistered));

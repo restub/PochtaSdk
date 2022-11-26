@@ -75,7 +75,7 @@ namespace PochtaSdk.Otpravka
         {
             if (MailTypeCodes.TryGetValue(mt, out var mtc) && mtc > 0)
             {
-                if (MailCategoryCodes.TryGetValue(mc, out var mcc) && mcc > 0)
+                if (MailCategoryCodes.TryGetValue(mc, out var mcc) && mcc >= 0)
                 {
                     // например, 4020 = Посылка с объявленной ценностью
                     return mtc * 1000 + mcc * 10;
