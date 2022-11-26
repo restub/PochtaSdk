@@ -66,7 +66,9 @@ Documentation: https://otpravka.pochta.ru/specification
   * CleanAddress: [nogroup-normalization_adress](https://otpravka.pochta.ru/specification#/nogroup-normalization_adress)
   * CleanFullName: [nogroup-normalization_fio](https://otpravka.pochta.ru/specification#/nogroup-normalization_fio)
   * CleanPhone: [nogroup-normalization_phone](https://otpravka.pochta.ru/specification#/nogroup-normalization_phone)
-* CalculateShipping: [nogroup-rate_calculate](https://otpravka.pochta.ru/specification#/nogroup-rate_calculate)
+* Shipping calculator
+  * CalculateShipping: [nogroup-rate_calculate](https://otpravka.pochta.ru/specification#/nogroup-rate_calculate)
+  * CalculateShippingTariff: improved version of the above
 * Delivery orders
   * CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
   * GetOrder: [orders-search_order_byid](https://otpravka.pochta.ru/specification#/orders-search_order_byid)
@@ -102,7 +104,7 @@ Documentation: https://otpravka.pochta.ru/specification
 
 ## Tracking API support
 
-* GetOperationHistory
+* GetOperationHistory: [specification/single](https://tracking.pochta.ru/specification/single)
 
 ## Trace log
 

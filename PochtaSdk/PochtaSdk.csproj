@@ -24,6 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
+    v0.16
+    — Improved OtpravkaClient: added CalculateShippingTariff method.
+
     v0.15
     — Added simple TrackingClient for mail tracking API.
 
