@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using PochtaSdk.Tariff;
+using PochtaSdk.Toolbox;
 using RestSharp;
 using Restub;
 using Restub.DataContracts;
@@ -35,6 +36,9 @@ namespace PochtaSdk
         /// <inheritdoc/>
         public override string LibraryName =>
             $"{nameof(PochtaSdk)}.{nameof(TariffClient)} v{LibraryVersion}, {base.LibraryName}";
+
+        protected override IRestubSerializer CreateSerializer() =>
+            new PochtaSerializer();
 
         private string GetFormat(ResponseFormat format) =>
             ParameterHelper.GetEnumMemberValue(format) as string;

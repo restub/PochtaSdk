@@ -1,5 +1,6 @@
 ﻿using System;
 using PochtaSdk.Otpravka;
+using PochtaSdk.Toolbox;
 using RestSharp;
 using RestSharp.Authenticators;
 using Restub;
@@ -60,6 +61,10 @@ namespace PochtaSdk
         /// <inheritdoc/>
         protected override IAuthenticator GetAuthenticator() =>
             new OtpravkaAuthenticator(this, (OtpravkaCredentials)Credentials);
+
+        /// <inheritdoc/>
+        protected override IRestubSerializer CreateSerializer() =>
+            new PochtaSerializer();
 
         /// <inheritdoc/>
         protected override Exception CreateException(IRestResponse res, string msg, IHasErrors errors) =>

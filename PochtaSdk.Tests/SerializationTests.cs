@@ -1,7 +1,9 @@
 ﻿using System;
 using NUnit.Framework;
+using PochtaSdk.Otpravka;
 using PochtaSdk.Tariff;
 using Restub;
+using DeliveryTerms = PochtaSdk.Tariff.DeliveryTerms;
 
 namespace PochtaSdk.Tests
 {
@@ -45,6 +47,26 @@ namespace PochtaSdk.Tests
 
             var tmp = Serializer.Deserialize<DeliveryTerms>(@"{""min"":4,""max"":4,""deadline"":""20221003T235900""}");
             Assert.That(tmp, Is.Not.Null);
+        }
+
+        [Test]
+        public void OrderSerializationTests()
+        {
+            // no default values
+            var orderJson = "{\"given-name\":\"Иван\",\"house-to\":\"1\"," +
+                "\"index-to\":117463,\"mail-category\":\"ORDINARY\"," +
+                "\"mail-direct\":643,\"mass\":1234,\"middle-name\":\"Иванович\"," +
+                "\"order-num\":\"тест 111\",\"place-to\":\"Москва\"," +
+                "\"postoffice-code\":\"109012\",\"region-to\":\"Москва\"," +
+                "\"street-to\":\"Ул. Паустовского\",\"surname\":\"Иванов\"}";
+
+            var order = Serializer.Deserialize<Order>(orderJson);
+            Assert.That(order, Is.Not.Null);
+            Assert.That(order.GivenName, Is.EqualTo("Иван"));
+
+            var json = Serializer.Serialize(order);
+            Assert.That(json, Is.Not.Null.Or.Empty);
+            Assert.That(json, Is.EqualTo(orderJson));
         }
     }
 }
