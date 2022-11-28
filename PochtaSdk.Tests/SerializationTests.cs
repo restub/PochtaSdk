@@ -52,10 +52,12 @@ namespace PochtaSdk.Tests
         [Test]
         public void OrderSerializationTests()
         {
-            // no default values
-            var orderJson = "{\"given-name\":\"Иван\",\"house-to\":\"1\"," +
+            // no null values
+            var orderJson = "{\"address-type-to\":\"DEFAULT\"," +
+                "\"given-name\":\"Иван\",\"house-to\":\"1\"," +
                 "\"index-to\":117463,\"mail-category\":\"ORDINARY\"," +
-                "\"mail-direct\":643,\"mass\":1234,\"middle-name\":\"Иванович\"," +
+                "\"mail-direct\":643,\"mail-type\":\"POSTAL_PARCEL\"," +
+                "\"mass\":1234,\"middle-name\":\"Иванович\"," +
                 "\"order-num\":\"тест 111\",\"place-to\":\"Москва\"," +
                 "\"postoffice-code\":\"109012\",\"region-to\":\"Москва\"," +
                 "\"street-to\":\"Ул. Паустовского\",\"surname\":\"Иванов\"}";

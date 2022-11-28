@@ -9,7 +9,7 @@ namespace PochtaSdk.Toolbox
         protected override JsonSerializerSettings CreateJsonSerializerSettings()
         {
             var settings = base.CreateJsonSerializerSettings();
-            settings.DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate;
+            settings.NullValueHandling = NullValueHandling.Ignore;
             return settings;
         }
     }
