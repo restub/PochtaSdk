@@ -24,6 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>Beta release. What's new:
 
+    v0.17
+    — Improved OtpravkaClient: added printforms-related methods and CheckinBatch method.
+
     v0.16
     — Improved OtpravkaClient: added CalculateShippingTariff method.
 

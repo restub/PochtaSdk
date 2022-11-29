@@ -89,6 +89,11 @@ Documentation: https://otpravka.pochta.ru/specification
   * SearchBatches: [batches-search_all_batches](https://otpravka.pochta.ru/specification#/batches-search_all_batches)
   * RemoveFromBatch: [orders-shipment_to_backlog](https://otpravka.pochta.ru/specification#/orders-shipment_to_backlog)
   * DeleteFromBatch: [batches-delete_order_from_batch](https://otpravka.pochta.ru/specification#/batches-delete_order_from_batch)
+* Print forms
+  * CheckinBatch: [documents-checkin](https://otpravka.pochta.ru/specification#/documents-checkin)
+  * GetPrintFormF7P: [documents-create_f7_f22](https://otpravka.pochta.ru/specification#/documents-create_f7_f22)
+  * GetPrintFormF112EK: [documents-create_f112](https://otpravka.pochta.ru/specification#/documents-create_f112)
+  * GetPrintForms: [documents-create_forms_backlog](https://otpravka.pochta.ru/specification#/documents-create_forms_backlog)
 * Archive
   * GetArchivedBatches: [archive-search_batches](https://otpravka.pochta.ru/specification#/archive-search_batches)
   * ArchiveBatches: [archive-batch_to_archive](https://otpravka.pochta.ru/specification#/archive-batch_to_archive)

@@ -125,7 +125,7 @@ namespace PochtaSdk
         /// Запрос данных о заказах в партии.
         /// https://otpravka.pochta.ru/specification#/batches-get_info_about_orders_in_batch
         /// </summary>
-        /// <param name="batchName">Batch creation request.</param>
+        /// <param name="batchName">Batch name (number).</param>
         /// <returns>Created batch.</returns>
         public OrderInfo[] GetBatchOrders(string batchName) =>
             GetBatchOrders(new BatchOrdersRequest(batchName));
@@ -230,5 +230,25 @@ namespace PochtaSdk
         public OrderInfo[] SearchBatchOrdersByGroupName(string groupName) =>
             Get<OrderInfo[]>("1.0/shipment/by-group-name/{group-name}", r => r
                 .AddUrlSegment("group-name", groupName));
+
+        /// <summary>
+        /// Checks in the given batch for sending.
+        /// Finalizes the batch. Sends F103 electronic form for registration.
+        /// Регистрирует партию для приема сотрудниками ОПС.
+        /// Финализирует партию. Отправляет электронную форму Ф103 для регистрации.
+        /// </summary>
+        /// <param name="batchName">Batch name (number).</param>
+        /// <param name="useOnlineBalance">Use online balance.</param>
+        /// <returns><see cref="BatchDateResponse"/> instance.</returns>
+        public BatchDateResponse CheckinBatch(string batchName, bool? useOnlineBalance = null) =>
+            Post<BatchDateResponse>("1.0/batch/{name}/checkin", null, r =>
+            {
+                r.AddUrlSegment("name", batchName);
+                if (useOnlineBalance.HasValue)
+                {
+                    r.AddQueryParameter("useOnlineBalance",
+                        useOnlineBalance.Value.ToString().ToLower());
+                }
+            });
     }
 }

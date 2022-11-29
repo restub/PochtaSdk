@@ -736,7 +736,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Created a batch: {CreatedBatchName}");
         }
 
-        private string CreatedBatchName { get; set; } = "105";
+        private string CreatedBatchName { get; set; } = "134";
 
         [Test, Ordered]
         public void GetBatchByName()
@@ -811,6 +811,35 @@ namespace PochtaSdk.Tests
             Assert.That(response, Is.Not.Null);
             Assert.That(response.ErrorCode, Is.Null);
             Assert.That(response.F103Sent, Is.False);
+        }
+
+        [Test]
+        public void CheckinBatchFails()
+        {
+            // this batch doesn't exist
+            Assert.That(() => Client.CheckinBatch("000", true),
+                Throws.TypeOf<OtpravkaException>().With.Message.EqualTo("Instance ShipmentBatchTuple not found for params: 000"));
+        }
+
+        [Test, Ordered, Explicit("Don't bother pochta.ru employees with fake F103 registration forms")]
+        public void CheckinBatchSucceeds()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // Got this error when useOnlineBalance=true:
+            // body: {
+            // "code": "1024",
+            //   "desc": "Ошибка в сервисе. Код ошибки: EXTERNAL_SYSTEMS, вспомогательный код: UNDEFINED, описание: 'UNDEFINED->UNDEFINED. Requested 82674 but available 0'"
+            // }
+            // or this when useOnlineBalance=false:
+            // body: {
+            //   "error-code": "OFFLINE_BALANCE_FORBIDDEN",
+            //   "f103-sent": false
+            // }
+            var response = Client.CheckinBatch("135", true);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.ErrorCode, Is.Null);
+            Assert.That(response.F103Sent, Is.True);
         }
 
         [Test, Ordered]
