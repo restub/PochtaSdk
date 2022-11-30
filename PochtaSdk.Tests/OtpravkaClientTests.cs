@@ -821,27 +821,6 @@ namespace PochtaSdk.Tests
                 Throws.TypeOf<OtpravkaException>().With.Message.EqualTo("Instance ShipmentBatchTuple not found for params: 000"));
         }
 
-        [Test, Ordered, Explicit("Don't bother pochta.ru employees with fake F103 registration forms")]
-        public void CheckinBatchSucceeds()
-        {
-            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
-
-            // Got this error when useOnlineBalance=true:
-            // body: {
-            // "code": "1024",
-            //   "desc": "Ошибка в сервисе. Код ошибки: EXTERNAL_SYSTEMS, вспомогательный код: UNDEFINED, описание: 'UNDEFINED->UNDEFINED. Requested 82674 but available 0'"
-            // }
-            // or this when useOnlineBalance=false:
-            // body: {
-            //   "error-code": "OFFLINE_BALANCE_FORBIDDEN",
-            //   "f103-sent": false
-            // }
-            var response = Client.CheckinBatch("135", true);
-            Assert.That(response, Is.Not.Null);
-            Assert.That(response.ErrorCode, Is.Null);
-            Assert.That(response.F103Sent, Is.True);
-        }
-
         [Test, Ordered]
         public void AddExistingOrdersToTheBatch()
         {
@@ -905,6 +884,37 @@ namespace PochtaSdk.Tests
             Assert.That(() => Client.GetBatchOrders(new BatchOrdersRequest("bad")),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Message.Contains("Instance ShipmentBatchTuple not found for params: bad"));
+        }
+
+        [Test, Ordered, Explicit("Don't bother pochta.ru employees with fake F103 registration forms")]
+        public void CheckinBatchSucceeds()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            // Got this error when useOnlineBalance=true:
+            // body: {
+            //   "code": "1024",
+            //   "desc": "Ошибка в сервисе. Код ошибки: EXTERNAL_SYSTEMS, вспомогательный код: UNDEFINED, описание: 'UNDEFINED->UNDEFINED. Requested 82674 but available 0'"
+            // }
+            // It means that the delivery costs 826.74 rub, but the current balance is 0.
+            // Go this error when useOnlineBalance=false:
+            // body: {
+            //   "error-code": "OFFLINE_BALANCE_FORBIDDEN",
+            //   "f103-sent": false
+            // }
+            var response = Client.CheckinBatch(CreatedBatchName, true);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.ErrorCode, Is.Null);
+            Assert.That(response.F103Sent, Is.True);
+        }
+
+        [Test, Ordered, Explicit("This method works for checked-in batches")]
+        public void DownloadBatchDocuments()
+        {
+            Assert.That(CreatedBatchName, Is.Not.Null.And.Not.Empty);
+
+            var zipFile = Client.DownloadBatchDocuments(CreatedBatchName, false, false);
+            Assert.That(zipFile, Is.Not.Null.And.Not.Empty);
         }
 
         [Test, Ordered]

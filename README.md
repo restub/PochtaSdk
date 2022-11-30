@@ -91,6 +91,7 @@ Documentation: https://otpravka.pochta.ru/specification
   * DeleteFromBatch: [batches-delete_order_from_batch](https://otpravka.pochta.ru/specification#/batches-delete_order_from_batch)
 * Print forms
   * CheckinBatch: [documents-checkin](https://otpravka.pochta.ru/specification#/documents-checkin)
+  * DownloadBatchDocuments: [documents-create_all_docs](https://otpravka.pochta.ru/specification#/documents-create_all_docs)
   * GetPrintFormF7P: [documents-create_f7_f22](https://otpravka.pochta.ru/specification#/documents-create_f7_f22)
   * GetPrintFormF112EK: [documents-create_f112](https://otpravka.pochta.ru/specification#/documents-create_f112)
   * GetPrintForms: [documents-create_forms_backlog](https://otpravka.pochta.ru/specification#/documents-create_forms_backlog)
