@@ -70,7 +70,7 @@ Documentation: https://otpravka.pochta.ru/specification
   * CalculateShipping: [nogroup-rate_calculate](https://otpravka.pochta.ru/specification#/nogroup-rate_calculate)
   * CalculateShippingTariff: improved version of the above
 * Delivery orders
-  * CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order)
+  * CreateOrders: [orders-creating_order](https://otpravka.pochta.ru/specification#/orders-creating_order), [postamat_order](https://otpravka.pochta.ru/help/#/details/482)
   * GetOrder: [orders-search_order_byid](https://otpravka.pochta.ru/specification#/orders-search_order_byid)
   * SearchOrders: [orders-search_order](https://otpravka.pochta.ru/specification#/orders-search_order)
   * SearchOrdersByGroupName: [orders-search_orders_by_group_name](https://otpravka.pochta.ru/specification#/orders-search_orders_by_group_name)

@@ -111,6 +111,7 @@ namespace PochtaSdk
         /// <summary>
         /// Downloads zip arhive with all post offices.
         /// Загружает zip-архив со списком почтовых отделений.
+        /// https://otpravka.pochta.ru/specification#/postoffice_passport-unload_passport
         /// </summary>
         public byte[] DownloadPostOffices(PostOfficeType type) =>
             Get<byte[]>("1.0/unloading-passport/zip", r => r
