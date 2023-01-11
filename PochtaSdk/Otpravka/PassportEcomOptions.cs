@@ -11,6 +11,18 @@ namespace PochtaSdk.Otpravka
     public class PassportEcomOptions
     {
         /// <summary>
+        /// Бренд доставочной компании.
+        /// </summary>
+        [DataMember(Name = "brandName")]
+        public string BrandName { get; set; }
+
+        /// <summary>
+        /// Примечание, как добраться.
+        /// </summary>
+        [DataMember(Name = "getto")]
+        public string GetTo { get; set; }
+
+        /// <summary>
         /// Есть оплата по карте.
         /// </summary>
         [DataMember(Name = "cardPayment")]
@@ -50,7 +62,7 @@ namespace PochtaSdk.Otpravka
         /// Максимальный допустимый вес отправления.
         /// </summary>
         [DataMember(Name = "weightLimit")]
-        public double WeightLimit { get; set; }
+        public decimal WeightLimit { get; set; }
 
         /// <summary>
         /// Есть примерка.
