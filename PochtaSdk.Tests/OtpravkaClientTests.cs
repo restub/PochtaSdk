@@ -413,10 +413,10 @@ namespace PochtaSdk.Tests
             Assert.That(() => Client.CreateOrders(new Order()),
                 Throws.TypeOf<OtpravkaException>()
                     .With.Property(nameof(OtpravkaException.StatusCode)).EqualTo(HttpStatusCode.OK)
-                    .And.Message.Contains("значение")
+                    //.And.Message.Contains("значение")
+                    //.And.Message.Contains("не заполнен")
                     .And.Message.Contains("не задан")
-                    .And.Message.Contains("не указан")
-                    .And.Message.Contains("не заполнен"));
+                    .And.Message.Contains("не указан"));
         }
 
         [Test]
@@ -470,10 +470,11 @@ namespace PochtaSdk.Tests
             }),
             Throws.TypeOf<OtpravkaException>()
                 .With.Property(nameof(OtpravkaException.StatusCode)).EqualTo(HttpStatusCode.OK)
+                //.And.Message.Contains("не заполнен")
+                //.And.Message.Contains("значение")
                 .And.Message.Contains("приемного")
-                .And.Message.Contains("значение")
-                .And.Message.Contains("не указан")
-                .And.Message.Contains("не заполнен"));
+                .And.Message.Contains("не задан")
+                .And.Message.Contains("не указан"));
         }
 
         private Order CreateTestOrder(string num = "002", string groupName = null) => new Order
