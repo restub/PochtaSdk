@@ -116,7 +116,7 @@ namespace PochtaSdk
         /// <param name="batchName">Batch name (number).</param>
         /// <param name="orders">Orders to create.</param>
         /// <returns>Order identities added to the batch.</returns>
-        public OrderResponseBase AddToBatch(string batchName, params Order[] orders) =>
+        public OrderResponseBase AddToBatch(string batchName, params OrderBase[] orders) =>
             Put<OrderResponseBase>("1.0/batch/{name}/shipment", orders, r => r
                 .AddUrlSegment("name", batchName));
 

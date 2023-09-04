@@ -17,7 +17,7 @@ namespace PochtaSdk
         /// https://otpravka.pochta.ru/specification#/orders-creating_order_v2
         /// </summary>
         /// <returns>Order information.</returns>
-        public OrderResponse CreateOrders(params Order[] orders)
+        public OrderResponse CreateOrders(params OrderBase[] orders)
         {
             var result = Put<OrderResponse>("2.0/user/backlog", orders);
             if (result != null)
@@ -77,7 +77,7 @@ namespace PochtaSdk
         /// <param name="orderId">Order identity to update.</param>
         /// <param name="order">Updated order instance.</param>
         /// <returns>Order information.</returns>
-        public void UpdateOrder(long orderId, Order order) =>
+        public void UpdateOrder(long orderId, OrderBase order) =>
             Put<Error>("1.0/backlog/{id}", order, r => r.AddUrlSegment("id", orderId));
 
         /// <summary>

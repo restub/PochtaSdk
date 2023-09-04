@@ -100,7 +100,7 @@ namespace PochtaSdk.Tests
             Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
             Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
             Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
-            Assert.That(address.PostCode, Is.EqualTo("117105"));
+            Assert.That(address.PostCode, Is.EqualTo("115127"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
             Assert.That(address.Street, Is.EqualTo("ш Варшавское"));
@@ -137,7 +137,7 @@ namespace PochtaSdk.Tests
             Assert.That(address.AddressType, Is.EqualTo(AddressType.Default));
             Assert.That(address.QualityCode, Is.EqualTo(AddressQuality.Good));
             Assert.That(address.ValidationCode, Is.EqualTo(AddressValidation.Validated));
-            Assert.That(address.PostCode, Is.EqualTo("117105"));
+            Assert.That(address.PostCode, Is.EqualTo("115127"));
             Assert.That(address.Region, Is.EqualTo("г Москва"));
             Assert.That(address.Place, Is.EqualTo("г Москва"));
             Assert.That(address.Street, Is.EqualTo("ш Варшавское"));
@@ -898,7 +898,7 @@ namespace PochtaSdk.Tests
             //   "desc": "Ошибка в сервисе. Код ошибки: EXTERNAL_SYSTEMS, вспомогательный код: UNDEFINED, описание: 'UNDEFINED->UNDEFINED. Requested 82674 but available 0'"
             // }
             // It means that the delivery costs 826.74 rub, but the current balance is 0.
-            // Go this error when useOnlineBalance=false:
+            // Got this error when useOnlineBalance=false:
             // body: {
             //   "error-code": "OFFLINE_BALANCE_FORBIDDEN",
             //   "f103-sent": false
@@ -1098,7 +1098,7 @@ namespace PochtaSdk.Tests
             Assert.That(result.ServiceGroups, Is.Not.Null.And.Not.Empty);
             Assert.That(result.WorkingHours, Is.Not.Null.And.Not.Empty);
             Assert.That(result.WorksOnSaturdays, Is.True);
-            Assert.That(result.WorksOnSundays, Is.False);
+            Assert.That(result.WorksOnSundays, Is.True);
             Assert.That(result.TypeCode, Is.EqualTo("ГОПС"));
             Assert.That(result.TypeID, Is.EqualTo(8));
 

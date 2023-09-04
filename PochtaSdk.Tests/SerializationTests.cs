@@ -53,14 +53,13 @@ namespace PochtaSdk.Tests
         public void OrderSerializationTests()
         {
             // no null values
-            var orderJson = "{\"address-type-to\":\"DEFAULT\"," +
-                "\"given-name\":\"Иван\",\"house-to\":\"1\"," +
-                "\"index-to\":117463,\"mail-category\":\"ORDINARY\"," +
-                "\"mail-direct\":643,\"mail-type\":\"POSTAL_PARCEL\"," +
-                "\"mass\":1234,\"middle-name\":\"Иванович\"," +
-                "\"order-num\":\"тест 111\",\"place-to\":\"Москва\"," +
-                "\"postoffice-code\":\"109012\",\"region-to\":\"Москва\"," +
-                "\"street-to\":\"Ул. Паустовского\",\"surname\":\"Иванов\"}";
+            var orderJson = "{\"address-type-to\":\"DEFAULT\",\"house-to\"" +
+                ":\"1\",\"index-to\":117463,\"place-to\":\"Москва\",\"regi" +
+                "on-to\":\"Москва\",\"street-to\":\"Ул. Паустовского\",\"g" +
+                "iven-name\":\"Иван\",\"mail-category\":\"ORDINARY\",\"mai" +
+                "l-direct\":643,\"mail-type\":\"POSTAL_PARCEL\",\"mass\":1" +
+                "234,\"middle-name\":\"Иванович\",\"order-num\":\"тест 111" +
+                "\",\"postoffice-code\":\"109012\",\"surname\":\"Иванов\"}";
 
             var order = Serializer.Deserialize<Order>(orderJson);
             Assert.That(order, Is.Not.Null);
