@@ -545,15 +545,21 @@ namespace PochtaSdk.Tests
 
             CreatedOrderID = result.ResultIDs.First();
             TestContext.Progress.WriteLine("Created an order: {0}", CreatedOrderID);
+
+            CreatedOrderBarcode = result.Orders.First().Barcode;
+            TestContext.Progress.WriteLine("Order barcode: {0}", CreatedOrderBarcode);
         }
 
-        private long CreatedOrderID { get; set; } = 920755995;
+        private long CreatedOrderID { get; set; } = 1208576339;
+
+        private string CreatedOrderBarcode { get; set; } = "80082288939742";
 
         [Test, Ordered]
         public void GetOrderByIdentity()
         {
             Assert.That(CreatedOrderID, Is.Not.EqualTo(0));
             var result = Client.GetOrder(CreatedOrderID);
+
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ID, Is.EqualTo(CreatedOrderID));
         }
@@ -716,8 +722,20 @@ namespace PochtaSdk.Tests
             Assert.That(order.GroupName, Is.EqualTo("002"));
         }
 
+        [Test, Ordered, Explicit("Fails with DIRECT_SHIPMENT_NOT_FOUND error")]
+        public void CreateDirectReturnOrderThenDeleteIt()
+        {
+            Assert.That(CreatedOrderBarcode, Is.Not.Null.And.Not.Empty);
+
+            var ret = Client.CreateReturn(CreatedOrderBarcode);
+            TestContext.Progress.WriteLine($"Created return: {ret.ReturnBarcode}");
+
+            Client.DeleteReturn(ret.ReturnBarcode);
+            TestContext.Progress.WriteLine($"Deleted return: {ret.ReturnBarcode}");
+        }
+
         [Test, Explicit("Fails with INTERNAL_ERROR error, code 1002, http status 500")]
-        public void CreateReturnOrderThenDeleteIt()
+        public void CreateSeparateReturnOrderThenDeleteIt()
         {
             var order = new ReturnOrder
             {

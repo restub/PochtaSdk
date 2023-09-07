@@ -31,43 +31,14 @@ namespace PochtaSdk.Otpravka
         /// Список ошибок
         /// </summary>
         [DataMember(Name = "errors")]
-        public Error[] Errors { get; set; }
-
-        private IEnumerable<ErrorWithCode> ErrorsWithCodes
-        {
-            get
-            {
-                var errors = Errors ?? Enumerable.Empty<Error>();
-
-                // sometimes we have errors holding arrays or error-with-codes
-                var errorsWithCodes =
-                    from err in errors
-                    orderby err.Position
-                    from ewc in err.ErrorCodes ?? Enumerable.Empty<ErrorWithCode>()
-                    orderby ewc.Position
-                    select ewc;
-
-                // and sometimes we have flat errors with error-codes
-                var moreErrors =
-                    from err in errors
-                    orderby err.Position
-                    where err.ErrorCode.HasValue
-                    select new ErrorWithCode
-                    {
-                        Code = err.ErrorCode.Value,
-                        Description = err.ErrorCode.Value.GetDisplayName(),
-                    };
-
-                return errorsWithCodes.Concat(moreErrors);
-            }
-        }
+        public ErrorWithCode[] Errors { get; set; }
 
         /// <inheritdoc/>
-        public bool HasErrors() => ErrorsWithCodes.Any();
+        public bool HasErrors() => Errors.Any();
 
         /// <inheritdoc/>
         public string GetErrorMessage() =>
-            string.Join(". ", ErrorsWithCodes
+            string.Join(". ", Errors
                 .Select(e => e.Description.Coalesce(e.Code.GetDisplayName(), string.Empty)
                     .Trim(". \r\n\v".ToCharArray())));
     }
