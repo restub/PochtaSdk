@@ -716,6 +716,46 @@ namespace PochtaSdk.Tests
             Assert.That(order.GroupName, Is.EqualTo("002"));
         }
 
+        [Test, Explicit("Fails with INTERNAL_ERROR error, code 1002, http status 500")]
+        public void CreateReturnOrderThenDeleteIt()
+        {
+            var order = new ReturnOrder
+            {
+                OrderNum = "123",
+                AddressFrom = new Address
+                {
+                    AddressType = AddressType.Default,
+                    PostCode = "115162",
+                    House = "2",
+                    Place = "Москва",
+                    Region = "Москва",
+                    Street = "Севастопольский проспект",
+                },
+                AddressTo = new Address
+                {
+                    AddressType = AddressType.Default,
+                    PostCode = "117042",
+                    House = "3А",
+                    Place = "Москва",
+                    Region = "Москва",
+                    Street = "ул Венёвская",
+                },
+                SenderName = "Алексеев Алексей",
+                RecipientName = "Милешин Олег",
+                PostOfficeCode = "115162",
+                DeclaredValue = 0,
+                MailType = MailType.Undefined,
+            };
+
+            var result = Client.CreateReturns(order);
+            Assert.That(result, Is.Not.Null.And.Not.Empty);
+
+            var resp = result.First();
+            TestContext.Progress.WriteLine("Created a return order: {0}", resp.ReturnBarcode);
+
+            Client.DeleteReturn(resp.ReturnBarcode);
+        }
+
         [Test, Ordered]
         public void CreateBatch()
         {

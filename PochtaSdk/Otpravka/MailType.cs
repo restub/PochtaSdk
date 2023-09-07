@@ -12,6 +12,16 @@ namespace PochtaSdk.Otpravka
     public enum MailType
     {
         /// <summary>
+        /// Не задан
+        /// </summary>
+        /// <remarks>
+        /// https://otpravka.pochta.ru/specification#/returns-create_for_direct
+        /// </remarks>
+        [EnumMember(Value = "UNDEFINED")]
+        [Display(Name = "Не задан")]
+        Undefined,
+
+        /// <summary>
         /// Посылка нестандартная
         /// </summary>
         [EnumMember(Value = "POSTAL_PARCEL")]
