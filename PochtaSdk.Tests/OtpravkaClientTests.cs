@@ -759,7 +759,7 @@ namespace PochtaSdk.Tests
                     Street = "ул Венёвская",
                 },
                 SenderName = "Алексеев Алексей",
-                RecipientName = "Милешин Олег",
+                RecipientName = "Немов Константин",
                 PostOfficeCode = "115162",
                 DeclaredValue = 0,
                 MailType = MailType.Undefined,
@@ -1584,7 +1584,8 @@ namespace PochtaSdk.Tests
             // расчет через тарификатор сообщает, в чем конкретно ошибка
             Assert.That(() => Client.CalculateShippingTariff(req),
                 Throws.TypeOf<OtpravkaException>().With
-                    .Message.Contains("нельзя доставить в почтомат"));
+                    .Message.Contains("нельзя доставить в почтомат").Or
+                    .Message.Contains("в почтомат не осуществляется"));
         }
 
         [Test]
