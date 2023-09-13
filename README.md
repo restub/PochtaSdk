@@ -95,6 +95,11 @@ Documentation: https://otpravka.pochta.ru/specification
   * GetPrintFormF7P: [documents-create_f7_f22](https://otpravka.pochta.ru/specification#/documents-create_f7_f22)
   * GetPrintFormF112EK: [documents-create_f112](https://otpravka.pochta.ru/specification#/documents-create_f112)
   * GetPrintForms: [documents-create_forms_backlog](https://otpravka.pochta.ru/specification#/documents-create_forms_backlog)
+* Returns
+  * CreateReturn: [returns-create_for_direct](https://otpravka.pochta.ru/specification#/returns-create_for_direct)
+  * CreateReturns: [returns-create_without_direct](https://otpravka.pochta.ru/specification#/returns-create_without_direct)
+  * DeleteReturn: [returns-delete_separate_return](https://otpravka.pochta.ru/specification#/returns-delete_separate_return)
+  * UpdateReturn: [returns-update_separate_return](https://otpravka.pochta.ru/specification#/returns-update_separate_return)
 * Archive
   * GetArchivedBatches: [archive-search_batches](https://otpravka.pochta.ru/specification#/archive-search_batches)
   * ArchiveBatches: [archive-batch_to_archive](https://otpravka.pochta.ru/specification#/archive-batch_to_archive)
