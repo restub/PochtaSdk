@@ -41,6 +41,15 @@ namespace PochtaSdk
             Put<ReturnResponse[]>("1.0/returns/return-without-direct", returns);
 
         /// <summary>
+        /// Create separate return order.
+        /// Создание отдельного возвратного отправления.
+        /// https://otpravka.pochta.ru/specification#/returns-create_without_direct
+        /// </summary>
+        /// <returns>Return information.</returns>
+        public ReturnResponse CreateReturn(ReturnOrder ret) =>
+            CreateReturns(ret).Single();
+
+        /// <summary>
         /// Update separate return order.
         /// Изменение отдельного возвратного отправления.
         /// https://otpravka.pochta.ru/specification#/returns-update_separate_return

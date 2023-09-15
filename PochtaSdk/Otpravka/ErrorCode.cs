@@ -258,6 +258,13 @@ namespace PochtaSdk.Otpravka
         RestrictedMailCategory,
 
         /// <summary>
+        /// Возвратное отправление не найдено
+        /// </summary>
+        [EnumMember(Value = "RETURN_SHIPMENT_NOT_FOUND")]
+        [Display(Name = "Возвратное отправление не найдено")]
+        ReturnShipmentNotFound,
+
+        /// <summary>
         /// Ошибка при отправке почты
         /// </summary>
         [EnumMember(Value = "SENDING_MAIL_FAILED")]

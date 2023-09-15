@@ -734,7 +734,7 @@ namespace PochtaSdk.Tests
             TestContext.Progress.WriteLine($"Deleted return: {ret.ReturnBarcode}");
         }
 
-        [Test, Explicit("Fails with INTERNAL_ERROR error, code 1002, http status 500")]
+        [Test]
         public void CreateSeparateReturnOrderThenDeleteIt()
         {
             var order = new ReturnOrder
@@ -760,17 +760,15 @@ namespace PochtaSdk.Tests
                 },
                 SenderName = "Алексеев Алексей",
                 RecipientName = "Немов Константин",
-                PostOfficeCode = "115162",
+                PostOfficeCode = "102961", // "115162", // use one of the account's offices, not the address-from office!
                 DeclaredValue = 0,
-                MailType = MailType.Undefined,
+                MailType = MailType.EasyReturn, // contact techsupport to enable this mail type in the account settings!
             };
 
-            var result = Client.CreateReturns(order);
-            Assert.That(result, Is.Not.Null.And.Not.Empty);
+            var resp = Client.CreateReturn(order);
+            Assert.That(resp, Is.Not.Null);
 
-            var resp = result.First();
             TestContext.Progress.WriteLine("Created a return order: {0}", resp.ReturnBarcode);
-
             Client.DeleteReturn(resp.ReturnBarcode);
         }
 
