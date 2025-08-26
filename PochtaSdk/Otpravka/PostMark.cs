@@ -5,7 +5,7 @@ namespace PochtaSdk.Otpravka
     /// <summary>
     /// Post marks for the domestic and international shippings
     /// Коды отметок внутренних и международных отправлений
-    /// https://otpravka.pochta.ru/specification#/enums-base-transport-type
+    /// https://otpravka.pochta.ru/specification#/enums-base-postmarks
     /// </summary>
     [DataContract]
     public enum PostMark
@@ -88,6 +88,12 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "NONSTANDARD")]
         NonStandard,
+
+        /// <summary>
+        /// Заграничная (?) — нет документации
+        /// </summary>
+        [EnumMember(Value = "BORDER")]
+        Border,
 
         /// <summary>
         /// С ОЦ
@@ -178,5 +184,11 @@ namespace PochtaSdk.Otpravka
         /// </summary>
         [EnumMember(Value = "EASY_RETURN")]
         EasyReturn,
+
+        /// <summary>
+        /// СМС-уведомление получателю (?) — нет документации
+        /// </summary>
+        [EnumMember(Value = "SMS_NOTICE_RECIPIENT")]
+        SmsNoticeRecipient,
     }
 }
